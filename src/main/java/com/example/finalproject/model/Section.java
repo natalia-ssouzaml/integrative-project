@@ -20,6 +20,7 @@ public class Section {
     private Long sectionCode;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Category category;
 
     @Column(nullable = false)

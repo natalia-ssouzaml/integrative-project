@@ -11,10 +11,6 @@ import java.util.List;
 @Getter
 public class InboundOrderRequestDTO {
 
-    private Long orderNumber;
-
-    private LocalDate orderDate;
-
     private Long sectionCode;
 
     private Long warehouseCode;
