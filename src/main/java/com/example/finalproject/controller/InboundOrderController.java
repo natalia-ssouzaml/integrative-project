@@ -4,6 +4,7 @@ import com.example.finalproject.dto.BatchDTO;
 import com.example.finalproject.dto.InboundOrderCreateDTO;
 import com.example.finalproject.dto.InboundOrderUpdateDTO;
 import com.example.finalproject.model.Batch;
+import com.example.finalproject.model.InboundOrder;
 import com.example.finalproject.service.IInboundOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,8 +24,12 @@ public class InboundOrderController {
     @PostMapping
     public ResponseEntity<List<BatchDTO>> createInboundOrder(@Valid @RequestBody InboundOrderCreateDTO inboundOrderCreateDTO) {
         // TODO: chamar conversor de InboundOrder
-        // List<BatchDTO> batchDTOList = BatchDTO.convertListToResponse(service.create(inboundOrderCreateDTO));
-        return new ResponseEntity<>(service.create(inboundOrderCreateDTO), HttpStatus.CREATED);
+        InboundOrder inboundOrder = InboundOrderCreateDTO.convertToInboundOrder(inboundOrderCreateDTO);
+        Long sectionCode = inboundOrderCreateDTO.getSectionCode();
+        Long warehouseCode = inboundOrderCreateDTO.getWarehouseCode();
+
+        List<BatchDTO> batchDTOList = BatchDTO.convertListToResponse(service.create(inboundOrder,warehouseCode,sectionCode));
+        return new ResponseEntity<>(batchDTOList, HttpStatus.CREATED);
     }
     @PutMapping
     public ResponseEntity<List<BatchDTO>> updateInboundOrder(@RequestBody InboundOrderUpdateDTO inboundOrderUpdateDTO){

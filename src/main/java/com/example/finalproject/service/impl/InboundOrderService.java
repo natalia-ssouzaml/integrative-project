@@ -37,7 +37,7 @@ public class InboundOrderService implements IInboundOrderService {
     private BatchRepo batchRepo;
 
     @Override
-    public List<Batch> create(InboundOrderCreateDTO inboundOrderCreateDTO) {
+    public List<Batch> create(InboundOrder inboundOrder,Long warehouseCode, Long sectionCode) {
 
         // TODO: refazer validacao porque sempre é null
 //        inboundOrderCreateDTO.getBatchStock().forEach(
@@ -47,25 +47,27 @@ public class InboundOrderService implements IInboundOrderService {
 //                        throw new NotFoundException("BatchNumber already exists");
 //                    }
 //                });
-        Warehouse warehouse = warehouseRepo.findById(inboundOrderCreateDTO.getWarehouseCode()).orElseThrow(() -> new NotFoundException("Warehouse not found"));
-        Section section = sectionRepo.findById(inboundOrderCreateDTO.getSectionCode()).orElseThrow(() -> new NotFoundException("Section not found"));
+        //TODO: Como eu vou acessar o section e o warehouse pelo inboundOrder? No parametro? No Controller a gente seta ?
+        Warehouse warehouse = warehouseRepo.findById(warehouseCode).orElseThrow(() -> new NotFoundException("Warehouse not found"));
+        Section section = sectionRepo.findById(sectionCode).orElseThrow(() -> new NotFoundException("Section not found"));
         warehouseSectionValidation(section, warehouse);
 
-        InboundOrder inboundOrder = InboundOrder.builder()
-                .orderDate(LocalDate.now())
-                .section(section)
-                .batchStock(inboundOrderCreateDTO.getBatchStock())
-                .build();
+        //DAR SET NOS INBOUNDORDER
+//        InboundOrder inboundOrder = InboundOrder.builder()
+//                .orderDate(LocalDate.now())
+//                .section(section)
+//                .batchStock(inboundOrder.getBatchStock())
+//                .build();
 
         InboundOrder savedInboundOrder = inboundOrderRepo.save(inboundOrder);
 
-        setBatchOrderNumber(inboundOrderCreateDTO.getBatchStock(), section, savedInboundOrder);
-        float totalVolume = batchesTotalVolume(inboundOrderCreateDTO.getBatchStock()).floatValue();
+        setBatchOrderNumber(inboundOrder.getBatchStock(), section, savedInboundOrder);
+        float totalVolume = batchesTotalVolume(inboundOrder.getBatchStock()).floatValue();
         volumeValidation(section, totalVolume);
 
         section.setAccumulatedVolume(totalVolume + section.getAccumulatedVolume());
 
-        return batchRepo.saveAll(inboundOrderCreateDTO.getBatchStock());
+        return batchRepo.saveAll(inboundOrder.getBatchStock());
     }
 
     public List<Batch> update(InboundOrderUpdateDTO inboundOrderUpdateDTO) {

@@ -7,7 +7,10 @@ import lombok.Getter;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import java.time.LocalDate;
 import java.util.List;
+
+import static com.example.finalproject.dto.BatchDTO.convertToBatchList;
 
 @Getter
 public class InboundOrderCreateDTO {
@@ -25,10 +28,11 @@ public class InboundOrderCreateDTO {
 
     // TODO: Converte inboundOrderDTO e retorna inboundOrder (já converter BatchDTO para Batch)
 
-    private static convertToInboundOrder(InboundOrderCreateDTO inboundOrderCreateDTO) {
+    public static InboundOrder convertToInboundOrder(InboundOrderCreateDTO inboundOrderCreateDTO) {
+        repo
         return InboundOrder.builder()
-                .batchStock(convertBatchDTOtoBatch(inboundOrderCreateDTO.getBatchStock()))
-                ...,
+                .batchStock(convertToBatchList(inboundOrderCreateDTO.getBatchStock()))
+                .orderDate(LocalDate.now())
                 .build();
     }
 }
