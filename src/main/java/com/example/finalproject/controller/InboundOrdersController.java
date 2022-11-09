@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -22,7 +23,7 @@ public class InboundOrdersController {
     private IInboundOrderService service;
 
     @PostMapping
-    public ResponseEntity<List<Batch>> createInboundOrder(@RequestBody InboundOrderRequestDTO inboundOrderRequestDTO) {
+    public ResponseEntity<List<Batch>> createInboundOrder(@Valid @RequestBody InboundOrderRequestDTO inboundOrderRequestDTO) {
         return new ResponseEntity<>(service.create(inboundOrderRequestDTO), HttpStatus.CREATED);
     }
 }
