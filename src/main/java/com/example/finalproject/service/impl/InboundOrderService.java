@@ -1,11 +1,11 @@
 package com.example.finalproject.service.impl;
 
-import com.example.finalproject.dto.InboundOrderRequestDTO;
+import com.example.finalproject.dto.InboundOrderCreateDTO;
+import com.example.finalproject.dto.InboundOrderUpdateDTO;
 import com.example.finalproject.exception.InvalidTemperatureException;
 import com.example.finalproject.exception.NotFoundException;
 import com.example.finalproject.exception.VolumeNotAvailableException;
 import com.example.finalproject.model.Batch;
-import com.example.finalproject.model.Enum.Category;
 import com.example.finalproject.model.InboundOrder;
 import com.example.finalproject.model.Section;
 import com.example.finalproject.model.Warehouse;
@@ -18,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -36,44 +35,65 @@ public class InboundOrderService implements IInboundOrderService {
     @Autowired
     private BatchRepo batchRepo;
 
-
-    //    CENÁRIO 1: O produto de um vendedor é registrado.
-//    DESDE que o produto de um Vendedor é registrado
-//    E que o armazém é válido OK
-//    E que o representante pertence ao armazém OK
-//    E que o setor é válido OK
-//    E que o setor corresponde ao tipo de produto OK
-//    E que o setor tenha espaço disponível OK
-//    QUANDO o representante entra no setor
-//    ENTÃO o registro de compra é criado
-//    E o lote é atribuído a um setor OK
-//    E o representante é associado ao registro de estoque OK
-//            VALIDAÇÃO
-//▪ Registre o lote no setor correspondente.
-//            ▪ Verifique se o setor de warehouse está sendo registrado corretamente.
     @Override
-    public List<Batch> create(InboundOrderRequestDTO inboundOrderRequestDTO) {
-        Warehouse warehouse = warehouseRepo.findById(inboundOrderRequestDTO.getWarehouseCode()).orElseThrow(() -> new NotFoundException("Warehouse not found"));
-        Section section = sectionRepo.findById(inboundOrderRequestDTO.getSectionCode()).orElseThrow(() -> new NotFoundException("Section not found"));
+    public List<Batch> create(InboundOrderCreateDTO inboundOrderCreateDTO) {
+
+        inboundOrderCreateDTO.getBatchStock().forEach(
+                id -> {
+                    var result = batchRepo.existsById(id.getBatchNumber());
+                    if (result) {
+                        throw new NotFoundException("BatchNumber already exists");
+                    }
+                });
+        Warehouse warehouse = warehouseRepo.findById(inboundOrderCreateDTO.getWarehouseCode()).orElseThrow(() -> new NotFoundException("Warehouse not found"));
+        Section section = sectionRepo.findById(inboundOrderCreateDTO.getSectionCode()).orElseThrow(() -> new NotFoundException("Section not found"));
         warehouseSectionValidation(section, warehouse);
 
-        // Create inboundOrder
         InboundOrder inboundOrder = InboundOrder.builder()
                 .orderDate(LocalDate.now())
                 .section(section)
-                .batchStock(inboundOrderRequestDTO.getBatchStock())
+                .batchStock(inboundOrderCreateDTO.getBatchStock())
                 .build();
 
         InboundOrder savedInboundOrder = inboundOrderRepo.save(inboundOrder);
 
-        setBatchOrderNumber(inboundOrderRequestDTO.getBatchStock(), section, savedInboundOrder);
-        float totalVolume = batchesTotalVolume(inboundOrderRequestDTO.getBatchStock()).floatValue();
+        setBatchOrderNumber(inboundOrderCreateDTO.getBatchStock(), section, savedInboundOrder);
+        float totalVolume = batchesTotalVolume(inboundOrderCreateDTO.getBatchStock()).floatValue();
         volumeValidation(section, totalVolume);
 
         section.setAccumulatedVolume(totalVolume + section.getAccumulatedVolume());
 
-        return batchRepo.saveAll(inboundOrderRequestDTO.getBatchStock());
+        return batchRepo.saveAll(inboundOrderCreateDTO.getBatchStock());
     }
+
+    public List<Batch> update(InboundOrderUpdateDTO inboundOrderUpdateDTO) {
+       batchIdValidation(inboundOrderUpdateDTO);
+        Warehouse warehouse = warehouseRepo.findById(inboundOrderUpdateDTO.getWarehouseCode()).orElseThrow(() -> new NotFoundException("Warehouse not found"));
+        Section section = sectionRepo.findById(inboundOrderUpdateDTO.getSectionCode()).orElseThrow(() -> new NotFoundException("Section not found"));
+        warehouseSectionValidation(section, warehouse);
+
+        InboundOrder inboundOrder = InboundOrder.builder()
+                .orderNumber(inboundOrderUpdateDTO.getOrderNumber())
+                .section(section)
+                .orderDate(LocalDate.now())
+                .batchStock(inboundOrderUpdateDTO.getBatchStock())
+                .build();
+        InboundOrder savedInboundOrder = inboundOrderRepo.save(inboundOrder);
+
+        setBatchOrderNumber(inboundOrderUpdateDTO.getBatchStock(), section, savedInboundOrder);
+
+        return batchRepo.saveAll(inboundOrder.getBatchStock());
+    }
+    private void batchIdValidation(InboundOrderUpdateDTO inboundOrderUpdateDTO){
+        inboundOrderUpdateDTO.getBatchStock().forEach(
+                id -> {
+                    var result = batchRepo.existsById(id.getBatchNumber());
+                    if (!result) {
+                        throw new NotFoundException("BatchNumber does not exists");
+                    }
+                });
+    }
+
 
     private void setBatchOrderNumber(List<Batch> batchList, Section section, InboundOrder savedInboundOrder) {
         for (Batch batch : batchList) {
