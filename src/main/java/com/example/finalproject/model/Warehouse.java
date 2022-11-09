@@ -28,4 +28,5 @@ public class Warehouse {
     @OneToMany(mappedBy = "warehouse", fetch = FetchType.LAZY)
     @JsonIgnoreProperties("warehouse")
     private List<Section> sections;
+
 }

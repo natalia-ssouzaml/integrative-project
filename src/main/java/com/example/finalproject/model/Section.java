@@ -26,6 +26,15 @@ public class Section {
     @Column(nullable = false)
     private Float volume;
 
+    @Column(nullable = false)
+    private Float minTemperature;
+
+    @Column(nullable = false)
+    private Float maxTemperature;
+
+    @Column(nullable = false)
+    private Float accumulatedVolume;
+
     @ManyToOne
     @JoinColumn(name = "warehouse_id")
     @JsonIgnoreProperties("sections")
