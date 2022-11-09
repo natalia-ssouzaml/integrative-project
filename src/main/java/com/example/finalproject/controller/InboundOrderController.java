@@ -22,8 +22,9 @@ public class InboundOrderController {
 
     @PostMapping
     public ResponseEntity<List<BatchDTO>> createInboundOrder(@Valid @RequestBody InboundOrderCreateDTO inboundOrderCreateDTO) {
-        List<BatchDTO> batchDTOList = BatchDTO.convertListToResponse(service.create(inboundOrderCreateDTO));
-        return new ResponseEntity<>(batchDTOList, HttpStatus.CREATED);
+        // TODO: chamar conversor de InboundOrder
+        // List<BatchDTO> batchDTOList = BatchDTO.convertListToResponse(service.create(inboundOrderCreateDTO));
+        return new ResponseEntity<>(service.create(inboundOrderCreateDTO), HttpStatus.CREATED);
     }
     @PutMapping
     public ResponseEntity<List<BatchDTO>> updateInboundOrder(@RequestBody InboundOrderUpdateDTO inboundOrderUpdateDTO){

@@ -55,4 +55,6 @@ public class BatchDTO {
         return batchList.stream().map(BatchDTO::convertToResponse)
                 .collect(Collectors.toList());
     }
+
+    // TODO: fazer a conversao contraria: BatchDTO to Batch
 }

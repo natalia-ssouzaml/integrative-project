@@ -116,10 +116,9 @@ public class InboundOrderService implements IInboundOrderService {
     private void temperatureValidation(Section section, Batch batch) {
         float temperature = batch.getCurrentTemperature();
 
-        //TODO FindByIdAdvertsiment and get name
         if (!(temperature >= section.getMinTemperature() && temperature <= section.getMaxTemperature())) {
             throw new InvalidTemperatureException("Invalid temperature for this section: " + section.getCategory().name() + ". You sent the product " +
-                    batch.getAdvertisementId() + " with the temperature: " + batch.getCurrentTemperature() + "°, but the acceptable range is between: " + section.getMinTemperature() + "° and " + section.getMaxTemperature() + "°");
+                    batch.getAdvertisement().getName() + " with the temperature: " + batch.getCurrentTemperature() + "°, but the acceptable range is between: " + section.getMinTemperature() + "° and " + section.getMaxTemperature() + "°");
         }
     }
 

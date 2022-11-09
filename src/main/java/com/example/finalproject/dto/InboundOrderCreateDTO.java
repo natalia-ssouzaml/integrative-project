@@ -1,6 +1,7 @@
 package com.example.finalproject.dto;
 
 import com.example.finalproject.model.Batch;
+import com.example.finalproject.model.InboundOrder;
 import lombok.Getter;
 
 import javax.validation.Valid;
@@ -20,5 +21,14 @@ public class InboundOrderCreateDTO {
 
     @NotNull
     @Valid
-    private List<Batch> batchStock;
+    private List<BatchDTO> batchStock;
+
+    // TODO: Converte inboundOrderDTO e retorna inboundOrder (já converter BatchDTO para Batch)
+
+    private static convertToInboundOrder(InboundOrderCreateDTO inboundOrderCreateDTO) {
+        return InboundOrder.builder()
+                .batchStock(convertBatchDTOtoBatch(inboundOrderCreateDTO.getBatchStock()))
+                ...,
+                .build();
+    }
 }

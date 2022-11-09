@@ -1,12 +1,10 @@
 package com.example.finalproject.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -25,8 +23,9 @@ public class Batch {
     private Long batchNumber;
 
     @NotNull
-    @Column(nullable = false)
-    private Long advertisementId;
+    @OneToOne
+    @JoinColumn(name = "advertisementId")
+    private Advertisement advertisement;
 
     @NotNull
     @Column(nullable = false)
