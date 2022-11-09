@@ -1,5 +1,6 @@
 package com.example.finalproject.service.impl;
 
+import com.example.finalproject.dto.BatchDTO;
 import com.example.finalproject.dto.InboundOrderCreateDTO;
 import com.example.finalproject.dto.InboundOrderUpdateDTO;
 import com.example.finalproject.exception.InvalidTemperatureException;
@@ -38,13 +39,14 @@ public class InboundOrderService implements IInboundOrderService {
     @Override
     public List<Batch> create(InboundOrderCreateDTO inboundOrderCreateDTO) {
 
-        inboundOrderCreateDTO.getBatchStock().forEach(
-                id -> {
-                    var result = batchRepo.existsById(id.getBatchNumber());
-                    if (result) {
-                        throw new NotFoundException("BatchNumber already exists");
-                    }
-                });
+        // TODO: refazer validacao porque sempre é null
+//        inboundOrderCreateDTO.getBatchStock().forEach(
+//                id -> {
+//                    var result = batchRepo.existsById(id.getBatchNumber());
+//                    if (result) {
+//                        throw new NotFoundException("BatchNumber already exists");
+//                    }
+//                });
         Warehouse warehouse = warehouseRepo.findById(inboundOrderCreateDTO.getWarehouseCode()).orElseThrow(() -> new NotFoundException("Warehouse not found"));
         Section section = sectionRepo.findById(inboundOrderCreateDTO.getSectionCode()).orElseThrow(() -> new NotFoundException("Section not found"));
         warehouseSectionValidation(section, warehouse);

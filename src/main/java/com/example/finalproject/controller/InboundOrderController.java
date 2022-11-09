@@ -1,5 +1,6 @@
 package com.example.finalproject.controller;
 
+import com.example.finalproject.dto.BatchDTO;
 import com.example.finalproject.dto.InboundOrderCreateDTO;
 import com.example.finalproject.dto.InboundOrderUpdateDTO;
 import com.example.finalproject.model.Batch;
@@ -20,11 +21,13 @@ public class InboundOrderController {
     private IInboundOrderService service;
 
     @PostMapping
-    public ResponseEntity<List<Batch>> createInboundOrder(@Valid @RequestBody InboundOrderCreateDTO inboundOrderCreateDTO) {
-        return new ResponseEntity<>(service.create(inboundOrderCreateDTO), HttpStatus.CREATED);
+    public ResponseEntity<List<BatchDTO>> createInboundOrder(@Valid @RequestBody InboundOrderCreateDTO inboundOrderCreateDTO) {
+        List<BatchDTO> batchDTOList = BatchDTO.convertListToResponse(service.create(inboundOrderCreateDTO));
+        return new ResponseEntity<>(batchDTOList, HttpStatus.CREATED);
     }
     @PutMapping
-    public ResponseEntity<List<Batch>> updateInboundOrder(@RequestBody InboundOrderUpdateDTO inboundOrderUpdateDTO){
-        return new ResponseEntity<>(service.update(inboundOrderUpdateDTO), HttpStatus.CREATED);
+    public ResponseEntity<List<BatchDTO>> updateInboundOrder(@RequestBody InboundOrderUpdateDTO inboundOrderUpdateDTO){
+        List<BatchDTO> batchDTOList = BatchDTO.convertListToResponse(service.update(inboundOrderUpdateDTO));
+        return new ResponseEntity<>(batchDTOList, HttpStatus.CREATED);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.finalproject.service;
 
+import com.example.finalproject.dto.BatchDTO;
 import com.example.finalproject.dto.InboundOrderCreateDTO;
 import com.example.finalproject.dto.InboundOrderUpdateDTO;
 import com.example.finalproject.model.Batch;
