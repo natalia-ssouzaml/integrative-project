@@ -3,7 +3,6 @@ package com.example.finalproject.controller;
 import com.example.finalproject.dto.BatchDTO;
 import com.example.finalproject.dto.InboundOrderCreateDTO;
 import com.example.finalproject.dto.InboundOrderUpdateDTO;
-import com.example.finalproject.model.Batch;
 import com.example.finalproject.model.InboundOrder;
 import com.example.finalproject.service.IInboundOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +37,8 @@ public class InboundOrderController {
         Long sectionCode = inboundOrderUpdateDTO.getSectionCode();
         Long warehouseCode = inboundOrderUpdateDTO.getWarehouseCode();
         List<Long> advertisementIdsList = inboundOrderUpdateDTO.getBatchStock().stream().map(b -> b.getAdvertisementId()).collect(Collectors.toList());
-        List<BatchDTO> batchDTOList = BatchDTO.convertListToResponse(service.update(inboundOrderUpdateDTO));
+        List<Long> batchNumbersList = inboundOrderUpdateDTO.getBatchStock().stream().map(b -> b.getBatchNumber()).collect(Collectors.toList());
+        List<BatchDTO> batchDTOList = BatchDTO.convertListToResponse(service.update(inboundOrder, warehouseCode, sectionCode, advertisementIdsList, batchNumbersList));
         return new ResponseEntity<>(batchDTOList, HttpStatus.CREATED);
     }
 }
