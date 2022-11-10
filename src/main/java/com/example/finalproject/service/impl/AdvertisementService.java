@@ -29,4 +29,5 @@ public class AdvertisementService implements IAdvertisementService {
         return advertisementRepo.findAllByCategory(Category.CONGELADO);
     }
 
+
 }

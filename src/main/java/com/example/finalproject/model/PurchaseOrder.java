@@ -1,5 +1,6 @@
 package com.example.finalproject.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
@@ -46,5 +47,6 @@ public class PurchaseOrder {
             inverseJoinColumns = @JoinColumn(name = "id_advertisement", referencedColumnName = "advertisementId")
     )
     @JsonIgnoreProperties("purchases")
+    @JsonIgnore
     private List<Advertisement> advertisements;
 }
