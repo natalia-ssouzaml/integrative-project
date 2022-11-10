@@ -24,7 +24,7 @@ public class Batch {
     private Long batchNumber;
 
     @NotNull
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "advertisementId")
     private Advertisement advertisement;
 

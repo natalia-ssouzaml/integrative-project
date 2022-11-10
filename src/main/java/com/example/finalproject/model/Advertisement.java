@@ -25,8 +25,8 @@ public class Advertisement {
     @NotNull
     private BigDecimal price;
 
-    @OneToOne(mappedBy = "advertisement", cascade = CascadeType.PERSIST)
-    private Batch batch;
+    @OneToMany(mappedBy = "advertisement", cascade = CascadeType.PERSIST)
+    private List<Batch> batches;
 
     @ManyToOne
     @JoinColumn(name = "seller_id")
