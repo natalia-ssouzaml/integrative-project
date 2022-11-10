@@ -128,4 +128,7 @@ public class InboundOrderService implements IInboundOrderService {
                     "m³ is available");
         }
     }
+
+    public static class AdvertisementService {
+    }
 }

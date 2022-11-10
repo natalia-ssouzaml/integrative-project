@@ -32,14 +32,19 @@ INSERT INTO section(category, volume, accumulated_volume, max_temperature, min_t
 VALUES ('FRESCO', 200, 0, 10, 5, 2);
 
 -- BUYER
-INSERT INTO buyer(name) VALUES ('Neymar');
-INSERT INTO buyer(name) VALUES ('Benzema');
+INSERT INTO buyer(name)
+VALUES ('Neymar');
+INSERT INTO buyer(name)
+VALUES ('Benzema');
 
 
 -- SELLER
-INSERT INTO seller(name) VALUES ('Lucas');
-INSERT INTO seller(name) VALUES ('Matheus');
-INSERT INTO seller(name) VALUES ('Cristiano Ronaldo');
+INSERT INTO seller(name)
+VALUES ('Lucas');
+INSERT INTO seller(name)
+VALUES ('Matheus');
+INSERT INTO seller(name)
+VALUES ('Cristiano Ronaldo');
 
 
 -- ADVERTISEMENT
@@ -51,3 +56,12 @@ INSERT INTO advertisement(name, price, seller_id)
 VALUES ("Frango", 15.00, 2);
 INSERT INTO advertisement(name, price, seller_id)
 VALUES ("Sorvete", 5.50, 3);
+
+--INBOUND ORDER
+INSERT INTO inbound_order (order_date, section_code)
+VALUES ("2017-01-25", 2);
+
+--BATCH
+INSERT INTO batch (current_temperature, due_date, manufacturing_date_time, price, product_quantity,
+volume, advertisement_id, order_number)
+VALUES (-18, "2017-01-25", "2017-03-25T21:34:55", 8, 50, 10, 2, 1);

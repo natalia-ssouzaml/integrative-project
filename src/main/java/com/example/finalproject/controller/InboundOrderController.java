@@ -15,13 +15,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/inboundOrder")
+@RequestMapping("api/v1/fresh-products")
 public class InboundOrderController {
 
     @Autowired
     private IInboundOrderService service;
 
-    @PostMapping
+    @PostMapping("/inboundorder")
     public ResponseEntity<List<BatchDTO>> createInboundOrder(@Valid @RequestBody InboundOrderCreateDTO inboundOrderCreateDTO) {
         InboundOrder inboundOrder = InboundOrderCreateDTO.convertToInboundOrder(inboundOrderCreateDTO);
         Long sectionCode = inboundOrderCreateDTO.getSectionCode();
@@ -31,7 +31,7 @@ public class InboundOrderController {
         return new ResponseEntity<>(batchDTOList, HttpStatus.CREATED);
     }
 
-    @PutMapping
+    @PutMapping("/inboundorder")
     public ResponseEntity<List<BatchDTO>> updateInboundOrder(@RequestBody InboundOrderUpdateDTO inboundOrderUpdateDTO){
         InboundOrder inboundOrder = InboundOrderUpdateDTO.convertToInboundOrder(inboundOrderUpdateDTO);
         Long sectionCode = inboundOrderUpdateDTO.getSectionCode();
