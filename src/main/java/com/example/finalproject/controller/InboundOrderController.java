@@ -32,13 +32,13 @@ public class InboundOrderController {
         return new ResponseEntity<>(batchDTOList, HttpStatus.CREATED);
     }
 
-    @PutMapping
-    public ResponseEntity<List<BatchDTO>> updateInboundOrder(@RequestBody InboundOrderUpdateDTO inboundOrderUpdateDTO){
-        InboundOrder inboundOrder = InboundOrderUpdateDTO.convertToInboundOrder(inboundOrderUpdateDTO);
-        Long sectionCode = inboundOrderUpdateDTO.getSectionCode();
-        Long warehouseCode = inboundOrderUpdateDTO.getWarehouseCode();
-        List<Long> advertisementIdsList = inboundOrderUpdateDTO.getBatchStock().stream().map(b -> b.getAdvertisementId()).collect(Collectors.toList());
-        List<BatchDTO> batchDTOList = BatchDTO.convertListToResponse(service.update(inboundOrderUpdateDTO));
-        return new ResponseEntity<>(batchDTOList, HttpStatus.CREATED);
-    }
+//    @PutMapping
+//    public ResponseEntity<List<BatchDTO>> updateInboundOrder(@RequestBody InboundOrderUpdateDTO inboundOrderUpdateDTO){
+//        InboundOrder inboundOrder = InboundOrderUpdateDTO.convertToInboundOrder(inboundOrderUpdateDTO);
+//        Long sectionCode = inboundOrderUpdateDTO.getSectionCode();
+//        Long warehouseCode = inboundOrderUpdateDTO.getWarehouseCode();
+//        List<Long> advertisementIdsList = inboundOrderUpdateDTO.getBatchStock().stream().map(b -> b.getAdvertisementId()).collect(Collectors.toList());
+//        List<BatchDTO> batchDTOList = BatchDTO.convertListToResponse(service.update(inboundOrderUpdateDTO));
+//        return new ResponseEntity<>(batchDTOList, HttpStatus.CREATED);
+//    }
 }
