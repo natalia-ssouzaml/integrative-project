@@ -1,7 +1,5 @@
 package com.example.finalproject.service.impl;
 
-import com.example.finalproject.dto.BatchDTO;
-import com.example.finalproject.dto.InboundOrderCreateDTO;
 import com.example.finalproject.dto.InboundOrderUpdateDTO;
 import com.example.finalproject.exception.InvalidTemperatureException;
 import com.example.finalproject.exception.NotFoundException;
@@ -10,10 +8,7 @@ import com.example.finalproject.model.Batch;
 import com.example.finalproject.model.InboundOrder;
 import com.example.finalproject.model.Section;
 import com.example.finalproject.model.Warehouse;
-import com.example.finalproject.repository.BatchRepo;
-import com.example.finalproject.repository.InboundOrderRepo;
-import com.example.finalproject.repository.SectionRepo;
-import com.example.finalproject.repository.WarehouseRepo;
+import com.example.finalproject.repository.*;
 import com.example.finalproject.service.IInboundOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,14 +27,18 @@ public class InboundOrderService implements IInboundOrderService {
 
     @Autowired
     private SectionRepo sectionRepo;
+    @Autowired
+    AdvertisementRepo advertisementRepo;
 
     @Autowired
     private BatchRepo batchRepo;
 
     @Override
-    public List<Batch> create(InboundOrder inboundOrder,Long warehouseCode, Long sectionCode) {
+    public List<Batch> create(InboundOrder inboundOrder,Long warehouseCode, Long sectionCode,List<Long>advertisementList) {
 
         // TODO: refazer validacao porque sempre é null
+        //TODO validar se os Ids estao duplicados.
+
 //        inboundOrderCreateDTO.getBatchStock().forEach(
 //                id -> {
 //                    var result = batchRepo.existsById(id.getBatchNumber());
@@ -47,17 +46,14 @@ public class InboundOrderService implements IInboundOrderService {
 //                        throw new NotFoundException("BatchNumber already exists");
 //                    }
 //                });
-        //TODO: Como eu vou acessar o section e o warehouse pelo inboundOrder? No parametro? No Controller a gente seta ?
         Warehouse warehouse = warehouseRepo.findById(warehouseCode).orElseThrow(() -> new NotFoundException("Warehouse not found"));
         Section section = sectionRepo.findById(sectionCode).orElseThrow(() -> new NotFoundException("Section not found"));
         warehouseSectionValidation(section, warehouse);
 
-        //DAR SET NOS INBOUNDORDER
-//        InboundOrder inboundOrder = InboundOrder.builder()
-//                .orderDate(LocalDate.now())
-//                .section(section)
-//                .batchStock(inboundOrder.getBatchStock())
-//                .build();
+        inboundOrder.setSection(section);
+        for (int i = 0; i < advertisementList.size() ; i++) {
+            inboundOrder.getBatchStock().get(i).setAdvertisement(advertisementRepo.findById(advertisementList.get(i)).get());
+        }
 
         InboundOrder savedInboundOrder = inboundOrderRepo.save(inboundOrder);
 
@@ -66,11 +62,13 @@ public class InboundOrderService implements IInboundOrderService {
         volumeValidation(section, totalVolume);
 
         section.setAccumulatedVolume(totalVolume + section.getAccumulatedVolume());
-
+        for (Batch batch : inboundOrder.getBatchStock()) {
+            System.out.println(batch);
+        }
         return batchRepo.saveAll(inboundOrder.getBatchStock());
     }
 
-    public List<Batch> update(InboundOrderUpdateDTO inboundOrderUpdateDTO) {
+    public List<Batch> update(InboundOrderUpdateDTO inboundOrderUpdateDTO,Long warehouseCode, Long sectionCode,List<Long>advertisementList) {
        batchIdValidation(inboundOrderUpdateDTO);
         Warehouse warehouse = warehouseRepo.findById(inboundOrderUpdateDTO.getWarehouseCode()).orElseThrow(() -> new NotFoundException("Warehouse not found"));
         Section section = sectionRepo.findById(inboundOrderUpdateDTO.getSectionCode()).orElseThrow(() -> new NotFoundException("Section not found"));
@@ -80,11 +78,11 @@ public class InboundOrderService implements IInboundOrderService {
                 .orderNumber(inboundOrderUpdateDTO.getOrderNumber())
                 .section(section)
                 .orderDate(LocalDate.now())
-                .batchStock(inboundOrderUpdateDTO.getBatchStock())
+                //.batchStock(inboundOrderUpdateDTO.getBatchStock())
                 .build();
         InboundOrder savedInboundOrder = inboundOrderRepo.save(inboundOrder);
 
-        setBatchOrderNumber(inboundOrderUpdateDTO.getBatchStock(), section, savedInboundOrder);
+        //setBatchOrderNumber(inboundOrderUpdateDTO.getBatchStock(), section, savedInboundOrder);
 
         return batchRepo.saveAll(inboundOrder.getBatchStock());
     }
@@ -102,7 +100,7 @@ public class InboundOrderService implements IInboundOrderService {
     private void setBatchOrderNumber(List<Batch> batchList, Section section, InboundOrder savedInboundOrder) {
         for (Batch batch : batchList) {
             temperatureValidation(section, batch);
-            batch.setOrderNumber(savedInboundOrder);
+            batch.setInboundOrder(savedInboundOrder);
         }
     }
 

@@ -2,7 +2,9 @@ package com.example.finalproject.dto;
 
 import com.example.finalproject.model.Batch;
 import com.example.finalproject.model.InboundOrder;
+import com.example.finalproject.repository.AdvertisementRepo;
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -14,6 +16,8 @@ import static com.example.finalproject.dto.BatchDTO.convertToBatchList;
 
 @Getter
 public class InboundOrderCreateDTO {
+
+
     @NotNull
     @Positive
     private Long sectionCode;
@@ -25,11 +29,7 @@ public class InboundOrderCreateDTO {
     @NotNull
     @Valid
     private List<BatchDTO> batchStock;
-
-    // TODO: Converte inboundOrderDTO e retorna inboundOrder (já converter BatchDTO para Batch)
-
     public static InboundOrder convertToInboundOrder(InboundOrderCreateDTO inboundOrderCreateDTO) {
-        repo
         return InboundOrder.builder()
                 .batchStock(convertToBatchList(inboundOrderCreateDTO.getBatchStock()))
                 .orderDate(LocalDate.now())

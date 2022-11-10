@@ -2,8 +2,12 @@ package com.example.finalproject.dto;
 
 import com.example.finalproject.model.Batch;
 import com.example.finalproject.repository.AdvertisementRepo;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -13,10 +17,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class
 BatchDTO {
-    @Autowired
-    private static AdvertisementRepo advertisementRepo;
     private Long batchNumber;
 
     @NotNull
@@ -43,7 +47,7 @@ BatchDTO {
 
     public BatchDTO(Batch batch) {
         this.batchNumber = batch.getBatchNumber();
-        this.advertisementId = getAdvertisementId();
+        this.advertisementId = batch.getAdvertisement().getAdvertisementId();
         this.currentTemperature = batch.getCurrentTemperature();
         this.productQuantity = batch.getProductQuantity();
         this.manufacturingDateTime = batch.getManufacturingDateTime();
@@ -71,6 +75,7 @@ BatchDTO {
                 .volume(batchDTO.getVolume())
                 .build();
     }
+
     public static List<Batch> convertToBatchList(List<BatchDTO> batchDTOList) {
         return batchDTOList.stream().map(BatchDTO::convertToBatch).collect(Collectors.toList());
     }

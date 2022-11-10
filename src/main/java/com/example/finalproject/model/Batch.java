@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class Batch {
@@ -55,5 +56,5 @@ public class Batch {
     @JoinColumn(name = "order_number")
     @JsonIgnoreProperties("batchStock")
     @JsonIgnore
-    private InboundOrder orderNumber;
+    private InboundOrder inboundOrder;
 }

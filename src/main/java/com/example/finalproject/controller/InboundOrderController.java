@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/inboundOrder")
@@ -23,16 +24,20 @@ public class InboundOrderController {
 
     @PostMapping
     public ResponseEntity<List<BatchDTO>> createInboundOrder(@Valid @RequestBody InboundOrderCreateDTO inboundOrderCreateDTO) {
-        // TODO: chamar conversor de InboundOrder
         InboundOrder inboundOrder = InboundOrderCreateDTO.convertToInboundOrder(inboundOrderCreateDTO);
         Long sectionCode = inboundOrderCreateDTO.getSectionCode();
         Long warehouseCode = inboundOrderCreateDTO.getWarehouseCode();
-
-        List<BatchDTO> batchDTOList = BatchDTO.convertListToResponse(service.create(inboundOrder,warehouseCode,sectionCode));
+        List<Long> advertisementIdsList = inboundOrderCreateDTO.getBatchStock().stream().map(b -> b.getAdvertisementId()).collect(Collectors.toList());
+        List<BatchDTO> batchDTOList = BatchDTO.convertListToResponse(service.create(inboundOrder,warehouseCode,sectionCode,advertisementIdsList));
         return new ResponseEntity<>(batchDTOList, HttpStatus.CREATED);
     }
+
     @PutMapping
     public ResponseEntity<List<BatchDTO>> updateInboundOrder(@RequestBody InboundOrderUpdateDTO inboundOrderUpdateDTO){
+        InboundOrder inboundOrder = InboundOrderUpdateDTO.convertToInboundOrder(inboundOrderUpdateDTO);
+        Long sectionCode = inboundOrderUpdateDTO.getSectionCode();
+        Long warehouseCode = inboundOrderUpdateDTO.getWarehouseCode();
+        List<Long> advertisementIdsList = inboundOrderUpdateDTO.getBatchStock().stream().map(b -> b.getAdvertisementId()).collect(Collectors.toList());
         List<BatchDTO> batchDTOList = BatchDTO.convertListToResponse(service.update(inboundOrderUpdateDTO));
         return new ResponseEntity<>(batchDTOList, HttpStatus.CREATED);
     }

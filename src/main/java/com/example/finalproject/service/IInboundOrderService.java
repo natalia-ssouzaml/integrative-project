@@ -9,6 +9,7 @@ import com.example.finalproject.model.InboundOrder;
 import java.util.List;
 
 public interface IInboundOrderService {
-    List<Batch> create(InboundOrder inboundOrder,Long warehouseCode, Long section);
-    List<Batch> update(InboundOrderUpdateDTO inboundOrderUpdateDTO);
+    List<Batch> create(InboundOrder inboundOrder, Long warehouseCode, Long section, List<Long> advertisementList);
+
+    List<Batch> update(InboundOrderUpdateDTO inboundOrderUpdateDTO, Long warehouseCode, Long section, List<Long> advertisementList);
 }
