@@ -3,7 +3,6 @@ package com.example.finalproject.exception;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -68,6 +67,18 @@ public class HandlerException extends ResponseEntityExceptionHandler {
     public ResponseEntity<ExceptionDetails> handlerVolumeNotAvailableException(VolumeNotAvailableException ex) {
         ExceptionDetails exceptionDetails = ExceptionDetails.builder()
                 .title("Volume not available")
+                .message(ex.getMessage())
+                .status(HttpStatus.NOT_FOUND.value())
+                .timeStamp(LocalDateTime.now())
+                .build();
+
+        return new ResponseEntity<>(exceptionDetails, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(QuantityNotAvailableException.class)
+    public ResponseEntity<ExceptionDetails> handlerQuantityNotAvailableException(QuantityNotAvailableException ex) {
+        ExceptionDetails exceptionDetails = ExceptionDetails.builder()
+                .title("Quantity not available")
                 .message(ex.getMessage())
                 .status(HttpStatus.NOT_FOUND.value())
                 .timeStamp(LocalDateTime.now())

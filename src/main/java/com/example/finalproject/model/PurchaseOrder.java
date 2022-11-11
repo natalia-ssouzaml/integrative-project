@@ -7,10 +7,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -28,7 +26,6 @@ public class PurchaseOrder {
     @Column(nullable = false)
     private LocalDateTime dateTime;
 
-    @NotNull
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;

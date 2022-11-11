@@ -1,13 +1,9 @@
 package com.example.finalproject.dto;
 
 import com.example.finalproject.model.Batch;
-import com.example.finalproject.repository.AdvertisementRepo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
