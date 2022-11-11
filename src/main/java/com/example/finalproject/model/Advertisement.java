@@ -1,10 +1,7 @@
 package com.example.finalproject.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -14,7 +11,10 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class Advertisement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +27,7 @@ public class Advertisement {
     private BigDecimal price;
 
     @OneToMany(mappedBy = "advertisement", cascade = CascadeType.PERSIST)
+    @ToString.Exclude
     private List<Batch> batches;
 
     @ManyToOne
@@ -36,6 +37,7 @@ public class Advertisement {
 
     @ManyToMany(mappedBy = "advertisements")
     @JsonIgnoreProperties("advertisements")
+    @ToString.Exclude
     private List<PurchaseOrder> purchases;
 
 }

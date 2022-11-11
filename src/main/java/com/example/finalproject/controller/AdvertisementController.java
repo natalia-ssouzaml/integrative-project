@@ -22,7 +22,8 @@ public class AdvertisementController {
     IAdvertisementService service;
 
     @GetMapping
-    public ResponseEntity<List<AdvertisementDTO>> getAllAdvertisiment() {
+    public ResponseEntity<List<AdvertisementDTO>> getAllAdvertisement() {
+        // TODO: Padronizar response
         return ResponseEntity.ok(AdvertisementDTO.convertListToResponse(service.findAll()));
     }
 

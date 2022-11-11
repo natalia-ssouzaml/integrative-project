@@ -1,7 +1,6 @@
 package com.example.finalproject.dto;
 
 import com.example.finalproject.model.Advertisement;
-import com.example.finalproject.model.Batch;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
