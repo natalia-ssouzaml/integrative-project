@@ -2,6 +2,7 @@ package com.example.finalproject.controller;
 
 import com.example.finalproject.dto.AdvertisementDTO;
 import com.example.finalproject.model.Advertisement;
+import com.example.finalproject.model.Batch;
 import com.example.finalproject.model.Enum.Category;
 import com.example.finalproject.repository.AdvertisementRepo;
 import com.example.finalproject.service.IAdvertisementService;
@@ -31,6 +32,11 @@ public class AdvertisementController {
     @GetMapping("/list/{category}")
     public ResponseEntity<List<AdvertisementDTO>> getAllAdvertisimentByCategory(@PathVariable String category) {
         return ResponseEntity.ok(AdvertisementDTO.convertListToResponse(service.findAllByCategory(category)));
+    }
+
+    @GetMapping("/list/batch/advertisementId")
+    public ResponseEntity<Batch> findAllByBatch(@PathVariable Long advertisementId) {
+        return ResponseEntity.ok(service.findAllByBatch(advertisementId));
     }
 }
 
