@@ -7,6 +7,7 @@ import com.example.finalproject.model.Advertisement;
 import com.example.finalproject.model.Batch;
 import com.example.finalproject.model.PurchaseOrder;
 import com.example.finalproject.repository.AdvertisementRepo;
+import com.example.finalproject.repository.BuyerRepo;
 import com.example.finalproject.repository.PurchaseOrderRepo;
 import com.example.finalproject.service.IPurchaseOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +28,12 @@ public class PurchaseOrderService implements IPurchaseOrderService {
     @Autowired
     private AdvertisementRepo advertisementRepo;
 
+    @Autowired
+    private BuyerRepo buyerRepo;
+
     @Override
     public BigDecimal createPurchaseOrder(PurchaseOrder purchaseOrder, List<Integer> quantity) {
+        buyerRepo.findById(purchaseOrder.getBuyer().getBuyerCode()).orElseThrow(() -> new NotFoundException("Buyer not found"));
         List<Advertisement> advertisementList = getAdvertisementList(purchaseOrder);
         purchaseOrder.setAdvertisements(advertisementList);
 
@@ -56,7 +61,8 @@ public class PurchaseOrderService implements IPurchaseOrderService {
         PurchaseOrder purchaseOrder = (purchaseOrderRepo.findById(purchaseCode).orElseThrow(() -> new NotFoundException("Purchase order not found")));
         return purchaseOrder.getAdvertisements();
     }
-    
+
+
     @Override
     public PurchaseOrder updatePurchaseStatus(Long purchaseCode) {
         PurchaseOrder purchaseOrder = (purchaseOrderRepo.findById(purchaseCode).orElseThrow(() -> new NotFoundException("Purchase order not found")));
