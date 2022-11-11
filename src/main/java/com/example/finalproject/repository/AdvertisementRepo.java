@@ -10,21 +10,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 
 public interface AdvertisementRepo extends JpaRepository<Advertisement, Long> {
-//    List<Advertisement> findAllByCategory(String category);
+    @Query(value = "SELECT * \n" +
+            "FROM advertisement a\n" +
+            "INNER JOIN batch b on a.advertisement_id = b.advertisement_id\n" +
+            "INNER JOIN inbound_order i on b.order_number = i.order_number\n" +
+            "INNER JOIN section s on i.section_code = s.section_code\n" +
+            "WHERE s.category = ?1 ",nativeQuery = true)
 
-
-//    @Query(value = "select a from Advertisement a \n" +
-//            "    inner join Batch b \n" +
-//            "    inner join InboundOrder io \n" +
-//            "    inner join Section s \n" +
-//            "    where s.category = :category")
-//    List<Advertisement> findAllByCategory(@Param("category") Category category);
-
-//    @Query(value = "SELECT * \n" +
-//            "FROM advertisement a\n" +
-//            "INNER JOIN batch b on a.advertisement_id = b.advertisement_id\n" +
-//            "INNER JOIN inbound_order i on b.order_number = i.order_number\n" +
-//            "INNER JOIN section s on i.section_code = s.section_code\n" +
-//            "WHERE s.category = ?1 ",nativeQuery = true)
-//    List<Advertisement> findAllByCategory(Category category);
+    List<Advertisement> findAllByCategory(String category);
 }
