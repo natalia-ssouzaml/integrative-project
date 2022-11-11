@@ -65,3 +65,4 @@ VALUES ("2017-01-25", 2);
 INSERT INTO batch (current_temperature, due_date, manufacturing_date_time, price, product_quantity,
 volume, advertisement_id, order_number)
 VALUES (-18, "2017-01-25", "2017-03-25T21:34:55", 8, 50, 10, 2, 1);
+

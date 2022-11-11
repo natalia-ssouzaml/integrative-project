@@ -2,6 +2,7 @@ package com.example.finalproject.service.impl;
 
 import com.example.finalproject.exception.NotFoundException;
 import com.example.finalproject.model.Advertisement;
+import com.example.finalproject.model.Enum.OrderStatus;
 import com.example.finalproject.model.PurchaseOrder;
 import com.example.finalproject.repository.AdvertisementRepo;
 import com.example.finalproject.repository.PurchaseOrderRepo;
@@ -29,7 +30,7 @@ public class PurchaseOrderService implements IPurchaseOrderService {
 
     public PurchaseOrder updatePurchaseStatus(Long purchaseCode) {
         PurchaseOrder purchaseOrder = (purchaseRepo.findById(purchaseCode).orElseThrow(() -> new NotFoundException("Purchase order not found")));
-        purchaseOrder.setOrderStatus(true);
+        purchaseOrder.setOrderStatus(OrderStatus.FINALIZADO);
         return purchaseOrder;
     }
 }
