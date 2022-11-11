@@ -2,6 +2,7 @@ package com.example.finalproject.dto;
 
 
 import com.example.finalproject.model.Buyer;
+import com.example.finalproject.model.Enum.OrderStatus;
 import com.example.finalproject.model.PurchaseOrder;
 import lombok.Getter;
 
@@ -29,7 +30,7 @@ public class PurchaseOrderCreateDTO {
         return PurchaseOrder.builder()
                 .dateTime(purchaseOrderCreateDTO.getDateTime())
                 .buyer(Buyer.builder().buyerCode(purchaseOrderCreateDTO.buyerCode).build())
-                .orderStatus(false)
+                .orderStatus(OrderStatus.ABERTO)
                 .advertisements(AdvertisementOrderDTO.convertToAdvertisementList(purchaseOrderCreateDTO.getAdvertisementListDTO()))
                 .build();
     }

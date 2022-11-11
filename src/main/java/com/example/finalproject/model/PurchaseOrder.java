@@ -30,10 +30,6 @@ public class PurchaseOrder {
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
-    @NotNull
-    @Column(nullable = false)
-    private int quantity;
-
     @ManyToOne
     @JoinColumn(name = "buyer_id")
     @JsonIgnoreProperties("purchases")
