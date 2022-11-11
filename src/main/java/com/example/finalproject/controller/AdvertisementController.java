@@ -2,6 +2,7 @@ package com.example.finalproject.controller;
 
 import com.example.finalproject.dto.AdvertisementDTO;
 import com.example.finalproject.model.Advertisement;
+import com.example.finalproject.model.Enum.Category;
 import com.example.finalproject.repository.AdvertisementRepo;
 import com.example.finalproject.service.IAdvertisementService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,5 +1,7 @@
 package com.example.finalproject.model;
 
+import com.example.finalproject.model.Enum.OrderStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
@@ -25,7 +27,8 @@ public class PurchaseOrder {
     private LocalDateTime dateTime;
 
     @Column(nullable = false)
-    private boolean orderStatus;
+    @Enumerated(EnumType.STRING)
+    private OrderStatus orderStatus;
 
     @NotNull
     @Column(nullable = false)
@@ -43,5 +46,6 @@ public class PurchaseOrder {
             inverseJoinColumns = @JoinColumn(name = "id_advertisement", referencedColumnName = "advertisementId")
     )
     @JsonIgnoreProperties("purchases")
+    @JsonIgnore
     private List<Advertisement> advertisements;
 }

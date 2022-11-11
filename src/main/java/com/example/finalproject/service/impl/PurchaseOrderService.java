@@ -1,6 +1,6 @@
 package com.example.finalproject.service.impl;
 
-
+import com.example.finalproject.model.Enum.OrderStatus;
 import com.example.finalproject.exception.NotFoundException;
 import com.example.finalproject.exception.QuantityNotAvailableException;
 import com.example.finalproject.model.Advertisement;
@@ -17,7 +17,6 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
-
 
 @Service
 public class PurchaseOrderService implements IPurchaseOrderService {
@@ -50,6 +49,19 @@ public class PurchaseOrderService implements IPurchaseOrderService {
         }
         purchaseOrderRepo.save(purchaseOrder);
         return totalPrice;
+    }
+    
+    @Override
+    public List<Advertisement> findAllAdvertisementsByPurchase(Long purchaseCode) {
+        PurchaseOrder purchaseOrder = (purchaseOrderRepo.findById(purchaseCode).orElseThrow(() -> new NotFoundException("Purchase order not found")));
+        return purchaseOrder.getAdvertisements();
+    }
+    
+    @Override
+    public PurchaseOrder updatePurchaseStatus(Long purchaseCode) {
+        PurchaseOrder purchaseOrder = (purchaseOrderRepo.findById(purchaseCode).orElseThrow(() -> new NotFoundException("Purchase order not found")));
+        purchaseOrder.setOrderStatus(OrderStatus.FINALIZADO);
+        return purchaseOrder;
     }
 
 
