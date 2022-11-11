@@ -18,6 +18,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PurchaseOrderService implements IPurchaseOrderService {
@@ -66,7 +67,29 @@ public class PurchaseOrderService implements IPurchaseOrderService {
     @Override
     public PurchaseOrder updatePurchaseStatus(Long purchaseCode) {
         PurchaseOrder purchaseOrder = (purchaseOrderRepo.findById(purchaseCode).orElseThrow(() -> new NotFoundException("Purchase order not found")));
+        List<Advertisement> advertisements = purchaseOrder.getAdvertisements();
+        // atualizar volume
+        for (int i = 0; i < advertisements.size(); i++) {
+            List<Batch> batchList = advertisements.get(i).getBatches();
+//            List<Integer> quantities = batchList.stream().map(Batch::getProductQuantity).collect(Collectors.toList());
+
+            for (int j = 0; j < batchList.size(); j++){
+                Double unitVolumeFunction = batchList.get(j).getUnitVolume();
+                System.out.println("UNIT VOLUME FUNCTION === -> " + unitVolumeFunction);
+            }
+
+
+            Float sectionVolume = advertisements.get(i).getBatches().get(i).getInboundOrder().getSection().getVolume();
+            System.out.println("SECTION VOLUME === -> " + sectionVolume);
+        }
+        // atualizar quantity
+
+
+
+        // atualizar OrderStatus
         purchaseOrder.setOrderStatus(OrderStatus.FINALIZADO);
+
+        // atualizar o response body
         return purchaseOrder;
     }
 

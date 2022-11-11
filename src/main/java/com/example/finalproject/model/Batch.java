@@ -57,4 +57,8 @@ public class Batch {
     @JsonIgnoreProperties("batchStock")
     @JsonIgnore
     private InboundOrder inboundOrder;
+
+    public Double getUnitVolume() {
+        return (double) getVolume() / getProductQuantity();
+    }
 }
