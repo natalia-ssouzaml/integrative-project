@@ -24,14 +24,14 @@ public class PurchaseOrderCreateDTO {
 
     @NotNull
     @Valid
-    private List<AdvertisementOrderDTO> advertisementListDTO;
+    private List<PurchaseItemDTO> purchaseItemListDTO;
 
     public static PurchaseOrder convertToPurchaseOrder(PurchaseOrderCreateDTO purchaseOrderCreateDTO) {
         return PurchaseOrder.builder()
                 .dateTime(purchaseOrderCreateDTO.getDateTime())
                 .buyer(Buyer.builder().buyerCode(purchaseOrderCreateDTO.buyerCode).build())
                 .orderStatus(OrderStatus.ABERTO)
-                .advertisements(AdvertisementOrderDTO.convertToAdvertisementList(purchaseOrderCreateDTO.getAdvertisementListDTO()))
+                .purchaseItems(PurchaseItemDTO.convertToPurchaseItemList(purchaseOrderCreateDTO.getPurchaseItemListDTO()))
                 .build();
     }
 }

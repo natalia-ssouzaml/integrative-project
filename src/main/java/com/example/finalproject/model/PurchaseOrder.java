@@ -1,7 +1,6 @@
 package com.example.finalproject.model;
 
 import com.example.finalproject.model.Enum.OrderStatus;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
@@ -35,13 +34,7 @@ public class PurchaseOrder {
     @JsonIgnoreProperties("purchases")
     private Buyer buyer;
 
-    @ManyToMany
-    @JoinTable(
-            name = "PurchaseOrder_Advertisement",
-            joinColumns = @JoinColumn(name = "id_purchaseOrder", referencedColumnName = "purchaseCode"),
-            inverseJoinColumns = @JoinColumn(name = "id_advertisement", referencedColumnName = "advertisementId")
-    )
-    @JsonIgnoreProperties("purchases")
-    @JsonIgnore
-    private List<Advertisement> advertisements;
+    @OneToMany(mappedBy = "purchaseOrder", fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("purchaseOrder")
+    private List<PurchaseItem> purchaseItems;
 }

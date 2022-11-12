@@ -35,9 +35,9 @@ public class Advertisement {
     @JsonIgnoreProperties("advertisements")
     private Seller seller;
 
-    @ManyToMany(mappedBy = "advertisements")
-    @JsonIgnoreProperties("advertisements")
+    @OneToMany(mappedBy = "advertisement", fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("advertisement")
     @ToString.Exclude
-    private List<PurchaseOrder> purchases;
+    private List<PurchaseItem> purchaseItems;
 
 }

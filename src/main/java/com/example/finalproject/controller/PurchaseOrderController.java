@@ -1,7 +1,7 @@
 package com.example.finalproject.controller;
 
 import com.example.finalproject.dto.AdvertisementDTO;
-import com.example.finalproject.dto.AdvertisementOrderDTO;
+import com.example.finalproject.dto.PurchaseItemDTO;
 import com.example.finalproject.dto.PurchaseOrderCreateDTO;
 import com.example.finalproject.model.PurchaseOrder;
 import com.example.finalproject.service.IPurchaseOrderService;
@@ -26,8 +26,8 @@ public class PurchaseOrderController {
     @PostMapping("/orders")
     public ResponseEntity<BigDecimal> createPurchaseOrder(@Valid @RequestBody PurchaseOrderCreateDTO purchaseOrderCreateDTO) {
         PurchaseOrder purchaseOrder = PurchaseOrderCreateDTO.convertToPurchaseOrder(purchaseOrderCreateDTO);
-        List<Integer> advertisementQuantityList = purchaseOrderCreateDTO.getAdvertisementListDTO().stream().map(AdvertisementOrderDTO::getQuantity).collect(Collectors.toList());
-        return new ResponseEntity<>(service.createPurchaseOrder(purchaseOrder, advertisementQuantityList), HttpStatus.CREATED);
+        List<Integer> advertisementQuantityList = purchaseOrderCreateDTO.getPurchaseItemListDTO().stream().map(PurchaseItemDTO::getQuantity).collect(Collectors.toList());
+        return new ResponseEntity<>(service.createPurchaseOrder(purchaseOrder), HttpStatus.CREATED);
     }
     
     @GetMapping("/orders/{purchaseCode}")

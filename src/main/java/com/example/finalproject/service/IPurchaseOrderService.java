@@ -12,6 +12,6 @@ public interface IPurchaseOrderService {
 
     PurchaseOrder updatePurchaseStatus(Long purchaseCode);
     
-    BigDecimal createPurchaseOrder(PurchaseOrder purchaseOrder, List<Integer> quantity);
+    BigDecimal createPurchaseOrder(PurchaseOrder purchaseOrder);
 
 }
