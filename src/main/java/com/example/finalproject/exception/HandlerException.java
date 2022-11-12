@@ -87,6 +87,18 @@ public class HandlerException extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(exceptionDetails, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(PurchaseFailureException.class)
+    public ResponseEntity<ExceptionDetails> handlerPurchaseFailureException(PurchaseFailureException ex) {
+        ExceptionDetails exceptionDetails = ExceptionDetails.builder()
+                .title("Purchase failed")
+                .message(ex.getMessage())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .timeStamp(LocalDateTime.now())
+                .build();
+
+        return new ResponseEntity<>(exceptionDetails, HttpStatus.BAD_REQUEST);
+    }
+
 
 //    @Override
 //    protected ResponseEntity<Object> handleHttpMessageNotReadable(

@@ -58,7 +58,7 @@ public class Batch {
     @JsonIgnore
     private InboundOrder inboundOrder;
 
-    public Double getUnitVolume() {
-        return (double) getVolume() / getProductQuantity();
+    public Float getUnitVolume() {
+        return getVolume() / getProductQuantity();
     }
 }
