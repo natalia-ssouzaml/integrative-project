@@ -8,5 +8,5 @@ public interface IBatchService {
 
     List<Batch> FindAllBatchBySectorAndDueDate(int days, Long sectionCode);
 
-    List<Batch> FindAllBatchByCategoryAndDueDate(int days, String category);
+    List<Batch> FindAllBatchByCategoryAndDueDate(int days, String category, String order);
 }
