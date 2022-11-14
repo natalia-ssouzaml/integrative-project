@@ -24,7 +24,6 @@ public class PurchaseItemDTO {
     @NotNull
     private int quantity;
 
-
     private static PurchaseItem convertToPurchaseItem(PurchaseItemDTO purchaseItemDTO) {
         return PurchaseItem.builder()
                 .advertisement(Advertisement.builder().advertisementId(purchaseItemDTO.getAdvertisementId()).build())

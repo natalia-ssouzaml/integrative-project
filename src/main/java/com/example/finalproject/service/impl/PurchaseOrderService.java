@@ -34,6 +34,7 @@ public class PurchaseOrderService implements IPurchaseOrderService {
 
     @Autowired
     private BatchRepo batchRepo;
+
     @Autowired
     private SectionRepo sectionRepo;
 
@@ -84,8 +85,7 @@ public class PurchaseOrderService implements IPurchaseOrderService {
         PurchaseOrder purchaseOrder = (purchaseOrderRepo.findById(purchaseCode).orElseThrow(() -> new NotFoundException("Purchase order not found")));
         if (purchaseOrder.getOrderStatus().equals(OrderStatus.FINALIZADO))
             throw new PurchaseFailureException("The purchase order is already finished");
-        LocalDate dateTime = LocalDate.of(purchaseOrder.getDateTime().getYear(), purchaseOrder.getDateTime().getMonth(),
-                purchaseOrder.getDateTime().getDayOfMonth());
+        LocalDate dateTime = LocalDate.now();
 
         List<PurchaseItem> purchaseItemList = purchaseOrder.getPurchaseItems();
         for (PurchaseItem purchaseItem : purchaseItemList) {
@@ -132,9 +132,8 @@ public class PurchaseOrderService implements IPurchaseOrderService {
                 }
             }
         }
-
         purchaseOrder.setOrderStatus(OrderStatus.FINALIZADO);
-        // atualizar o response body do controller
         return purchaseOrderRepo.save(purchaseOrder);
     }
 }
+

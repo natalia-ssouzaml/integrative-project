@@ -27,8 +27,8 @@ public class AdvertisementDTO {
         return new AdvertisementDTO(advertisement);
     }
 
-    public static List<AdvertisementDTO>convertListToResponse(List<Advertisement> advertisementList){
+    public static List<AdvertisementDTO> convertListToResponse(List<Advertisement> advertisementList) {
         return advertisementList.stream().map(AdvertisementDTO::convertToResponse).collect(Collectors.toList());
-    }
 
+    }
 }

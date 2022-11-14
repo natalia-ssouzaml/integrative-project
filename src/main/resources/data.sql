@@ -68,15 +68,19 @@ INSERT INTO inbound_order (order_date, section_code)
 VALUES ("2022-03-26", 5);
 INSERT INTO inbound_order (order_date, section_code)
 VALUES ("2022-11-02", 2);
+INSERT INTO inbound_order (order_date, section_code)
+VALUES ("2022-10-06", 5);
 
 --BATCH
 INSERT INTO batch (current_temperature, due_date, manufacturing_date_time, price, product_quantity, volume, advertisement_id, order_number)
-VALUES (-20, "2023-01-25", "2022-11-01T22:50:55", 7, 40, 10, 1, 1);
+VALUES (-20, "2023-01-25", "2022-11-01T22:50:55", 60, 40, 10, 1, 1);
 INSERT INTO batch (current_temperature, due_date, manufacturing_date_time, price, product_quantity, volume, advertisement_id, order_number)
-VALUES (-20, "2023-01-23", "2022-11-01T23:40:00", 7, 20, 5, 1, 2);
+VALUES (-20, "2023-01-23", "2022-11-01T23:40:00", 25, 20, 5, 1, 2);
 INSERT INTO batch (current_temperature, due_date, manufacturing_date_time, price, product_quantity,volume, advertisement_id, order_number)
-VALUES (-18, "2023-02-20", "2022-08-02T11:34:55", 8, 50, 20, 2, 3);
+VALUES (-18, "2023-02-20", "2022-08-02T11:34:55", 150, 50, 20, 2, 3);
 INSERT INTO batch (current_temperature, due_date, manufacturing_date_time, price, product_quantity,volume, advertisement_id, order_number)
-VALUES (-19, "2022-11-15", "2022-03-25T14:38:55", 9, 60, 30, 3, 4);
+VALUES (-19, "2022-11-15", "2022-03-25T14:38:55", 600, 60, 30, 3, 4);
 INSERT INTO batch (current_temperature, due_date, manufacturing_date_time, price, product_quantity, volume, advertisement_id, order_number)
-VALUES (-20, "2022-11-25", "2022-11-01T22:50:55", 7, 24, 6, 1, 5);
+VALUES (-20, "2022-11-25", "2022-11-01T22:50:55", 36, 24, 6, 1, 5);
+INSERT INTO batch (current_temperature, due_date, manufacturing_date_time, price, product_quantity, volume, advertisement_id, order_number)
+VALUES (-22, "2023-02-25", "2022-10-05T22:50:55", 96, 32, 8, 4, 6);
