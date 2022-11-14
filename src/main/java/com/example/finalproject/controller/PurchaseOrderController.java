@@ -1,7 +1,6 @@
 package com.example.finalproject.controller;
 
 import com.example.finalproject.dto.AdvertisementDTO;
-import com.example.finalproject.dto.PurchaseItemDTO;
 import com.example.finalproject.dto.PurchaseOrderCreateDTO;
 import com.example.finalproject.model.PurchaseOrder;
 import com.example.finalproject.service.IPurchaseOrderService;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/fresh-products")
@@ -26,7 +24,6 @@ public class PurchaseOrderController {
     @PostMapping("/orders")
     public ResponseEntity<BigDecimal> createPurchaseOrder(@Valid @RequestBody PurchaseOrderCreateDTO purchaseOrderCreateDTO) {
         PurchaseOrder purchaseOrder = PurchaseOrderCreateDTO.convertToPurchaseOrder(purchaseOrderCreateDTO);
-        List<Integer> advertisementQuantityList = purchaseOrderCreateDTO.getPurchaseItemListDTO().stream().map(PurchaseItemDTO::getQuantity).collect(Collectors.toList());
         return new ResponseEntity<>(service.createPurchaseOrder(purchaseOrder), HttpStatus.CREATED);
     }
     
