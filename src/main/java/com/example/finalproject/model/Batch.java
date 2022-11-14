@@ -26,6 +26,7 @@ public class Batch {
     @NotNull
     @ManyToOne
     @JoinColumn(name = "advertisementId")
+    @JsonIgnore
     private Advertisement advertisement;
 
     @NotNull
