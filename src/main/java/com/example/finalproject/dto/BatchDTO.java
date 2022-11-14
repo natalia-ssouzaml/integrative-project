@@ -52,6 +52,7 @@ BatchDTO {
         this.price = batch.getPrice();
     }
 
+
     private static BatchDTO convertToResponse(Batch batch) {
         return new BatchDTO(batch);
     }
