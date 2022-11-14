@@ -50,4 +50,23 @@ public class BatchService implements IBatchService {
                 .sorted(order.equals("asc") ? Comparator.comparing(Batch::getDueDate) : Comparator.comparing(Batch::getDueDate).reversed())
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<Batch> findByAdvertisementId(Long advertisementId,String filter) {
+        List<Batch> batchList = batchRepo.findByAdvertisementAdvertisementId(advertisementId);
+        if (batchList.isEmpty()) throw new NotFoundException("Advertisement does not belong to any batch");
+        return sortByFilter(batchList,filter);
+    }
+
+    private List<Batch> sortByFilter(List<Batch>batchList, String filter) {
+        if(filter == null) return batchList;
+        switch (filter) {
+            case "Q":
+                return batchList.stream().sorted(Comparator.comparing(Batch::getProductQuantity)).collect(Collectors.toList());
+            case "V":
+                return batchList.stream().sorted(Comparator.comparing(Batch::getDueDate)).collect(Collectors.toList());
+            default:
+                return batchList;
+        }
+    }
 }
