@@ -18,7 +18,6 @@ public class BatchService implements IBatchService {
 
     @Override
     public List<Batch> findByAdvertisementId(Long advertisementId,String filter) {
-        System.out.println("CHEGUEEEEEEEEEEEEEEEEEEEEI");
         List<Batch> batchList = batchRepo.findByAdvertisementAdvertisementId(advertisementId);
         if (batchList.isEmpty()) throw new NotFoundException("Advertisement does not belong to any batch");
         return sortByFilter(batchList,filter);
