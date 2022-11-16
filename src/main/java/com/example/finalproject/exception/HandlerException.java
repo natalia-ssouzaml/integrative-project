@@ -52,6 +52,7 @@ public class HandlerException extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(exceptionDetails, HttpStatus.NOT_FOUND);
     }
+
     @ExceptionHandler(InvalidTemperatureException.class)
     public ResponseEntity<ExceptionDetails> handlerInvalidTemperatureException(InvalidTemperatureException ex) {
         ExceptionDetails exceptionDetails = ExceptionDetails.builder()
@@ -63,6 +64,7 @@ public class HandlerException extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(exceptionDetails, HttpStatus.NOT_FOUND);
     }
+
     @ExceptionHandler(VolumeNotAvailableException.class)
     public ResponseEntity<ExceptionDetails> handlerVolumeNotAvailableException(VolumeNotAvailableException ex) {
         ExceptionDetails exceptionDetails = ExceptionDetails.builder()
@@ -98,25 +100,4 @@ public class HandlerException extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(exceptionDetails, HttpStatus.BAD_REQUEST);
     }
-
-
-//    @Override
-//    protected ResponseEntity<Object> handleHttpMessageNotReadable(
-//            HttpMessageNotReadableException ex,
-//            HttpHeaders httpHeaders,
-//            HttpStatus httpStatus,
-//            WebRequest webRequest) {
-//
-//
-//        return new ResponseEntity<>(
-//                ExceptionDetails.builder()
-//                        .title("Invalid parameter type")
-//                        .message("Invalid parameter type")
-//                        .status(HttpStatus.BAD_REQUEST.value())
-//                        .timeStamp(LocalDateTime.now())
-//                        .build()
-//                ,
-//                httpStatus);
-//
-//    }
 }

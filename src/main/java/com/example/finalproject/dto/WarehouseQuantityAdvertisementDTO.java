@@ -16,15 +16,15 @@ public class WarehouseQuantityAdvertisementDTO {
     private List<WarehouseDTO> warehouses;
 
 
-    public WarehouseQuantityAdvertisementDTO(Long advertisementId, List<Batch> batchList){
+    public WarehouseQuantityAdvertisementDTO(Long advertisementId, List<Batch> batchList) {
         this.advertisementId = advertisementId;
         this.advertisementName = batchList.get(0).getAdvertisement().getName();
-        this.warehouses = WarehouseDTO.convertListToResponse(batchToWarehouseCodeList(batchList),batchList);
+        this.warehouses = WarehouseDTO.convertListToResponse(batchToWarehouseCodeList(batchList), batchList);
 
     }
 
-    private Set<Long> batchToWarehouseCodeList(List<Batch> batchList){
-        return batchList.stream().map(b-> b.getInboundOrder().getSection().getWarehouse().getWarehouseCode()).collect(Collectors.toSet());
+    private Set<Long> batchToWarehouseCodeList(List<Batch> batchList) {
+        return batchList.stream().map(b -> b.getInboundOrder().getSection().getWarehouse().getWarehouseCode()).collect(Collectors.toSet());
     }
 
 

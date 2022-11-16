@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,8 +33,7 @@ public class BatchLocationDTO {
     }
 
     public static List<BatchLocationDTO> convertListToResponse(List<Batch> batchList) {
-        return batchList.stream().map(BatchLocationDTO::convertToResponse)
-                .collect(Collectors.toList());
+        return batchList.stream().map(BatchLocationDTO::convertToResponse).collect(Collectors.toList());
     }
 
 }

@@ -15,7 +15,7 @@ public class WarehouseDTO {
     private Long warehouseCode;
     private int totalQuantity;
 
-    public WarehouseDTO(Long warehouseCode, List<Batch> batchList){
+    public WarehouseDTO(Long warehouseCode, List<Batch> batchList) {
         this.warehouseCode = warehouseCode;
         this.totalQuantity = getTotalQuantity(batchList);
     }
@@ -25,10 +25,10 @@ public class WarehouseDTO {
     }
 
     public static List<WarehouseDTO> convertListToResponse(Set<Long> warehouseCodeList, List<Batch> batchList) {
-        List<WarehouseDTO>warehouseDTOList = new ArrayList<>();
+        List<WarehouseDTO> warehouseDTOList = new ArrayList<>();
         for (Long warehouseCode : warehouseCodeList) {
-            List<Batch> filteredBatchListByWarehouse = batchList.stream().filter(b->b.getInboundOrder().getSection().getWarehouse().getWarehouseCode().equals(warehouseCode)).collect(Collectors.toList());
-            warehouseDTOList.add(new WarehouseDTO(warehouseCode,filteredBatchListByWarehouse));
+            List<Batch> filteredBatchListByWarehouse = batchList.stream().filter(b -> b.getInboundOrder().getSection().getWarehouse().getWarehouseCode().equals(warehouseCode)).collect(Collectors.toList());
+            warehouseDTOList.add(new WarehouseDTO(warehouseCode, filteredBatchListByWarehouse));
         }
         return warehouseDTOList;
     }

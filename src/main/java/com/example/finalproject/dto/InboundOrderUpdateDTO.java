@@ -25,6 +25,7 @@ public class InboundOrderUpdateDTO {
     @NotNull
     @Valid
     private List<BatchDTO> batchStock;
+
     public static InboundOrder convertToInboundOrder(InboundOrderUpdateDTO inboundOrderUpdateDTO) {
         return InboundOrder.builder()
                 .batchStock(BatchDTO.convertToBatchList(inboundOrderUpdateDTO.getBatchStock()))

@@ -15,16 +15,13 @@ import java.util.List;
 public class InboundOrderService implements IInboundOrderService {
 
     @Autowired
+    AdvertisementRepo advertisementRepo;
+    @Autowired
     private InboundOrderRepo inboundOrderRepo;
-
     @Autowired
     private WarehouseRepo warehouseRepo;
-
     @Autowired
     private SectionRepo sectionRepo;
-    @Autowired
-    AdvertisementRepo advertisementRepo;
-
     @Autowired
     private BatchRepo batchRepo;
 
@@ -32,15 +29,8 @@ public class InboundOrderService implements IInboundOrderService {
     public List<Batch> create(InboundOrder inboundOrder, Long warehouseCode, Long sectionCode, List<Long> advertisementList) {
 
         // TODO: refazer validacao porque sempre é null
-        //TODO validar se os Ids estao duplicados.
+        // TODO: validar se os Ids estao duplicados
 
-//        inboundOrderCreateDTO.getBatchStock().forEach(
-//                id -> {
-//                    var result = batchRepo.existsById(id.getBatchNumber());
-//                    if (result) {
-//                        throw new NotFoundException("BatchNumber already exists");
-//                    }
-//                });
         Warehouse warehouse = warehouseRepo.findById(warehouseCode).orElseThrow(() -> new NotFoundException("Warehouse not found"));
         Section section = sectionRepo.findById(sectionCode).orElseThrow(() -> new NotFoundException("Section not found"));
         warehouseSectionValidation(section, warehouse);

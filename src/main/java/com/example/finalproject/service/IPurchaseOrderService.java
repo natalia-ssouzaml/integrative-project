@@ -11,7 +11,7 @@ public interface IPurchaseOrderService {
     List<Advertisement> findAllAdvertisementsByPurchase(Long purchaseCode);
 
     PurchaseOrder updatePurchaseStatus(Long purchaseCode);
-    
+
     BigDecimal createPurchaseOrder(PurchaseOrder purchaseOrder);
 
 }
