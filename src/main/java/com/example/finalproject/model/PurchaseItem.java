@@ -26,12 +26,12 @@ public class PurchaseItem {
     private int quantity;
 
     @ManyToOne
-    @JoinColumn(name = "purchase_id")
+    @JoinColumn(name = "purchase_code")
     @JsonIgnoreProperties("purchaseItems")
     private PurchaseOrder purchaseOrder;
 
     @ManyToOne
-    @JoinColumn(name = "advertisement_id")
+    @JoinColumn(name = "advertisement_code")
     @JsonIgnoreProperties("purchaseItems")
     private Advertisement advertisement;
 

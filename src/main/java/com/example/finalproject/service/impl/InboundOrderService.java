@@ -42,7 +42,7 @@ public class InboundOrderService implements IInboundOrderService {
         }
         temperatureValidation(inboundOrder);
         InboundOrder savedInboundOrder = inboundOrderRepo.save(inboundOrder);
-        setBatchOrderNumber(savedInboundOrder);
+        setBatchOrderCode(savedInboundOrder);
 
         float totalVolume = batchesTotalVolume(savedInboundOrder.getBatchStock()).floatValue();
         volumeValidation(section, totalVolume);
@@ -52,39 +52,39 @@ public class InboundOrderService implements IInboundOrderService {
         return batchRepo.saveAll(savedInboundOrder.getBatchStock());
     }
 
-    public List<Batch> update(InboundOrder inboundOrder, Long warehouseCode, Long sectionCode, List<Long> advertisementList, List<Long> batchNumbersList) {
+    public List<Batch> update(InboundOrder inboundOrder, Long warehouseCode, Long sectionCode, List<Long> advertisementList, List<Long> batchCodeList) {
         Warehouse warehouse = warehouseRepo.findById(warehouseCode).orElseThrow(() -> new NotFoundException("Warehouse not found"));
         Section section = sectionRepo.findById(sectionCode).orElseThrow(() -> new NotFoundException("Section not found"));
 
         inboundOrder.setSection(section);
         for (int i = 0; i < advertisementList.size(); i++) {
             Advertisement advertisement = advertisementRepo.findById(advertisementList.get(i)).orElseThrow(() -> new NotFoundException("Advertisement not found"));
-            Batch batch = batchRepo.findById(batchNumbersList.get(i)).orElseThrow(() -> new NotFoundException("Batch not found"));
+            Batch batch = batchRepo.findById(batchCodeList.get(i)).orElseThrow(() -> new NotFoundException("Batch not found"));
 
             inboundOrder.getBatchStock().get(i).setAdvertisement(advertisement);
-            inboundOrder.getBatchStock().get(i).setBatchNumber(batch.getBatchNumber());
+            inboundOrder.getBatchStock().get(i).setBatchCode(batch.getBatchCode());
         }
 
-        setBatchOrderNumber(inboundOrder);
+        setBatchOrderCode(inboundOrder);
 
-        batchIdValidation(inboundOrder);
+        batchCodeValidation(inboundOrder);
         warehouseSectionValidation(section, warehouse);
 
         return batchRepo.saveAll(inboundOrder.getBatchStock());
     }
 
-    private void batchIdValidation(InboundOrder inboundOrder) {
+    private void batchCodeValidation(InboundOrder inboundOrder) {
         inboundOrder.getBatchStock().forEach(
                 id -> {
-                    var result = batchRepo.existsById(id.getBatchNumber());
+                    var result = batchRepo.existsById(id.getBatchCode());
                     if (!result) {
-                        throw new NotFoundException("BatchNumber does not exists");
+                        throw new NotFoundException("BatchCode does not exists");
                     }
                 });
     }
 
 
-    private void setBatchOrderNumber(InboundOrder inboundOrder) {
+    private void setBatchOrderCode(InboundOrder inboundOrder) {
         List<Batch> batchList = inboundOrder.getBatchStock();
         for (Batch batch : batchList) {
             batch.setInboundOrder(inboundOrder);
@@ -92,7 +92,7 @@ public class InboundOrderService implements IInboundOrderService {
     }
 
     private Double batchesTotalVolume(List<Batch> batchList) {
-        return batchList.stream().mapToDouble(b -> b.getVolume()).sum();
+        return batchList.stream().mapToDouble(Batch::getVolume).sum();
     }
 
     private void warehouseSectionValidation(Section section, Warehouse warehouse) {

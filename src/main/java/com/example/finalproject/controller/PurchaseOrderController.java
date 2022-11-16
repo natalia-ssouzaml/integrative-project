@@ -18,21 +18,21 @@ import java.util.List;
 public class PurchaseOrderController {
 
     @Autowired
-    private IPurchaseOrderService service;
+    private IPurchaseOrderService purchaseOrderService;
 
     @PostMapping("/orders")
     public ResponseEntity<String> createPurchaseOrder(@Valid @RequestBody PurchaseOrderCreateDTO purchaseOrderCreateDTO) {
         PurchaseOrder purchaseOrder = PurchaseOrderCreateDTO.convertToPurchaseOrder(purchaseOrderCreateDTO);
-        return new ResponseEntity<>("Total price: " + service.createPurchaseOrder(purchaseOrder), HttpStatus.CREATED);
+        return new ResponseEntity<>("Total price: " + purchaseOrderService.createPurchaseOrder(purchaseOrder), HttpStatus.CREATED);
     }
 
     @GetMapping("/orders/{purchaseCode}")
     public ResponseEntity<List<PurchaseAdvertisementDTO>> findAllAdvertisementsByPurchase(@PathVariable Long purchaseCode) {
-        return new ResponseEntity<>(PurchaseAdvertisementDTO.convertListToResponse(service.findAllAdvertisementsByPurchase(purchaseCode)), HttpStatus.OK);
+        return new ResponseEntity<>(PurchaseAdvertisementDTO.convertListToResponse(purchaseOrderService.findAllAdvertisementsByPurchase(purchaseCode)), HttpStatus.OK);
     }
 
     @PutMapping("/orders/{purchaseCode}")
     public ResponseEntity<PurchaseOrderUpdateDTO> updatePurchaseStatus(@PathVariable Long purchaseCode) {
-        return new ResponseEntity<>(PurchaseOrderUpdateDTO.convertToResponse(service.updatePurchaseStatus(purchaseCode)), HttpStatus.CREATED);
+        return new ResponseEntity<>(PurchaseOrderUpdateDTO.convertToResponse(purchaseOrderService.updatePurchaseStatus(purchaseCode)), HttpStatus.CREATED);
     }
 }

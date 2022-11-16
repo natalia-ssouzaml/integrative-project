@@ -19,15 +19,15 @@ import java.util.stream.Collectors;
 public class InboundOrderController {
 
     @Autowired
-    private IInboundOrderService service;
+    private IInboundOrderService inboundOrderService;
 
     @PostMapping("/inboundorder")
     public ResponseEntity<List<BatchDTO>> createInboundOrder(@Valid @RequestBody InboundOrderCreateDTO inboundOrderCreateDTO) {
         InboundOrder inboundOrder = InboundOrderCreateDTO.convertToInboundOrder(inboundOrderCreateDTO);
         Long sectionCode = inboundOrderCreateDTO.getSectionCode();
         Long warehouseCode = inboundOrderCreateDTO.getWarehouseCode();
-        List<Long> advertisementIdsList = inboundOrderCreateDTO.getBatchStock().stream().map(b -> b.getAdvertisementId()).collect(Collectors.toList());
-        List<BatchDTO> batchDTOList = BatchDTO.convertListToResponse(service.create(inboundOrder,warehouseCode,sectionCode,advertisementIdsList));
+        List<Long> advertisementCodeList = inboundOrderCreateDTO.getBatchStock().stream().map(BatchDTO::getAdvertisementCode).collect(Collectors.toList());
+        List<BatchDTO> batchDTOList = BatchDTO.convertListToResponse(inboundOrderService.create(inboundOrder,warehouseCode,sectionCode,advertisementCodeList));
         return new ResponseEntity<>(batchDTOList, HttpStatus.CREATED);
     }
 
@@ -36,9 +36,9 @@ public class InboundOrderController {
         InboundOrder inboundOrder = InboundOrderUpdateDTO.convertToInboundOrder(inboundOrderUpdateDTO);
         Long sectionCode = inboundOrderUpdateDTO.getSectionCode();
         Long warehouseCode = inboundOrderUpdateDTO.getWarehouseCode();
-        List<Long> advertisementIdsList = inboundOrderUpdateDTO.getBatchStock().stream().map(b -> b.getAdvertisementId()).collect(Collectors.toList());
-        List<Long> batchNumbersList = inboundOrderUpdateDTO.getBatchStock().stream().map(b -> b.getBatchNumber()).collect(Collectors.toList());
-        List<BatchDTO> batchDTOList = BatchDTO.convertListToResponse(service.update(inboundOrder, warehouseCode, sectionCode, advertisementIdsList, batchNumbersList));
+        List<Long> advertisementCodeList = inboundOrderUpdateDTO.getBatchStock().stream().map(BatchDTO::getAdvertisementCode).collect(Collectors.toList());
+        List<Long> batchCodeList = inboundOrderUpdateDTO.getBatchStock().stream().map(BatchDTO::getBatchCode).collect(Collectors.toList());
+        List<BatchDTO> batchDTOList = BatchDTO.convertListToResponse(inboundOrderService.update(inboundOrder, warehouseCode, sectionCode, advertisementCodeList, batchCodeList));
         return new ResponseEntity<>(batchDTOList, HttpStatus.CREATED);
     }
 }

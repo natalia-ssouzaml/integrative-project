@@ -17,7 +17,7 @@ public class InboundOrder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long orderNumber;
+    private Long orderCode;
 
     @Column(nullable = false)
     private LocalDate orderDate;

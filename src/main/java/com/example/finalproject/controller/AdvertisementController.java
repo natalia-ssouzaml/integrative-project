@@ -15,25 +15,25 @@ import java.util.List;
 public class AdvertisementController {
 
     @Autowired
-    IAdvertisementService service;
+    IAdvertisementService advertisementService;
 
     @Autowired
     IBatchService batchService;
 
     @GetMapping
     public ResponseEntity<List<AdvertisementDTO>> getAllAdvertisement() {
-        return ResponseEntity.ok(AdvertisementDTO.convertListToResponse(service.findAll()));
+        return ResponseEntity.ok(AdvertisementDTO.convertListToResponse(advertisementService.findAll()));
     }
 
     @GetMapping("/list/{category}")
     public ResponseEntity<List<AdvertisementDTO>> getAllAdvertisementByCategory(@PathVariable String category) {
-        return ResponseEntity.ok(AdvertisementDTO.convertListToResponse(service.findAllByCategory(category)));
+        return ResponseEntity.ok(AdvertisementDTO.convertListToResponse(advertisementService.findAllByCategory(category)));
     }
 
 
     @GetMapping("/list/advertisement")
     public ResponseEntity<ListBatchesAdvertisementDTO> getAllAdvertisementByBatch(Long advertisementId, @RequestParam(required = false) String filter) {
-        return ResponseEntity.ok(new ListBatchesAdvertisementDTO(batchService.findByAdvertisementId(advertisementId, filter)));
+        return ResponseEntity.ok(new ListBatchesAdvertisementDTO(batchService.findByAdvertisementCode(advertisementId, filter)));
     }
 
 

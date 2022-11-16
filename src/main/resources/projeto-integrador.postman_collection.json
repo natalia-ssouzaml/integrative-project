@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "0bace358-fc03-4a5f-be85-2427450d6cca",
+		"_postman_id": "cd8730b1-831e-435f-a466-d9e3468af167",
 		"name": "Projeto Integrador - Grupo 8",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23677396"
 	},
 	"item": [
 		{
@@ -15,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"sectionCode\": \"2\",\n    \"warehouseCode\": \"1\",\n    \"batchStock\": [\n        {\n            \"advertisementId\": \"1\",\n            \"currentTemperature\": \"-20.0\",\n            \"productQuantity\": \"54\",\n            \"manufacturingDateTime\": \"2016-01-25T21:34:55\",\n            \"volume\": \"1\",\n            \"dueDate\": \"2016-01-25T21:34:55\",\n            \"price\": \"30.0\"\n        },\n        {\n            \"advertisementId\": \"2\",\n            \"currentTemperature\": \"-20.0\",\n            \"productQuantity\": \"99\",\n            \"manufacturingDateTime\": \"2016-01-27T21:34:55\",\n            \"volume\": \"5\",\n            \"dueDate\": \"2016-01-25T21:34:55\",\n            \"price\": \"45.0\"\n        }]\n}",
+							"raw": "{\n    \"sectionCode\": \"2\",\n    \"warehouseCode\": \"1\",\n    \"batchStock\": [\n        {\n            \"advertisementCode\": \"1\",\n            \"currentTemperature\": \"-20.0\",\n            \"productQuantity\": \"54\",\n            \"manufacturingDateTime\": \"2016-01-25T21:34:55\",\n            \"volume\": \"1\",\n            \"dueDate\": \"2016-01-25T21:34:55\",\n            \"price\": \"30.0\"\n        },\n        {\n            \"advertisementCode\": \"2\",\n            \"currentTemperature\": \"-20.0\",\n            \"productQuantity\": \"99\",\n            \"manufacturingDateTime\": \"2016-01-27T21:34:55\",\n            \"volume\": \"5\",\n            \"dueDate\": \"2016-01-25T21:34:55\",\n            \"price\": \"45.0\"\n        }]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -44,7 +45,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"sectionCode\": \"2\",\n    \"warehouseCode\": \"1\",\n    \"orderNumber\": 1,\n    \"batchStock\": [\n        {\n            \"batchNumber\": 6,\n            \"advertisementId\": \"1\",\n            \"currentTemperature\": \"-20.0\",\n            \"productQuantity\": \"34\",\n            \"manufacturingDateTime\": \"2016-01-25T21:34:55\",\n            \"volume\": \"1\",\n            \"dueDate\": \"2016-01-25T21:34:55\",\n            \"price\": \"30.0\"\n        },\n        {\n            \"batchNumber\": 7,\n            \"advertisementId\": \"2\",\n            \"currentTemperature\": \"-20.0\",\n            \"productQuantity\": \"59\",\n            \"manufacturingDateTime\": \"2016-01-27T21:34:55\",\n            \"volume\": \"5\",\n            \"dueDate\": \"2016-01-25T21:34:55\",\n            \"price\": \"45.0\"\n        }]\n}",
+							"raw": "{\n    \"sectionCode\": \"2\",\n    \"warehouseCode\": \"1\",\n    \"orderCode\": 1,\n    \"batchStock\": [\n        {\n            \"batchCode\": 7,\n            \"advertisementCode\": \"1\",\n            \"currentTemperature\": \"-20.0\",\n            \"productQuantity\": \"34\",\n            \"manufacturingDateTime\": \"2016-01-25T21:34:55\",\n            \"volume\": \"1\",\n            \"dueDate\": \"2016-01-25T21:34:55\",\n            \"price\": \"30.0\"\n        },\n        {\n            \"batchCode\": 8,\n            \"advertisementCode\": \"2\",\n            \"currentTemperature\": \"-20.0\",\n            \"productQuantity\": \"59\",\n            \"manufacturingDateTime\": \"2016-01-27T21:34:55\",\n            \"volume\": \"5\",\n            \"dueDate\": \"2016-01-25T21:34:55\",\n            \"price\": \"45.0\"\n        }]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -143,7 +144,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"dateTime\": \"2022-11-11T11:04:00\",\n    \"buyerCode\": 1,\n    \"purchaseItems\": [\n        {\n            \"advertisementId\": 1,\n            \"quantity\": 50\n        },\n        {\n            \"advertisementId\": 2,\n            \"quantity\": 10\n        }\n    ]\n}",
+							"raw": "{\n    \"dateTime\": \"2022-11-11T11:04:00\",\n    \"buyerCode\": 1,\n    \"purchaseItems\": [\n        {\n            \"advertisementCode\": 1,\n            \"quantity\": 50\n        },\n        {\n            \"advertisementCode\": 2,\n            \"quantity\": 10\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"

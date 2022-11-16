@@ -1,6 +1,7 @@
 package com.example.finalproject.dto;
 
 import com.example.finalproject.model.Advertisement;
+import com.example.finalproject.model.PurchaseItem;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +23,8 @@ public class PurchaseAdvertisementDTO {
     public PurchaseAdvertisementDTO(Advertisement advertisement) {
         this.name = advertisement.getName();
         this.price = advertisement.getPrice();
-        this.quantity = advertisement.getPurchaseItems().stream().mapToInt(i -> i.getQuantity()).sum();
+//        this.quantity = advertisement.getPurchaseItems().stream().mapToInt(PurchaseItem::getQuantity).sum();
+        this.quantity = advertisement.getPurchaseItems().get(0).getQuantity();
         this.totalPrice = advertisement.getPurchaseItems().stream().mapToDouble(i -> i.getPrice().doubleValue()).sum();
     }
 

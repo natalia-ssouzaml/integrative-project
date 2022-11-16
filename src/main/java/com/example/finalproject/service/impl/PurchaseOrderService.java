@@ -48,8 +48,8 @@ public class PurchaseOrderService implements IPurchaseOrderService {
 
         List<PurchaseItem> purchaseItemList = purchaseOrder.getPurchaseItems();
         for (PurchaseItem purchaseItem : purchaseItemList) {
-            Long id = purchaseItem.getAdvertisement().getAdvertisementId();
-            Advertisement advertisement = advertisementRepo.findById(id).orElseThrow(() -> new NotFoundException("Advertisement not found"));
+            Long code = purchaseItem.getAdvertisement().getAdvertisementCode();
+            Advertisement advertisement = advertisementRepo.findById(code).orElseThrow(() -> new NotFoundException("Advertisement not found"));
 
             purchaseItem.setAdvertisement(advertisement);
 
@@ -65,10 +65,11 @@ public class PurchaseOrderService implements IPurchaseOrderService {
     }
 
     @Override
-    public List<Advertisement> findAllAdvertisementsByPurchase(Long purchaseCode) {
+    public List<PurchaseItem> findAllAdvertisementsByPurchase(Long purchaseCode) {
         PurchaseOrder purchaseOrder = (purchaseOrderRepo.findById(purchaseCode).orElseThrow(() -> new NotFoundException("Purchase order not found")));
+        System.out.println("------->>>>>>>" + purchaseOrder);
         purchaseOrder.getPurchaseItems().forEach(i -> i.getAdvertisement().setPrice(i.getPrice().divide(BigDecimal.valueOf(i.getQuantity()), RoundingMode.DOWN)));
-        return purchaseOrder.getPurchaseItems().stream().map(PurchaseItem::getAdvertisement).collect(Collectors.toList());
+        return purchaseOrder.getPurchaseItems();
     }
 
     @Override

@@ -33,8 +33,8 @@ public class BatchController {
     }
 
     @GetMapping("/list/warehouse")
-    public ResponseEntity<WarehouseQuantityAdvertisementDTO> sumAdvertisementByWarehouse(@RequestParam(value = "advertisement") Long advertisementId) {
-        return ResponseEntity.ok(new WarehouseQuantityAdvertisementDTO(advertisementId, batchService.findByAdvertisementId(advertisementId)));
+    public ResponseEntity<WarehouseQuantityAdvertisementDTO> sumAdvertisementByWarehouse(@RequestParam(value = "advertisement") Long advertisementCode) {
+        return ResponseEntity.ok(new WarehouseQuantityAdvertisementDTO(advertisementCode, batchService.findByAdvertisementCode(advertisementCode)));
     }
 
 }

@@ -18,17 +18,17 @@ VALUES (600, 2);
 
 
 -- SECTIONS
-INSERT INTO section(category, volume, accumulated_volume, max_temperature, min_temperature, warehouse_id)
+INSERT INTO section(category, volume, accumulated_volume, max_temperature, min_temperature, warehouse_code)
 VALUES ('REFRIGERADO', 100, 0, 5, 0, 1);
-INSERT INTO section(category, volume, accumulated_volume, max_temperature, min_temperature, warehouse_id)
+INSERT INTO section(category, volume, accumulated_volume, max_temperature, min_temperature, warehouse_code)
 VALUES ('CONGELADO', 100, 21, -18, -22, 1);
-INSERT INTO section(category, volume, accumulated_volume, max_temperature, min_temperature, warehouse_id)
+INSERT INTO section(category, volume, accumulated_volume, max_temperature, min_temperature, warehouse_code)
 VALUES ('FRESCO', 100, 0, 10, 5, 1);
-INSERT INTO section(category, volume, accumulated_volume, max_temperature, min_temperature, warehouse_id)
+INSERT INTO section(category, volume, accumulated_volume, max_temperature, min_temperature, warehouse_code)
 VALUES ('REFRIGERADO', 200, 0, 5, 0, 2);
-INSERT INTO section(category, volume, accumulated_volume, max_temperature, min_temperature, warehouse_id)
+INSERT INTO section(category, volume, accumulated_volume, max_temperature, min_temperature, warehouse_code)
 VALUES ('CONGELADO', 200, 50, -18, -22, 2);
-INSERT INTO section(category, volume, accumulated_volume, max_temperature, min_temperature, warehouse_id)
+INSERT INTO section(category, volume, accumulated_volume, max_temperature, min_temperature, warehouse_code)
 VALUES ('FRESCO', 200, 0, 10, 5, 2);
 
 -- BUYER
@@ -48,13 +48,13 @@ VALUES ('Cristiano Ronaldo');
 
 
 -- ADVERTISEMENT
-INSERT INTO advertisement(name, price, seller_id)
+INSERT INTO advertisement(name, price, seller_code)
 VALUES ("Hamburguer", 2.00, 1);
-INSERT INTO advertisement(name, price, seller_id)
+INSERT INTO advertisement(name, price, seller_code)
 VALUES ("Pizza", 4.00, 1);
-INSERT INTO advertisement(name, price, seller_id)
+INSERT INTO advertisement(name, price, seller_code)
 VALUES ("Frango", 15.00, 2);
-INSERT INTO advertisement(name, price, seller_id)
+INSERT INTO advertisement(name, price, seller_code)
 VALUES ("Sorvete", 5.50, 3);
 
 --INBOUND ORDER
@@ -72,15 +72,15 @@ INSERT INTO inbound_order (order_date, section_code)
 VALUES ("2022-10-06", 5);
 
 --BATCH
-INSERT INTO batch (current_temperature, due_date, manufacturing_date_time, price, product_quantity, volume, advertisement_id, order_number)
+INSERT INTO batch (current_temperature, due_date, manufacturing_date_time, price, product_quantity, volume, advertisement_code, order_code)
 VALUES (-20, "2023-01-25", "2022-11-01T22:50:55", 60, 40, 10, 1, 1);
-INSERT INTO batch (current_temperature, due_date, manufacturing_date_time, price, product_quantity, volume, advertisement_id, order_number)
+INSERT INTO batch (current_temperature, due_date, manufacturing_date_time, price, product_quantity, volume, advertisement_code, order_code)
 VALUES (-20, "2023-01-23", "2022-11-01T23:40:00", 25, 20, 5, 1, 2);
-INSERT INTO batch (current_temperature, due_date, manufacturing_date_time, price, product_quantity,volume, advertisement_id, order_number)
+INSERT INTO batch (current_temperature, due_date, manufacturing_date_time, price, product_quantity,volume, advertisement_code, order_code)
 VALUES (-18, "2023-02-20", "2022-08-02T11:34:55", 150, 50, 20, 2, 3);
-INSERT INTO batch (current_temperature, due_date, manufacturing_date_time, price, product_quantity,volume, advertisement_id, order_number)
+INSERT INTO batch (current_temperature, due_date, manufacturing_date_time, price, product_quantity,volume, advertisement_code, order_code)
 VALUES (-19, "2022-11-15", "2022-03-25T14:38:55", 600, 60, 30, 3, 4);
-INSERT INTO batch (current_temperature, due_date, manufacturing_date_time, price, product_quantity, volume, advertisement_id, order_number)
+INSERT INTO batch (current_temperature, due_date, manufacturing_date_time, price, product_quantity, volume, advertisement_code, order_code)
 VALUES (-20, "2022-11-25", "2022-11-01T22:50:55", 36, 24, 6, 1, 5);
-INSERT INTO batch (current_temperature, due_date, manufacturing_date_time, price, product_quantity, volume, advertisement_id, order_number)
+INSERT INTO batch (current_temperature, due_date, manufacturing_date_time, price, product_quantity, volume, advertisement_code, order_code)
 VALUES (-22, "2023-02-25", "2022-10-05T22:50:55", 96, 32, 8, 4, 6);

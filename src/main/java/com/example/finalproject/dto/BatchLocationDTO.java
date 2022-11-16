@@ -14,14 +14,14 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class BatchLocationDTO {
 
-    private Long batchNumber;
+    private Long batchCode;
     private int currentQuantity;
     private LocalDate dueDate;
     private Long sectionCode;
     private Long warehouseCode;
 
     public BatchLocationDTO(Batch batch) {
-        this.batchNumber = batch.getBatchNumber();
+        this.batchCode = batch.getBatchCode();
         this.currentQuantity = batch.getProductQuantity();
         this.dueDate = batch.getDueDate();
         this.sectionCode = batch.getInboundOrder().getSection().getSectionCode();

@@ -36,7 +36,7 @@ public class Section {
     private Float accumulatedVolume;
 
     @ManyToOne
-    @JoinColumn(name = "warehouse_id")
+    @JoinColumn(name = "warehouse_code")
     @JsonIgnoreProperties("sections")
     private Warehouse warehouse;
 

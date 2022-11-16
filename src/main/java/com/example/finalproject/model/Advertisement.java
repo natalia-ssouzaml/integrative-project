@@ -19,7 +19,7 @@ import java.util.List;
 public class Advertisement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long advertisementId;
+    private Long advertisementCode;
 
     @NotNull
     private String name;
@@ -33,7 +33,7 @@ public class Advertisement {
     private List<Batch> batches;
 
     @ManyToOne
-    @JoinColumn(name = "seller_id")
+    @JoinColumn(name = "seller_code")
     @JsonIgnoreProperties("advertisements")
     private Seller seller;
 

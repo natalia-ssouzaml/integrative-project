@@ -52,13 +52,13 @@ public class BatchService implements IBatchService {
     }
 
     @Override
-    public List<Batch> findByAdvertisementId(Long advertisementId, String filter) {
-        List<Batch> batchList = findByAdvertisementId(advertisementId);
+    public List<Batch> findByAdvertisementCode(Long advertisementCode, String filter) {
+        List<Batch> batchList = findByAdvertisementCode(advertisementCode);
         return sortByFilter(batchList, filter);
     }
 
-    public List<Batch> findByAdvertisementId(Long advertisementId) {
-        List<Batch> batchList = batchRepo.findByAdvertisementAdvertisementId(advertisementId);
+    public List<Batch> findByAdvertisementCode(Long advertisementCode) {
+        List<Batch> batchList = batchRepo.findByAdvertisementAdvertisementCode(advertisementCode);
         if (batchList.isEmpty()) throw new NotFoundException("Advertisement does not belong to any batch");
         return batchList;
     }

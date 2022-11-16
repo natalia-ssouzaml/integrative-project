@@ -19,14 +19,14 @@ public class PurchaseItemDTO {
 
     @NotNull
     @Positive
-    private Long advertisementId;
+    private Long advertisementCode;
 
     @NotNull
     private int quantity;
 
     private static PurchaseItem convertToPurchaseItem(PurchaseItemDTO purchaseItemDTO) {
         return PurchaseItem.builder()
-                .advertisement(Advertisement.builder().advertisementId(purchaseItemDTO.getAdvertisementId()).build())
+                .advertisement(Advertisement.builder().advertisementCode(purchaseItemDTO.getAdvertisementCode()).build())
                 .quantity(purchaseItemDTO.getQuantity())
                 .build();
     }
