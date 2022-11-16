@@ -24,7 +24,7 @@ public class BatchService implements IBatchService {
     SectionRepo sectionRepo;
 
     @Override
-    public List<Batch> FindAllBatchBySectorAndDueDate(int days, Long sectionCode) {
+    public List<Batch> findAllBatchBySectorAndDueDate(int days, Long sectionCode) {
         sectionRepo.findById(sectionCode).orElseThrow(() -> new NotFoundException("Section not found"));
         LocalDate initialDate = LocalDate.now();
         LocalDate limitDate = initialDate.plusDays(days);
@@ -38,7 +38,7 @@ public class BatchService implements IBatchService {
     }
 
     @Override
-    public List<Batch> FindAllBatchByCategoryAndDueDate(int days, String category, String order) {
+    public List<Batch> findAllBatchByCategoryAndDueDate(int days, String category, String order) {
         Section section = sectionRepo.findByCategory(category).orElseThrow(() -> new NotFoundException("Category does not exist"));
         LocalDate initialDate = LocalDate.now();
         LocalDate limitDate = initialDate.plusDays(days);
@@ -52,14 +52,19 @@ public class BatchService implements IBatchService {
     }
 
     @Override
-    public List<Batch> findByAdvertisementId(Long advertisementId,String filter) {
-        List<Batch> batchList = batchRepo.findByAdvertisementAdvertisementId(advertisementId);
-        if (batchList.isEmpty()) throw new NotFoundException("Advertisement does not belong to any batch");
-        return sortByFilter(batchList,filter);
+    public List<Batch> findByAdvertisementId(Long advertisementId, String filter) {
+        List<Batch> batchList = findByAdvertisementId(advertisementId);
+        return sortByFilter(batchList, filter);
     }
 
-    private List<Batch> sortByFilter(List<Batch>batchList, String filter) {
-        if(filter == null) return batchList;
+    public List<Batch> findByAdvertisementId(Long advertisementId) {
+        List<Batch> batchList = batchRepo.findByAdvertisementAdvertisementId(advertisementId);
+        if (batchList.isEmpty()) throw new NotFoundException("Advertisement does not belong to any batch");
+        return batchList;
+    }
+
+    private List<Batch> sortByFilter(List<Batch> batchList, String filter) {
+        if (filter == null) return batchList;
         switch (filter) {
             case "Q":
                 return batchList.stream().sorted(Comparator.comparing(Batch::getProductQuantity)).collect(Collectors.toList());

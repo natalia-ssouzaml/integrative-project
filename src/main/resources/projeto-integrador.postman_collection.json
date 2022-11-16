@@ -1,9 +1,8 @@
 {
 	"info": {
-		"_postman_id": "be25a73f-c548-4390-8030-5fa0c56f6d02",
+		"_postman_id": "0bace358-fc03-4a5f-be85-2427450d6cca",
 		"name": "Projeto Integrador - Grupo 8",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "23755010"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
@@ -144,7 +143,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"dateTime\": \"2022-11-11T11:04:00\",\n    \"buyerCode\": 1,\n    \"purchaseItemListDTO\": [\n        {\n            \"advertisementId\": 1,\n            \"quantity\": 50\n        },\n        {\n            \"advertisementId\": 2,\n            \"quantity\": 10\n        }\n    ]\n}",
+							"raw": "{\n    \"dateTime\": \"2022-11-11T11:04:00\",\n    \"buyerCode\": 1,\n    \"purchaseItems\": [\n        {\n            \"advertisementId\": 1,\n            \"quantity\": 50\n        },\n        {\n            \"advertisementId\": 2,\n            \"quantity\": 10\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -242,6 +241,38 @@
 								"list",
 								"batch",
 								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Requisito 04",
+			"item": [
+				{
+					"name": "Count Advertisement By Warehouse",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/api/v1/fresh-products/list/warehouse?advertisement=1",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"fresh-products",
+								"list",
+								"warehouse"
+							],
+							"query": [
+								{
+									"key": "advertisement",
+									"value": "1"
+								}
 							]
 						}
 					},

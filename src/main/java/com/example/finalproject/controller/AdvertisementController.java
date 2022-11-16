@@ -1,24 +1,13 @@
 package com.example.finalproject.controller;
 
 import com.example.finalproject.dto.AdvertisementDTO;
-import com.example.finalproject.dto.BatchLocationDTO;
 import com.example.finalproject.dto.ListBatchesAdvertisementDTO;
-import com.example.finalproject.exception.NotFoundException;
-import com.example.finalproject.model.Advertisement;
-import com.example.finalproject.model.Batch;
-import com.example.finalproject.model.Enum.Category;
-import com.example.finalproject.repository.AdvertisementRepo;
 import com.example.finalproject.service.IAdvertisementService;
 import com.example.finalproject.service.IBatchService;
-import net.bytebuddy.implementation.bind.annotation.Default;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.Cache;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.stream.Collectors;
-
 @RestController
 @RequestMapping("api/v1/fresh-products")
 public class AdvertisementController {
