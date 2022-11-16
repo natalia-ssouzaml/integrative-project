@@ -143,7 +143,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"dateTime\": \"2022-11-11T11:04:00\",\n    \"buyerCode\": 1,\n    \"purchaseItemListDTO\": [\n        {\n            \"advertisementId\": 1,\n            \"quantity\": 50\n        },\n        {\n            \"advertisementId\": 2,\n            \"quantity\": 10\n        }\n    ]\n}",
+							"raw": "{\n    \"dateTime\": \"2022-11-11T11:04:00\",\n    \"buyerCode\": 1,\n    \"purchaseItems\": [\n        {\n            \"advertisementId\": 1,\n            \"quantity\": 50\n        },\n        {\n            \"advertisementId\": 2,\n            \"quantity\": 10\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
