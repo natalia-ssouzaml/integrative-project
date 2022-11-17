@@ -40,16 +40,16 @@ public class InboundOrderService implements IInboundOrderService {
             Advertisement advertisement = advertisementRepo.findById(advertisementList.get(i)).orElseThrow(() -> new NotFoundException("Advertisement not found"));
             inboundOrder.getBatchStock().get(i).setAdvertisement(advertisement);
         }
-        temperatureValidation(inboundOrder);
-        InboundOrder savedInboundOrder = inboundOrderRepo.save(inboundOrder);
-        setBatchOrderCode(savedInboundOrder);
 
-        float totalVolume = batchesTotalVolume(savedInboundOrder.getBatchStock()).floatValue();
+        float totalVolume = batchesTotalVolume(inboundOrder.getBatchStock()).floatValue();
         volumeValidation(section, totalVolume);
+        temperatureValidation(inboundOrder);
+        inboundOrderRepo.save(inboundOrder);
+        setBatchOrderCode(inboundOrder);
 
         section.setAccumulatedVolume(totalVolume + section.getAccumulatedVolume());
 
-        return batchRepo.saveAll(savedInboundOrder.getBatchStock());
+        return batchRepo.saveAll(inboundOrder.getBatchStock());
     }
 
     public List<Batch> update(InboundOrder inboundOrder, Long warehouseCode, Long sectionCode, List<Long> advertisementList, List<Long> batchCodeList) {
@@ -117,8 +117,8 @@ public class InboundOrderService implements IInboundOrderService {
     private void volumeValidation(Section section, float totalVolumeBatch) {
         float availableVolume = section.getVolume() - section.getAccumulatedVolume();
         if (availableVolume < totalVolumeBatch) {
-            throw new VolumeNotAvailableException("You sent: " + totalVolumeBatch + "m³ but only: " + availableVolume +
-                    "m³ is available");
+            throw new VolumeNotAvailableException("You sent: " + totalVolumeBatch + " m³ but only: " + availableVolume +
+                    " m³ is available");
         }
     }
 }

@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -26,18 +27,21 @@ BatchDTO {
     private Float currentTemperature;
 
     @NotNull
+    @Positive
     private int productQuantity;
 
     @NotNull
     private LocalDateTime manufacturingDateTime;
 
     @NotNull
+    @Positive
     private Float volume;
 
     @NotNull
     private LocalDate dueDate;
 
     @NotNull
+    @Positive
     private BigDecimal price;
 
 

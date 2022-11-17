@@ -17,6 +17,9 @@ public class AdvertisementController {
     @Autowired
     IAdvertisementService advertisementService;
 
+
+    //TODO migrar o @GetMapping("/list/advertisement") para o batch service
+    //TODO receber minusculo no parametro do @GetMapping("/list/advertisement")
     @Autowired
     IBatchService batchService;
 
@@ -32,8 +35,8 @@ public class AdvertisementController {
 
 
     @GetMapping("/list/advertisement")
-    public ResponseEntity<ListBatchesAdvertisementDTO> getAllAdvertisementByBatch(Long advertisementId, @RequestParam(required = false) String filter) {
-        return ResponseEntity.ok(new ListBatchesAdvertisementDTO(batchService.findByAdvertisementCode(advertisementId, filter)));
+    public ResponseEntity<ListBatchesAdvertisementDTO> getAllAdvertisementByBatch(@RequestParam(value = "advertisement") Long advertisementCode, @RequestParam(required = false) String filter) {
+        return ResponseEntity.ok(new ListBatchesAdvertisementDTO(batchService.findByAdvertisementCode(advertisementCode, filter)));
     }
 
 

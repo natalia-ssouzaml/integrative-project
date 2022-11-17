@@ -19,6 +19,8 @@ public class BatchController {
     @Autowired
     private IBatchService batchService;
 
+    //TODO Validar dias negativos
+    //TODO validar asc/desc default
     @GetMapping("/due-date")
     public ResponseEntity<List<BatchDTO>> findAllBatchBySectorAndDueDate(@RequestParam int days,
                                                                          @RequestParam Long section) {

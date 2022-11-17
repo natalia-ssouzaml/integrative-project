@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 public class AdvertisementDTO {
 
     private String name;
+
     private BigDecimal price;
 
     public AdvertisementDTO(Advertisement advertisement) {

@@ -18,10 +18,10 @@ import java.util.stream.Collectors;
 public class PurchaseItemDTO {
 
     @NotNull
-    @Positive
     private Long advertisementCode;
 
     @NotNull
+    @Positive
     private int quantity;
 
     private static PurchaseItem convertToPurchaseItem(PurchaseItemDTO purchaseItemDTO) {

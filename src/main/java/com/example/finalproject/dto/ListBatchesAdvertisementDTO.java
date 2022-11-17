@@ -11,9 +11,10 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ListBatchesAdvertisementDTO {
-    List<BatchLocationDTO> batchStock;
+
     private Long advertisementCode;
     private String advertisementName;
+    private List<BatchLocationDTO> batchStock;
 
     public ListBatchesAdvertisementDTO(List<Batch> batchList) {
         this.advertisementName = batchList.get(0).getAdvertisement().getName();

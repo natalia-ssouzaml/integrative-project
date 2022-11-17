@@ -1,9 +1,8 @@
 {
 	"info": {
-		"_postman_id": "cd8730b1-831e-435f-a466-d9e3468af167",
+		"_postman_id": "277ba249-457c-4de1-b59e-5e76687d42c3",
 		"name": "Projeto Integrador - Grupo 8",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "23677396"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
@@ -231,7 +230,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{local}}/api/v1/fresh-products/list/batch/1",
+							"raw": "{{local}}/api/v1/fresh-products/list/advertisement?advertisement=1&filter=V",
 							"host": [
 								"{{local}}"
 							],
@@ -240,8 +239,17 @@
 								"v1",
 								"fresh-products",
 								"list",
-								"batch",
-								"1"
+								"advertisement"
+							],
+							"query": [
+								{
+									"key": "advertisement",
+									"value": "1"
+								},
+								{
+									"key": "filter",
+									"value": "V"
+								}
 							]
 						}
 					},

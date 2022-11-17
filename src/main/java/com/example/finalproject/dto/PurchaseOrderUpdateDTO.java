@@ -9,7 +9,6 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -26,7 +25,7 @@ public class PurchaseOrderUpdateDTO {
         this.dateTime = LocalDateTime.now();
         this.buyerName = purchaseOrder.getBuyer().getName();
         this.orderStatus = purchaseOrder.getOrderStatus();
-        this.purchaseAdvertisementList = PurchaseAdvertisementDTO.convertListToResponse(purchaseOrder.getPurchaseItems().stream().map(i -> i.getAdvertisement()).collect(Collectors.toList()));
+        this.purchaseAdvertisementList = PurchaseAdvertisementDTO.convertListToResponse(purchaseOrder.getPurchaseItems());
         this.totalPrice = purchaseOrder.getPurchaseItems().stream().mapToDouble(i -> i.getPrice().doubleValue()).sum();
     }
 
