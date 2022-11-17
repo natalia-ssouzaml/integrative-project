@@ -1,5 +1,8 @@
 package com.example.finalproject.service.impl;
 
+import com.example.finalproject.exception.InvalidTemperatureException;
+import com.example.finalproject.exception.NotFoundException;
+import com.example.finalproject.exception.VolumeNotAvailableException;
 import com.example.finalproject.model.*;
 import com.example.finalproject.model.Enum.Category;
 import com.example.finalproject.repository.*;
@@ -18,6 +21,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
@@ -43,6 +47,8 @@ class InboundOrderServiceTest {
     private BatchRepo batchRepo;
 
     private Warehouse warehouse;
+    private Warehouse warehouseII;
+
 
     private Section section;
 
@@ -83,7 +89,7 @@ class InboundOrderServiceTest {
                 .batchCode(3L)
                 .inboundOrder(inboundOrder)
                 .advertisement(advertisement)
-                .currentTemperature(5.0F)
+                .currentTemperature(-20.0F)
                 .productQuantity(100)
                 .manufacturingDateTime(LocalDateTime.of(2019, 01, 20, 22, 34))
                 .volume(12.0F)
@@ -95,7 +101,7 @@ class InboundOrderServiceTest {
                 .batchCode(1L)
                 .inboundOrder(inboundOrder)
                 .advertisement(advertisement)
-                .currentTemperature(12.0F)
+                .currentTemperature(-20.0F)
                 .productQuantity(10)
                 .manufacturingDateTime(LocalDateTime.of(2019, 02, 02, 05, 55))
                 .volume(3.0F).dueDate(LocalDate.of(2019, 10, 25))
@@ -107,8 +113,10 @@ class InboundOrderServiceTest {
 
 
         warehouse = Warehouse.builder().warehouseCode(1L).sections(new ArrayList<>()).volume(10.0F).build();
+        warehouseII = Warehouse.builder().warehouseCode(5L).sections(new ArrayList<>()).volume(10.0F).build();
 
-        section = Section.builder().sectionCode(1L).warehouse(warehouse).category(Category.CONGELADO).volume(100.0F).accumulatedVolume(15.0F).minTemperature(0F).maxTemperature(15F).build();
+        section = Section.builder().sectionCode(1L).warehouse(warehouse).category(Category.CONGELADO).volume(100.0F).accumulatedVolume(15.0F).minTemperature(-22F).maxTemperature(-18F).build();
+
 
         inboundOrder = InboundOrder.builder().orderCode(3L).orderDate(LocalDate.of(2022, 11, 14)).section(section).batchStock(batchList).build();
 
@@ -125,7 +133,7 @@ class InboundOrderServiceTest {
         when(sectionRepo.findById(anyLong())).thenReturn(Optional.ofNullable(section));
         when(advertisementRepo.findById(any())).thenReturn(Optional.ofNullable(advertisement));
         when(inboundOrderRepo.save(inboundOrder)).thenReturn(inboundOrder);
-        var totalVolume = inboundOrder.getBatchStock().stream().mapToDouble(b -> b.getVolume()).sum();
+        inboundOrder.getBatchStock().stream().mapToDouble(b -> b.getVolume()).sum();
         inboundOrderService.create(inboundOrder, warehouse.getWarehouseCode(), section.getSectionCode(), advertisementIdsList);
         verify(batchRepo, times(1)).saveAll(inboundOrder.getBatchStock());
 
@@ -140,6 +148,37 @@ class InboundOrderServiceTest {
         when(batchRepo.existsById(any())).thenReturn(true);
         inboundOrderService.update(inboundOrder, warehouse.getWarehouseCode(), section.getSectionCode(), advertisementIdsList, batchNumberList);
         verify(batchRepo, times(1)).saveAll(inboundOrder.getBatchStock());
+
+    }
+
+    @Test
+    void createInboundOrder_returnNotFoundException_whenWarehouseAndSectionNotEquals() {
+        section.setSectionCode(5L);
+        section.setWarehouse(warehouseII);
+        when(warehouseRepo.findById(any())).thenReturn(Optional.ofNullable(warehouse));
+        when(sectionRepo.findById(anyLong())).thenReturn(Optional.ofNullable(section));
+        assertThrows(NotFoundException.class, () -> inboundOrderService.create(inboundOrder, warehouse.getWarehouseCode(), section.getSectionCode(), advertisementIdsList));
+    }
+
+    @Test
+    void createInboundOrder_returnInvalidTemperatureException_whenTemperatureInvalid() {
+        batch.setCurrentTemperature(10f);
+        when(warehouseRepo.findById(any())).thenReturn(Optional.ofNullable(warehouse));
+        when(sectionRepo.findById(anyLong())).thenReturn(Optional.ofNullable(section));
+        when(advertisementRepo.findById(any())).thenReturn(Optional.ofNullable(advertisement));
+        assertThrows(InvalidTemperatureException.class, () -> inboundOrderService.create(inboundOrder, warehouse.getWarehouseCode(), section.getSectionCode(), advertisementIdsList));
+
+    }
+
+    @Test
+    void createInboundOrder_returnVolumeNotAvailableExceptionn_whenVolumeInvalid() {
+        batch.setVolume(90.0f);
+        inboundOrder.getBatchStock().stream().mapToDouble(b -> b.getVolume()).sum();
+        when(warehouseRepo.findById(any())).thenReturn(Optional.ofNullable(warehouse));
+        when(sectionRepo.findById(anyLong())).thenReturn(Optional.ofNullable(section));
+        when(advertisementRepo.findById(any())).thenReturn(Optional.ofNullable(advertisement));
+        assertThrows(VolumeNotAvailableException.class, () -> inboundOrderService.create(inboundOrder, warehouse.getWarehouseCode(), section.getSectionCode(), advertisementIdsList));
+
 
     }
 }
