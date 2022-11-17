@@ -11,13 +11,13 @@ import java.util.stream.Collectors;
 @Getter
 @NoArgsConstructor
 public class WarehouseQuantityAdvertisementDTO {
-    private Long advertisementId;
+    private Long advertisementCode;
     private String advertisementName;
     private List<WarehouseDTO> warehouses;
 
 
-    public WarehouseQuantityAdvertisementDTO(Long advertisementId, List<Batch> batchList) {
-        this.advertisementId = advertisementId;
+    public WarehouseQuantityAdvertisementDTO(Long advertisementCode, List<Batch> batchList) {
+        this.advertisementCode = advertisementCode;
         this.advertisementName = batchList.get(0).getAdvertisement().getName();
         this.warehouses = WarehouseDTO.convertListToResponse(batchToWarehouseCodeList(batchList), batchList);
 

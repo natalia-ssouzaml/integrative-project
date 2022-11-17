@@ -8,5 +8,5 @@ import java.util.List;
 public interface IInboundOrderService {
     List<Batch> create(InboundOrder inboundOrder, Long warehouseCode, Long section, List<Long> advertisementList);
 
-    List<Batch> update(InboundOrder inboundOrder, Long warehouseCode, Long section, List<Long> advertisementList, List<Long> batchNumbersList);
+    List<Batch> update(InboundOrder inboundOrder, Long warehouseCode, Long section, List<Long> advertisementList, List<Long> batchCodeList);
 }

@@ -20,7 +20,8 @@ public interface IBatchService {
 
     List<Batch> findAllBatchByCategoryAndDueDate(int days, String category, String order);
 
-    List<Batch> findByAdvertisementId(Long advertisementId, String filter);
+    List<Batch> findByAdvertisementCode(Long advertisementCode, String filter);
+    List<Batch> findByAdvertisementCode(Long advertisementCode);
 
-    List<Batch> findByAdvertisementId(Long advertisementId);
+
 }

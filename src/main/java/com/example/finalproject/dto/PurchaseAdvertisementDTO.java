@@ -1,6 +1,6 @@
 package com.example.finalproject.dto;
 
-import com.example.finalproject.model.Advertisement;
+import com.example.finalproject.model.PurchaseItem;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,19 +19,19 @@ public class PurchaseAdvertisementDTO {
     private int quantity;
     private Double totalPrice;
 
-    public PurchaseAdvertisementDTO(Advertisement advertisement) {
-        this.name = advertisement.getName();
-        this.price = advertisement.getPrice();
-        this.quantity = advertisement.getPurchaseItems().stream().mapToInt(i -> i.getQuantity()).sum();
-        this.totalPrice = advertisement.getPurchaseItems().stream().mapToDouble(i -> i.getPrice().doubleValue()).sum();
+    public PurchaseAdvertisementDTO(PurchaseItem purchaseItem) {
+        this.name = purchaseItem.getAdvertisement().getName();
+        this.price = purchaseItem.getAdvertisement().getPrice();
+        this.quantity = purchaseItem.getQuantity();
+        this.totalPrice = this.price.doubleValue() * this.quantity;
     }
 
-    private static PurchaseAdvertisementDTO convertToResponse(Advertisement advertisement) {
-        return new PurchaseAdvertisementDTO(advertisement);
+    private static PurchaseAdvertisementDTO convertToResponse(PurchaseItem purchaseItem) {
+        return new PurchaseAdvertisementDTO(purchaseItem);
     }
 
-    public static List<PurchaseAdvertisementDTO> convertListToResponse(List<Advertisement> advertisementList) {
-        return advertisementList.stream().map(PurchaseAdvertisementDTO::convertToResponse).collect(
+    public static List<PurchaseAdvertisementDTO> convertListToResponse(List<PurchaseItem> purchaseItemList) {
+        return purchaseItemList.stream().map(PurchaseAdvertisementDTO::convertToResponse).collect(
                 Collectors.toList());
     }
 }

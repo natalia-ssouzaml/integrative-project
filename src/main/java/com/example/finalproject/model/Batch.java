@@ -21,11 +21,11 @@ public class Batch {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long batchNumber;
+    private Long batchCode;
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "advertisementId")
+    @JoinColumn(name = "advertisement_code")
     @JsonIgnore
     private Advertisement advertisement;
 
@@ -54,7 +54,7 @@ public class Batch {
     private BigDecimal price;
 
     @ManyToOne
-    @JoinColumn(name = "order_number")
+    @JoinColumn(name = "order_code")
     @JsonIgnoreProperties("batchStock")
     @JsonIgnore
     private InboundOrder inboundOrder;

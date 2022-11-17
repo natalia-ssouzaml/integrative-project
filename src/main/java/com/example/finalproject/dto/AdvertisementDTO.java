@@ -9,13 +9,13 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
-//TODO  Separar DTOs por pastas request e response?
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class AdvertisementDTO {
 
     private String name;
+
     private BigDecimal price;
 
     public AdvertisementDTO(Advertisement advertisement) {

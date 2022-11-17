@@ -28,7 +28,6 @@ public class InboundOrderService implements IInboundOrderService {
     @Override
     public List<Batch> create(InboundOrder inboundOrder, Long warehouseCode, Long sectionCode, List<Long> advertisementList) {
 
-        // TODO: refazer validacao porque sempre é null
         // TODO: validar se os Ids estao duplicados
 
         Warehouse warehouse = warehouseRepo.findById(warehouseCode).orElseThrow(() -> new NotFoundException("Warehouse not found"));
@@ -40,51 +39,49 @@ public class InboundOrderService implements IInboundOrderService {
             Advertisement advertisement = advertisementRepo.findById(advertisementList.get(i)).orElseThrow(() -> new NotFoundException("Advertisement not found"));
             inboundOrder.getBatchStock().get(i).setAdvertisement(advertisement);
         }
-        temperatureValidation(inboundOrder);
-        InboundOrder savedInboundOrder = inboundOrderRepo.save(inboundOrder);
-        setBatchOrderNumber(savedInboundOrder);
 
-        float totalVolume = batchesTotalVolume(savedInboundOrder.getBatchStock()).floatValue();
+        float totalVolume = batchesTotalVolume(inboundOrder.getBatchStock()).floatValue();
         volumeValidation(section, totalVolume);
+        temperatureValidation(inboundOrder);
+        inboundOrderRepo.save(inboundOrder);
+        setBatchOrderCode(inboundOrder);
 
         section.setAccumulatedVolume(totalVolume + section.getAccumulatedVolume());
 
-        return batchRepo.saveAll(savedInboundOrder.getBatchStock());
+        return batchRepo.saveAll(inboundOrder.getBatchStock());
     }
 
-    public List<Batch> update(InboundOrder inboundOrder, Long warehouseCode, Long sectionCode, List<Long> advertisementList, List<Long> batchNumbersList) {
+    public List<Batch> update(InboundOrder inboundOrder, Long warehouseCode, Long sectionCode, List<Long> advertisementList, List<Long> batchCodeList) {
         Warehouse warehouse = warehouseRepo.findById(warehouseCode).orElseThrow(() -> new NotFoundException("Warehouse not found"));
         Section section = sectionRepo.findById(sectionCode).orElseThrow(() -> new NotFoundException("Section not found"));
 
         inboundOrder.setSection(section);
         for (int i = 0; i < advertisementList.size(); i++) {
             Advertisement advertisement = advertisementRepo.findById(advertisementList.get(i)).orElseThrow(() -> new NotFoundException("Advertisement not found"));
-            Batch batch = batchRepo.findById(batchNumbersList.get(i)).orElseThrow(() -> new NotFoundException("Batch not found"));
+            Batch batch = batchRepo.findById(batchCodeList.get(i)).orElseThrow(() -> new NotFoundException("Batch not found"));
 
             inboundOrder.getBatchStock().get(i).setAdvertisement(advertisement);
-            inboundOrder.getBatchStock().get(i).setBatchNumber(batch.getBatchNumber());
+            inboundOrder.getBatchStock().get(i).setBatchCode(batch.getBatchCode());
         }
 
-        setBatchOrderNumber(inboundOrder);
+        setBatchOrderCode(inboundOrder);
 
-        batchIdValidation(inboundOrder);
+        batchCodeValidation(inboundOrder);
         warehouseSectionValidation(section, warehouse);
 
         return batchRepo.saveAll(inboundOrder.getBatchStock());
     }
 
-    private void batchIdValidation(InboundOrder inboundOrder) {
+    private void batchCodeValidation(InboundOrder inboundOrder) {
         inboundOrder.getBatchStock().forEach(
                 id -> {
-                    var result = batchRepo.existsById(id.getBatchNumber());
-                    if (!result) {
-                        throw new NotFoundException("BatchNumber does not exists");
-                    }
+                    boolean result = batchRepo.existsById(id.getBatchCode());
+                    if (!result) throw new NotFoundException("BatchCode does not exists");
                 });
     }
 
 
-    private void setBatchOrderNumber(InboundOrder inboundOrder) {
+    private void setBatchOrderCode(InboundOrder inboundOrder) {
         List<Batch> batchList = inboundOrder.getBatchStock();
         for (Batch batch : batchList) {
             batch.setInboundOrder(inboundOrder);
@@ -92,7 +89,7 @@ public class InboundOrderService implements IInboundOrderService {
     }
 
     private Double batchesTotalVolume(List<Batch> batchList) {
-        return batchList.stream().mapToDouble(b -> b.getVolume()).sum();
+        return batchList.stream().mapToDouble(Batch::getVolume).sum();
     }
 
     private void warehouseSectionValidation(Section section, Warehouse warehouse) {
@@ -117,8 +114,8 @@ public class InboundOrderService implements IInboundOrderService {
     private void volumeValidation(Section section, float totalVolumeBatch) {
         float availableVolume = section.getVolume() - section.getAccumulatedVolume();
         if (availableVolume < totalVolumeBatch) {
-            throw new VolumeNotAvailableException("You sent: " + totalVolumeBatch + "m³ but only: " + availableVolume +
-                    "m³ is available");
+            throw new VolumeNotAvailableException("You sent: " + totalVolumeBatch + " m³ but only: " + availableVolume +
+                    " m³ is available");
         }
     }
 }

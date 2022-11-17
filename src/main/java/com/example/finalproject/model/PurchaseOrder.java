@@ -30,7 +30,7 @@ public class PurchaseOrder {
     private OrderStatus orderStatus;
 
     @ManyToOne
-    @JoinColumn(name = "buyer_id")
+    @JoinColumn(name = "buyer_code")
     @JsonIgnoreProperties("purchases")
     private Buyer buyer;
 

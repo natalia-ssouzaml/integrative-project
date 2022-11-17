@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -17,33 +18,36 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class
 BatchDTO {
-    private Long batchNumber;
+    private Long batchCode;
 
     @NotNull
-    private Long advertisementId;
+    private Long advertisementCode;
 
     @NotNull
     private Float currentTemperature;
 
     @NotNull
+    @Positive
     private int productQuantity;
 
     @NotNull
     private LocalDateTime manufacturingDateTime;
 
     @NotNull
+    @Positive
     private Float volume;
 
     @NotNull
     private LocalDate dueDate;
 
     @NotNull
+    @Positive
     private BigDecimal price;
 
 
     public BatchDTO(Batch batch) {
-        this.batchNumber = batch.getBatchNumber();
-        this.advertisementId = batch.getAdvertisement().getAdvertisementId();
+        this.batchCode = batch.getBatchCode();
+        this.advertisementCode = batch.getAdvertisement().getAdvertisementCode();
         this.currentTemperature = batch.getCurrentTemperature();
         this.productQuantity = batch.getProductQuantity();
         this.manufacturingDateTime = batch.getManufacturingDateTime();

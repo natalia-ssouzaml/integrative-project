@@ -20,7 +20,7 @@ public class InboundOrderUpdateDTO {
     private Long warehouseCode;
 
     @NotNull
-    private Long orderNumber;
+    private Long orderCode;
 
     @NotNull
     @Valid
@@ -30,7 +30,7 @@ public class InboundOrderUpdateDTO {
         return InboundOrder.builder()
                 .batchStock(BatchDTO.convertToBatchList(inboundOrderUpdateDTO.getBatchStock()))
                 .orderDate(LocalDate.now())
-                .orderNumber(inboundOrderUpdateDTO.getOrderNumber())
+                .orderCode(inboundOrderUpdateDTO.getOrderCode())
                 .build();
     }
 
