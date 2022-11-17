@@ -9,7 +9,6 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
-//TODO  Separar DTOs por pastas request e response?
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor

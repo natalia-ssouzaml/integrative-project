@@ -28,7 +28,6 @@ public class InboundOrderService implements IInboundOrderService {
     @Override
     public List<Batch> create(InboundOrder inboundOrder, Long warehouseCode, Long sectionCode, List<Long> advertisementList) {
 
-        // TODO: refazer validacao porque sempre é null
         // TODO: validar se os Ids estao duplicados
 
         Warehouse warehouse = warehouseRepo.findById(warehouseCode).orElseThrow(() -> new NotFoundException("Warehouse not found"));
@@ -76,10 +75,8 @@ public class InboundOrderService implements IInboundOrderService {
     private void batchCodeValidation(InboundOrder inboundOrder) {
         inboundOrder.getBatchStock().forEach(
                 id -> {
-                    var result = batchRepo.existsById(id.getBatchCode());
-                    if (!result) {
-                        throw new NotFoundException("BatchCode does not exists");
-                    }
+                    boolean result = batchRepo.existsById(id.getBatchCode());
+                    if (!result) throw new NotFoundException("BatchCode does not exists");
                 });
     }
 

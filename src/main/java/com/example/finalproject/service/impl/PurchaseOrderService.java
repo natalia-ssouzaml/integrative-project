@@ -67,7 +67,6 @@ public class PurchaseOrderService implements IPurchaseOrderService {
     @Override
     public List<PurchaseItem> findAllAdvertisementsByPurchase(Long purchaseCode) {
         PurchaseOrder purchaseOrder = (purchaseOrderRepo.findById(purchaseCode).orElseThrow(() -> new NotFoundException("Purchase order not found")));
-        System.out.println("------->>>>>>>" + purchaseOrder);
         purchaseOrder.getPurchaseItems().forEach(i -> i.getAdvertisement().setPrice(i.getPrice().divide(BigDecimal.valueOf(i.getQuantity()), RoundingMode.DOWN)));
         return purchaseOrder.getPurchaseItems();
     }

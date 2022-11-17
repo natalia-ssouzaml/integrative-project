@@ -1,5 +1,6 @@
 package com.example.finalproject.service.impl;
 
+import com.example.finalproject.exception.InvalidArgumentException;
 import com.example.finalproject.exception.NotFoundException;
 import com.example.finalproject.model.Batch;
 import com.example.finalproject.model.Section;
@@ -25,6 +26,7 @@ public class BatchService implements IBatchService {
 
     @Override
     public List<Batch> findAllBatchBySectorAndDueDate(int days, Long sectionCode) {
+        if (days <= 0) throw new InvalidArgumentException("Number of days must be positive");
         sectionRepo.findById(sectionCode).orElseThrow(() -> new NotFoundException("Section not found"));
         LocalDate initialDate = LocalDate.now();
         LocalDate limitDate = initialDate.plusDays(days);
@@ -39,6 +41,8 @@ public class BatchService implements IBatchService {
 
     @Override
     public List<Batch> findAllBatchByCategoryAndDueDate(int days, String category, String order) {
+        if (days <= 0) throw new InvalidArgumentException("Number of days must be positive");
+        if (order == null) order = "asc";
         Section section = sectionRepo.findByCategory(category).orElseThrow(() -> new NotFoundException("Category does not exist"));
         LocalDate initialDate = LocalDate.now();
         LocalDate limitDate = initialDate.plusDays(days);
@@ -47,14 +51,14 @@ public class BatchService implements IBatchService {
                 .filter(b -> b.getDueDate().isAfter(initialDate.minusDays(1))
                         && b.getDueDate().isBefore(limitDate.plusDays(1)))
                 .filter(b -> b.getInboundOrder().getSection().getCategory().equals(section.getCategory()))
-                .sorted(order.equals("asc") ? Comparator.comparing(Batch::getDueDate) : Comparator.comparing(Batch::getDueDate).reversed())
+                .sorted(order.equals("desc") ? Comparator.comparing(Batch::getDueDate).reversed() : Comparator.comparing(Batch::getDueDate))
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<Batch> findByAdvertisementCode(Long advertisementCode, String filter) {
         List<Batch> batchList = findByAdvertisementCode(advertisementCode);
-        return sortByFilter(batchList, filter);
+        return sortByFilter(batchList, filter.toLowerCase());
     }
 
     public List<Batch> findByAdvertisementCode(Long advertisementCode) {
@@ -66,9 +70,9 @@ public class BatchService implements IBatchService {
     private List<Batch> sortByFilter(List<Batch> batchList, String filter) {
         if (filter == null) return batchList;
         switch (filter) {
-            case "Q":
+            case "q":
                 return batchList.stream().sorted(Comparator.comparing(Batch::getProductQuantity)).collect(Collectors.toList());
-            case "V":
+            case "v":
                 return batchList.stream().sorted(Comparator.comparing(Batch::getDueDate)).collect(Collectors.toList());
             default:
                 return batchList;

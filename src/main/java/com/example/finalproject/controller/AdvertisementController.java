@@ -1,12 +1,14 @@
 package com.example.finalproject.controller;
 
 import com.example.finalproject.dto.AdvertisementDTO;
-import com.example.finalproject.dto.ListBatchesAdvertisementDTO;
 import com.example.finalproject.service.IAdvertisementService;
 import com.example.finalproject.service.IBatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -17,9 +19,6 @@ public class AdvertisementController {
     @Autowired
     IAdvertisementService advertisementService;
 
-
-    //TODO migrar o @GetMapping("/list/advertisement") para o batch service
-    //TODO receber minusculo no parametro do @GetMapping("/list/advertisement")
     @Autowired
     IBatchService batchService;
 
@@ -32,13 +31,5 @@ public class AdvertisementController {
     public ResponseEntity<List<AdvertisementDTO>> getAllAdvertisementByCategory(@PathVariable String category) {
         return ResponseEntity.ok(AdvertisementDTO.convertListToResponse(advertisementService.findAllByCategory(category)));
     }
-
-
-    @GetMapping("/list/advertisement")
-    public ResponseEntity<ListBatchesAdvertisementDTO> getAllAdvertisementByBatch(@RequestParam(value = "advertisement") Long advertisementCode, @RequestParam(required = false) String filter) {
-        return ResponseEntity.ok(new ListBatchesAdvertisementDTO(batchService.findByAdvertisementCode(advertisementCode, filter)));
-    }
-
-
 }
 
