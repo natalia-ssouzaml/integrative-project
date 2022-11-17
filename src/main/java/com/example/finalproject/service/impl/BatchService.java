@@ -58,9 +58,10 @@ public class BatchService implements IBatchService {
     @Override
     public List<Batch> findByAdvertisementCode(Long advertisementCode, String filter) {
         List<Batch> batchList = findByAdvertisementCode(advertisementCode);
-        return sortByFilter(batchList, filter.toLowerCase());
+        return sortByFilter(batchList, filter);
     }
 
+    @Override
     public List<Batch> findByAdvertisementCode(Long advertisementCode) {
         List<Batch> batchList = batchRepo.findByAdvertisementAdvertisementCode(advertisementCode);
         if (batchList.isEmpty()) throw new NotFoundException("Advertisement does not belong to any batch");
@@ -69,7 +70,7 @@ public class BatchService implements IBatchService {
 
     private List<Batch> sortByFilter(List<Batch> batchList, String filter) {
         if (filter == null) return batchList;
-        switch (filter) {
+        switch (filter.toLowerCase()) {
             case "q":
                 return batchList.stream().sorted(Comparator.comparing(Batch::getProductQuantity)).collect(Collectors.toList());
             case "v":

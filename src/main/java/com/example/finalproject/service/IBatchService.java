@@ -21,6 +21,7 @@ public interface IBatchService {
     List<Batch> findAllBatchByCategoryAndDueDate(int days, String category, String order);
 
     List<Batch> findByAdvertisementCode(Long advertisementCode, String filter);
-
     List<Batch> findByAdvertisementCode(Long advertisementCode);
+
+
 }
