@@ -51,7 +51,7 @@ public class BatchService implements IBatchService {
                 .filter(b -> b.getDueDate().isAfter(initialDate.minusDays(1))
                         && b.getDueDate().isBefore(limitDate.plusDays(1)))
                 .filter(b -> b.getInboundOrder().getSection().getCategory().equals(section.getCategory()))
-                .sorted(order.equals("desc") ? Comparator.comparing(Batch::getDueDate).reversed() : Comparator.comparing(Batch::getDueDate))
+                .sorted(order.equalsIgnoreCase("desc") ? Comparator.comparing(Batch::getDueDate).reversed() : Comparator.comparing(Batch::getDueDate))
                 .collect(Collectors.toList());
     }
 
