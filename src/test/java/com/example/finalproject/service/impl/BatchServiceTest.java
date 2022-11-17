@@ -43,6 +43,7 @@ class BatchServiceTest {
     private List<Batch> batchList;
     private Section section;
     private InboundOrder inboundOrder;
+    private Batch batchIII;
 
     @BeforeEach
     void setup() {
@@ -94,7 +95,7 @@ class BatchServiceTest {
                         .price(BigDecimal.valueOf(45.0D))
                         .inboundOrder(inboundOrder)
                         .build();
-        Batch batchIII =
+        batchIII =
                 Batch.builder()
                         .batchCode(3L)
                         .advertisement(advertisementII)
@@ -136,7 +137,7 @@ class BatchServiceTest {
     }
 
     @Test
-    void findAllBatchByCategoryAndDueDate_returnListBatch_whenSucess() {
+    void findAllBatchByCategoryAndDueDate_returnListBatch_whenSuccess() {
         int days = 1000;
         String category = "CONGELADO";
         when(sectionRepo.findByCategory(ArgumentMatchers.anyString())).thenReturn(Optional.ofNullable(section));
@@ -149,21 +150,41 @@ class BatchServiceTest {
     }
 
     @Test
-    void findByAdvertisementCode_returnListBatch_whenSucess() {
+    void findByAdvertisementCode_returnListBatch_whenSuccess() {
+        batchList.remove(batchIII);
         when(batchRepo.findByAdvertisementAdvertisementCode(ArgumentMatchers.anyLong())).thenReturn(batchList);
         List<Batch> batchListService = batchService.findByAdvertisementCode(advertisementI.getAdvertisementCode());
-        System.out.println(batchListService);
         Assertions.assertNotNull(batchListService);
-        Assertions.assertEquals(2,batchListService.size()-1);
+        Assertions.assertEquals(2,batchListService.size());
     }
 
     @Test
-    void findByAdvertisementCode3_returnListBatch_whenSucess() {
+    void findByAdvertisementCode_returnListBatchFilterByQuantity_whenSuccess() {
+        batchList.remove(batchIII);
         when(batchRepo.findByAdvertisementAdvertisementCode(ArgumentMatchers.anyLong())).thenReturn(batchList);
         List<Batch> batchListService = batchService.findByAdvertisementCode(advertisementI.getAdvertisementCode(),"Q");
-        System.out.println(batchListService);
         Assertions.assertNotNull(batchListService);
-        Assertions.assertEquals(2,batchListService.size()-1);
+        Assertions.assertEquals(2,batchListService.size());
+        Assertions.assertEquals(50,batchListService.get(0).getProductQuantity());
+    }
+
+    @Test
+    void findByAdvertisementCode_returnListBatchFilterByValid_whenSuccess() {
+        batchList.remove(batchIII);
+        when(batchRepo.findByAdvertisementAdvertisementCode(ArgumentMatchers.anyLong())).thenReturn(batchList);
+        List<Batch> batchListService = batchService.findByAdvertisementCode(advertisementI.getAdvertisementCode(),"V");
+        Assertions.assertNotNull(batchListService);
+        Assertions.assertEquals(2,batchListService.size());
+        Assertions.assertEquals(LocalDate.of(2023, 1, 31),batchListService.get(0).getDueDate());
+    }
+
+    @Test
+    void findByAdvertisementCode_returnListBatchWhenFilterIsEmpty_whenSuccess() {
+        batchList.remove(batchIII);
+        when(batchRepo.findByAdvertisementAdvertisementCode(ArgumentMatchers.anyLong())).thenReturn(batchList);
+        List<Batch> batchListService = batchService.findByAdvertisementCode(advertisementI.getAdvertisementCode(),"");
+        Assertions.assertNotNull(batchListService);
+        Assertions.assertEquals(2,batchListService.size());
     }
 
 }
