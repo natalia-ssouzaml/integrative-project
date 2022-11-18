@@ -1,5 +1,6 @@
 package com.example.finalproject.dto;
 
+import com.example.finalproject.model.Enum.OrderStatus;
 import com.example.finalproject.model.PurchaseItem;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,11 +20,14 @@ public class PurchaseAdvertisementDTO {
     private int quantity;
     private Double totalPrice;
 
+    private OrderStatus orderStatus;
+
     public PurchaseAdvertisementDTO(PurchaseItem purchaseItem) {
         this.name = purchaseItem.getAdvertisement().getName();
         this.price = purchaseItem.getAdvertisement().getPrice();
         this.quantity = purchaseItem.getQuantity();
         this.totalPrice = this.price.doubleValue() * this.quantity;
+        this.orderStatus = purchaseItem.getPurchaseOrder().getOrderStatus();
     }
 
     private static PurchaseAdvertisementDTO convertToResponse(PurchaseItem purchaseItem) {
