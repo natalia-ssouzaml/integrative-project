@@ -56,9 +56,9 @@ public class BatchService implements IBatchService {
     }
 
     @Override
-    public List<Batch> findByAdvertisementCode(Long advertisementCode, String filter) {
+    public List<Batch> findByAdvertisementCode(Long advertisementCode, String order) {
         List<Batch> batchList = findByAdvertisementCode(advertisementCode);
-        return sortByFilter(batchList, filter);
+        return sortByFilter(batchList, order);
     }
 
     @Override
@@ -68,9 +68,9 @@ public class BatchService implements IBatchService {
         return batchList;
     }
 
-    private List<Batch> sortByFilter(List<Batch> batchList, String filter) {
-        if (filter == null) return batchList;
-        switch (filter.toLowerCase()) {
+    private List<Batch> sortByFilter(List<Batch> batchList, String order) {
+        if (order == null) return batchList;
+        switch (order.toLowerCase()) {
             case "q":
                 return batchList.stream().sorted(Comparator.comparing(Batch::getProductQuantity)).collect(Collectors.toList());
             case "v":
