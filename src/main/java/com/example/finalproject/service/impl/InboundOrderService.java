@@ -54,6 +54,7 @@ public class InboundOrderService implements IInboundOrderService {
     public List<Batch> update(InboundOrder inboundOrder, Long warehouseCode, Long sectionCode, List<Long> advertisementList, List<Long> batchCodeList) {
         Warehouse warehouse = warehouseRepo.findById(warehouseCode).orElseThrow(() -> new NotFoundException("Warehouse not found"));
         Section section = sectionRepo.findById(sectionCode).orElseThrow(() -> new NotFoundException("Section not found"));
+        warehouseSectionValidation(section, warehouse);
 
         inboundOrder.setSection(section);
         for (int i = 0; i < advertisementList.size(); i++) {
@@ -64,10 +65,13 @@ public class InboundOrderService implements IInboundOrderService {
             inboundOrder.getBatchStock().get(i).setBatchCode(batch.getBatchCode());
         }
 
-        setBatchOrderCode(inboundOrder);
+        float totalVolume = batchesTotalVolume(inboundOrder.getBatchStock()).floatValue();
+        volumeValidation(inboundOrder.getSection(), totalVolume);
+        temperatureValidation(inboundOrder);
 
+        setBatchOrderCode(inboundOrder);
         batchCodeValidation(inboundOrder);
-        warehouseSectionValidation(section, warehouse);
+
 
         return batchRepo.saveAll(inboundOrder.getBatchStock());
     }
