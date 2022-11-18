@@ -112,6 +112,7 @@ public class HandlerException extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(exceptionDetails, HttpStatus.BAD_REQUEST);
     }
+
     @ExceptionHandler(InvalidDueDateException.class)
     public ResponseEntity<ExceptionDetails> handlerInvalidDueDateException(InvalidDueDateException ex) {
         ExceptionDetails exceptionDetails = ExceptionDetails.builder()

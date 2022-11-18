@@ -1,6 +1,5 @@
 package com.example.finalproject.dto;
 
-import com.example.finalproject.model.Enum.OrderStatus;
 import com.example.finalproject.model.PurchaseItem;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

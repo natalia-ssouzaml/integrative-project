@@ -60,18 +60,18 @@ a LATAM, criando os artefatos necessários para permitir as seguintes funcionali
       "advertisementCode": 1,
       "currentTemperature": -20.0,
       "productQuantity": 54,
-      "manufacturingDateTime": "2016-01-25T21:34:55",
+      "manufacturingDateTime": "2022-11-18T15:35:00",
       "volume": 10,
-      "dueDate": "2016-01-25",
+      "dueDate": "2023-01-25",
       "price": 30.0
     },
     {
       "advertisementCode": 2,
       "currentTemperature": -20.0,
       "productQuantity": 99,
-      "manufacturingDateTime": "2016-01-27T21:34:55",
+      "manufacturingDateTime": "2022-11-18T15:35:00",
       "volume": 5,
-      "dueDate": "2016-01-25",
+      "dueDate": "2023-01-25",
       "price": 45.0
     }
   ]
@@ -149,7 +149,6 @@ a LATAM, criando os artefatos necessários para permitir as seguintes funcionali
 
 ```json
 {
-  "dateTime": "2022-11-11T11:04:00",
   "buyerCode": 1,
   "purchaseItems": [
     {
@@ -191,12 +190,12 @@ a LATAM, criando os artefatos necessários para permitir as seguintes funcionali
 #### List Advertisements by Batch
 
 ```http
-  GET localhost:8080/api/v1/fresh-products/list/advertisement?advertisement=${advertisementCode}&filter=${orderParam}
+  GET localhost:8080/api/v1/fresh-products/list/advertisement?advertisement=${advertisementCode}&order=${orderParam}
 ```
-| Parâmetro       | Tipo     | Descrição                                                                                   |
-|:----------------|:---------|:--------------------------------------------------------------------------------------------|
-| `advertisement` | `int`    | **Obrigatório**. O código do anúncio que você quer                                          |
-| `filter`        | `string` | **Opcional**. O tipo de ordenação que deseja aplicar: *V = Data validade ou Q = Quantidade* |
+| Parâmetro       | Tipo     | Descrição                                                                                                         |
+|:----------------|:---------|:------------------------------------------------------------------------------------------------------------------|
+| `advertisement` | `int`    | **Obrigatório**. O código do anúncio que você quer                                                                |
+| `order`         | `string` | **Opcional**. O tipo de ordenação que deseja aplicar: *V = Data validade ou Q = Quantidade ou L = Número do Lote* |
 
 </details>
 

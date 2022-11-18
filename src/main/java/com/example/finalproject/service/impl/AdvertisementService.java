@@ -2,7 +2,6 @@ package com.example.finalproject.service.impl;
 
 import com.example.finalproject.exception.NotFoundException;
 import com.example.finalproject.model.Advertisement;
-import com.example.finalproject.model.Section;
 import com.example.finalproject.repository.AdvertisementRepo;
 import com.example.finalproject.repository.SectionRepo;
 import com.example.finalproject.service.IAdvertisementService;

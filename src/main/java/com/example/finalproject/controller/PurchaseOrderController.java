@@ -1,6 +1,5 @@
 package com.example.finalproject.controller;
 
-import com.example.finalproject.dto.PurchaseAdvertisementDTO;
 import com.example.finalproject.dto.PurchaseOrderCreateDTO;
 import com.example.finalproject.dto.PurchaseOrderDTO;
 import com.example.finalproject.dto.PurchaseOrderUpdateDTO;
@@ -12,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/fresh-products")

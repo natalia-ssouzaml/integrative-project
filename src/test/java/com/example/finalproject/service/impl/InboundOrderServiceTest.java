@@ -1,6 +1,9 @@
 package com.example.finalproject.service.impl;
 
-import com.example.finalproject.exception.*;
+import com.example.finalproject.exception.InvalidDueDateException;
+import com.example.finalproject.exception.InvalidTemperatureException;
+import com.example.finalproject.exception.NotFoundException;
+import com.example.finalproject.exception.VolumeNotAvailableException;
 import com.example.finalproject.model.*;
 import com.example.finalproject.model.Enum.Category;
 import com.example.finalproject.repository.*;
@@ -142,6 +145,7 @@ class InboundOrderServiceTest {
 
     @Test
     void updateInboundOrder_returnListOfBatch_whenValidationsCorrect() {
+        when(inboundOrderRepo.findById(anyLong())).thenReturn(Optional.ofNullable(inboundOrder));
         when(warehouseRepo.findById(anyLong())).thenReturn(Optional.ofNullable(warehouse));
         when(sectionRepo.findById(anyLong())).thenReturn(Optional.ofNullable(section));
         when(advertisementRepo.findById(any())).thenReturn(Optional.ofNullable(advertisement));

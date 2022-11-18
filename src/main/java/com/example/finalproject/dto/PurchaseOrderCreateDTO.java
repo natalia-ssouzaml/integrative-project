@@ -15,9 +15,6 @@ import java.util.List;
 public class PurchaseOrderCreateDTO {
 
     @NotNull
-    private LocalDateTime dateTime;
-
-    @NotNull
     private Long buyerCode;
 
     @NotNull
@@ -26,7 +23,7 @@ public class PurchaseOrderCreateDTO {
 
     public static PurchaseOrder convertToPurchaseOrder(PurchaseOrderCreateDTO purchaseOrderCreateDTO) {
         return PurchaseOrder.builder()
-                .dateTime(purchaseOrderCreateDTO.getDateTime())
+                .dateTime(LocalDateTime.now())
                 .buyer(Buyer.builder().buyerCode(purchaseOrderCreateDTO.buyerCode).build())
                 .orderStatus(OrderStatus.ABERTO)
                 .purchaseItems(PurchaseItemDTO.convertToPurchaseItemList(purchaseOrderCreateDTO.getPurchaseItems()))

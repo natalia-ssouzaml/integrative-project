@@ -1,6 +1,9 @@
 package com.example.finalproject.service.impl;
 
-import com.example.finalproject.exception.*;
+import com.example.finalproject.exception.InvalidDueDateException;
+import com.example.finalproject.exception.InvalidTemperatureException;
+import com.example.finalproject.exception.NotFoundException;
+import com.example.finalproject.exception.VolumeNotAvailableException;
 import com.example.finalproject.model.*;
 import com.example.finalproject.repository.*;
 import com.example.finalproject.service.IInboundOrderService;
@@ -53,6 +56,7 @@ public class InboundOrderService implements IInboundOrderService {
     }
 
     public List<Batch> update(InboundOrder inboundOrder, Long warehouseCode, Long sectionCode, List<Long> advertisementList, List<Long> batchCodeList) {
+        inboundOrderRepo.findById(inboundOrder.getOrderCode()).orElseThrow(() -> new NotFoundException("Inbound order not found"));
         float totalVolumePrevious = 0;
         Warehouse warehouse = warehouseRepo.findById(warehouseCode).orElseThrow(() -> new NotFoundException("Warehouse not found"));
         Section section = sectionRepo.findById(sectionCode).orElseThrow(() -> new NotFoundException("Section not found"));

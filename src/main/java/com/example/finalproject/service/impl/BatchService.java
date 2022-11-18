@@ -24,6 +24,11 @@ public class BatchService implements IBatchService {
     @Autowired
     SectionRepo sectionRepo;
 
+    private static void emptyListValidation(int days, List<Batch> batchList) {
+        if (batchList.isEmpty())
+            throw new NotFoundException("There are no products that will expire in the next " + days + " days");
+    }
+
     @Override
     public List<Batch> findAllBatchBySectorAndDueDate(int days, Long sectionCode) {
         if (days <= 0) throw new InvalidArgumentException("Number of days must be positive");
@@ -31,12 +36,14 @@ public class BatchService implements IBatchService {
         LocalDate initialDate = LocalDate.now();
         LocalDate limitDate = initialDate.plusDays(days);
 
-        return batchRepo.findAll().stream()
+        List<Batch> batchList = batchRepo.findAll().stream()
                 .filter(b -> b.getDueDate().isAfter(initialDate.minusDays(1))
                         && b.getDueDate().isBefore(limitDate.plusDays(1)))
                 .filter(b -> b.getInboundOrder().getSection().getSectionCode().equals(sectionCode))
                 .sorted(Comparator.comparing(Batch::getDueDate))
                 .collect(Collectors.toList());
+        emptyListValidation(days, batchList);
+        return batchList;
     }
 
     @Override
@@ -47,12 +54,15 @@ public class BatchService implements IBatchService {
         LocalDate initialDate = LocalDate.now();
         LocalDate limitDate = initialDate.plusDays(days);
 
-        return batchRepo.findAll().stream()
+        List<Batch> batchList = batchRepo.findAll().stream()
                 .filter(b -> b.getDueDate().isAfter(initialDate.minusDays(1))
                         && b.getDueDate().isBefore(limitDate.plusDays(1)))
                 .filter(b -> b.getInboundOrder().getSection().getCategory().equals(section.getCategory()))
                 .sorted(order.equalsIgnoreCase("desc") ? Comparator.comparing(Batch::getDueDate).reversed() : Comparator.comparing(Batch::getDueDate))
                 .collect(Collectors.toList());
+
+        emptyListValidation(days, batchList);
+        return batchList;
     }
 
     @Override

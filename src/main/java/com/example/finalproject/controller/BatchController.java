@@ -40,7 +40,7 @@ public class BatchController {
 
     @GetMapping("/list/advertisement")
     public ResponseEntity<ListBatchesAdvertisementDTO> getAllAdvertisementByBatch(@RequestParam(value = "advertisement") Long advertisementCode,
-                                                                                  @RequestParam(required = false) String filter) {
-        return ResponseEntity.ok(new ListBatchesAdvertisementDTO(batchService.findByAdvertisementCode(advertisementCode, filter)));
+                                                                                  @RequestParam(required = false) String order) {
+        return ResponseEntity.ok(new ListBatchesAdvertisementDTO(batchService.findByAdvertisementCode(advertisementCode, order)));
     }
 }

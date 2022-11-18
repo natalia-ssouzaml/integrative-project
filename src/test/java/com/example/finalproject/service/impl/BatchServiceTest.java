@@ -124,6 +124,14 @@ class BatchServiceTest {
     }
 
     @Test
+    void findAllBatchBySectorAndDueDate_returnNotFoundException_whenEmptyList() {
+        int days = 1;
+        when(sectionRepo.findById(ArgumentMatchers.anyLong())).thenReturn(Optional.ofNullable(section));
+        when(batchRepo.findAll()).thenReturn(batchList);
+        Assertions.assertThrows(NotFoundException.class, () -> batchService.findAllBatchBySectorAndDueDate(days, section.getSectionCode()));
+    }
+
+    @Test
     void findAllBatchBySectorAndDueDate_returnInvalidArgumentException_whenNegativeDays() {
         int days = -100;
         Assertions.assertThrows(InvalidArgumentException.class, () -> batchService.findAllBatchBySectorAndDueDate(days, section.getSectionCode()));
