@@ -3,7 +3,6 @@ package com.example.finalproject.exception;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -53,6 +52,7 @@ public class HandlerException extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(exceptionDetails, HttpStatus.NOT_FOUND);
     }
+
     @ExceptionHandler(InvalidTemperatureException.class)
     public ResponseEntity<ExceptionDetails> handlerInvalidTemperatureException(InvalidTemperatureException ex) {
         ExceptionDetails exceptionDetails = ExceptionDetails.builder()
@@ -64,6 +64,7 @@ public class HandlerException extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(exceptionDetails, HttpStatus.NOT_FOUND);
     }
+
     @ExceptionHandler(VolumeNotAvailableException.class)
     public ResponseEntity<ExceptionDetails> handlerVolumeNotAvailableException(VolumeNotAvailableException ex) {
         ExceptionDetails exceptionDetails = ExceptionDetails.builder()
@@ -76,24 +77,51 @@ public class HandlerException extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(exceptionDetails, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(QuantityNotAvailableException.class)
+    public ResponseEntity<ExceptionDetails> handlerQuantityNotAvailableException(QuantityNotAvailableException ex) {
+        ExceptionDetails exceptionDetails = ExceptionDetails.builder()
+                .title("Quantity not available")
+                .message(ex.getMessage())
+                .status(HttpStatus.NOT_FOUND.value())
+                .timeStamp(LocalDateTime.now())
+                .build();
 
-//    @Override
-//    protected ResponseEntity<Object> handleHttpMessageNotReadable(
-//            HttpMessageNotReadableException ex,
-//            HttpHeaders httpHeaders,
-//            HttpStatus httpStatus,
-//            WebRequest webRequest) {
-//
-//
-//        return new ResponseEntity<>(
-//                ExceptionDetails.builder()
-//                        .title("Invalid parameter type")
-//                        .message("Invalid parameter type")
-//                        .status(HttpStatus.BAD_REQUEST.value())
-//                        .timeStamp(LocalDateTime.now())
-//                        .build()
-//                ,
-//                httpStatus);
-//
-//    }
+        return new ResponseEntity<>(exceptionDetails, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(PurchaseFailureException.class)
+    public ResponseEntity<ExceptionDetails> handlerPurchaseFailureException(PurchaseFailureException ex) {
+        ExceptionDetails exceptionDetails = ExceptionDetails.builder()
+                .title("Purchase failed")
+                .message(ex.getMessage())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .timeStamp(LocalDateTime.now())
+                .build();
+
+        return new ResponseEntity<>(exceptionDetails, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(InvalidArgumentException.class)
+    public ResponseEntity<ExceptionDetails> handlerInvalidArgumentException(InvalidArgumentException ex) {
+        ExceptionDetails exceptionDetails = ExceptionDetails.builder()
+                .title("Invalid argument")
+                .message(ex.getMessage())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .timeStamp(LocalDateTime.now())
+                .build();
+
+        return new ResponseEntity<>(exceptionDetails, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(InvalidDueDateException.class)
+    public ResponseEntity<ExceptionDetails> handlerInvalidDueDateException(InvalidDueDateException ex) {
+        ExceptionDetails exceptionDetails = ExceptionDetails.builder()
+                .title("Invalid date")
+                .message(ex.getMessage())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .timeStamp(LocalDateTime.now())
+                .build();
+
+        return new ResponseEntity<>(exceptionDetails, HttpStatus.BAD_REQUEST);
+    }
 }

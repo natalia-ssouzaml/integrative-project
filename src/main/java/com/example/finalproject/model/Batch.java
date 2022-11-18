@@ -1,12 +1,8 @@
 package com.example.finalproject.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -17,16 +13,21 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
+@Builder
+@ToString
 @NoArgsConstructor
+@AllArgsConstructor
 public class Batch {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long batchNumber;
+    private Long batchCode;
 
     @NotNull
-    @Column(nullable = false)
-    private Long advertisementId;
+    @ManyToOne
+    @JoinColumn(name = "advertisement_code")
+    @JsonIgnore
+    private Advertisement advertisement;
 
     @NotNull
     @Column(nullable = false)
@@ -53,8 +54,12 @@ public class Batch {
     private BigDecimal price;
 
     @ManyToOne
-    @JoinColumn(name = "order_number")
+    @JoinColumn(name = "order_code")
     @JsonIgnoreProperties("batchStock")
     @JsonIgnore
-    private InboundOrder orderNumber;
+    private InboundOrder inboundOrder;
+
+    public Float getUnitVolume() {
+        return getVolume() / getProductQuantity();
+    }
 }

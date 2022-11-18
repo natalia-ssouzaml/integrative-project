@@ -1,0 +1,390 @@
+{
+	"info": {
+		"_postman_id": "931dd803-c60e-428b-839c-16ca003587b8",
+		"name": "Projeto Integrador - Grupo 8",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Requisito 01",
+			"item": [
+				{
+					"name": "Create Inbound Order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sectionCode\": 2,\n    \"warehouseCode\": 1,\n    \"batchStock\": [\n        {\n            \"advertisementCode\": 1,\n            \"currentTemperature\": -20.0,\n            \"productQuantity\": 54,\n            \"manufacturingDateTime\": \"2022-11-18T15:35:00\",\n            \"volume\": 10,\n            \"dueDate\": \"2023-01-25\",\n            \"price\": 30.0\n        },\n        {\n            \"advertisementCode\": 2,\n            \"currentTemperature\": -20.0,\n            \"productQuantity\": 99,\n            \"manufacturingDateTime\": \"2022-11-18T15:35:00\",\n            \"volume\": 5,\n            \"dueDate\": \"2023-01-25\",\n            \"price\": 45.0\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/v1/fresh-products/inboundorder",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"fresh-products",
+								"inboundorder"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Inbound Order",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sectionCode\": 2,\n    \"warehouseCode\": 1,\n    \"orderCode\": 12,\n    \"batchStock\": [\n        {\n            \"batchCode\": 15,\n            \"advertisementCode\": 1,\n            \"currentTemperature\": -20.0,\n            \"productQuantity\": 40,\n            \"manufacturingDateTime\": \"2022-11-01T21:34:56\",\n            \"volume\": 10,\n            \"dueDate\": \"2023-01-27\",\n            \"price\": 60.0\n        },\n        {\n            \"batchCode\": 16,\n            \"advertisementCode\": 2,\n            \"currentTemperature\": -20.0,\n            \"productQuantity\": 60,\n            \"manufacturingDateTime\": \"2022-11-01T21:40:27\",\n            \"volume\": 15,\n            \"dueDate\": \"2023-01-27\",\n            \"price\": 200.0\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/v1/fresh-products/inboundorder",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"fresh-products",
+								"inboundorder"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Requisito 02",
+			"item": [
+				{
+					"name": "List All Advertisements",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/v1/fresh-products/",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"fresh-products",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List All Advertisements by Category",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/v1/fresh-products/list/congelado",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"fresh-products",
+								"list",
+								"congelado"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Purchase Order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"buyerCode\": 1,\n    \"purchaseItems\": [\n        {\n            \"advertisementCode\": 1,\n            \"quantity\": 50\n        },\n        {\n            \"advertisementCode\": 2,\n            \"quantity\": 10\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/v1/fresh-products/orders",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"fresh-products",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Advertisements by Purchase",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/api/v1/fresh-products/orders/1",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"fresh-products",
+								"orders",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Purchase Status",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/api/v1/fresh-products/orders/1",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"fresh-products",
+								"orders",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Requisito 03",
+			"item": [
+				{
+					"name": "List Advertisements by Batch",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/v1/fresh-products/list/advertisement?advertisement=1&order=V",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"fresh-products",
+								"list",
+								"advertisement"
+							],
+							"query": [
+								{
+									"key": "advertisement",
+									"value": "1"
+								},
+								{
+									"key": "order",
+									"value": "V"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Requisito 04",
+			"item": [
+				{
+					"name": "Count Advertisement By Warehouse",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/api/v1/fresh-products/list/warehouse?advertisement=1",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"fresh-products",
+								"list",
+								"warehouse"
+							],
+							"query": [
+								{
+									"key": "advertisement",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Requisito 05",
+			"item": [
+				{
+					"name": "Find All Batch By Sector And DueDate",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/api/v1/fresh-products/due-date?days=10&section=2",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"fresh-products",
+								"due-date"
+							],
+							"query": [
+								{
+									"key": "days",
+									"value": "10"
+								},
+								{
+									"key": "section",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find All Batch By Category And DueDate",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/api/v1/fresh-products/due-date/list?days=10&category=congelado&order=asc",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"fresh-products",
+								"due-date",
+								"list"
+							],
+							"query": [
+								{
+									"key": "days",
+									"value": "10"
+								},
+								{
+									"key": "category",
+									"value": "congelado"
+								},
+								{
+									"key": "order",
+									"value": "asc"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "local",
+			"value": "localhost:8080",
+			"type": "string"
+		}
+	]
+}

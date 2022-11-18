@@ -17,7 +17,7 @@ public class Manager {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long managerCode;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private String name;
 
     @OneToOne(mappedBy = "manager", cascade = CascadeType.PERSIST)

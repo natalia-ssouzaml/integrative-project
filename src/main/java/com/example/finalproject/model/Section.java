@@ -2,9 +2,7 @@ package com.example.finalproject.model;
 
 import com.example.finalproject.model.Enum.Category;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,6 +10,8 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class Section {
 
@@ -36,7 +36,7 @@ public class Section {
     private Float accumulatedVolume;
 
     @ManyToOne
-    @JoinColumn(name = "warehouse_id")
+    @JoinColumn(name = "warehouse_code")
     @JsonIgnoreProperties("sections")
     private Warehouse warehouse;
 

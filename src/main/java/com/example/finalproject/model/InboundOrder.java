@@ -1,6 +1,5 @@
 package com.example.finalproject.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
@@ -18,7 +17,7 @@ public class InboundOrder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long orderNumber;
+    private Long orderCode;
 
     @Column(nullable = false)
     private LocalDate orderDate;
@@ -28,8 +27,8 @@ public class InboundOrder {
     @JsonIgnoreProperties("orders")
     private Section section;
 
-    @OneToMany(mappedBy = "orderNumber", fetch = FetchType.LAZY)
-    @JsonIgnoreProperties("orderNumber")
+    @OneToMany(mappedBy = "inboundOrder", fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("inboundOrder")
     private List<Batch> batchStock;
 
 

@@ -10,23 +10,18 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@Builder
 @AllArgsConstructor
-public class Warehouse {
+@Builder
+public class Seller {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long warehouseCode;
+    private Long sellerCode;
 
     @Column(nullable = false)
-    private Float volume;
+    private String name;
 
-    @OneToOne
-    @JoinColumn(name = "manager_code")
-    private Manager manager;
-
-    @OneToMany(mappedBy = "warehouse", fetch = FetchType.LAZY)
-    @JsonIgnoreProperties("warehouse")
-    private List<Section> sections;
-
+    @OneToMany(mappedBy = "seller", fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("seller")
+    private List<Advertisement> advertisements;
 }

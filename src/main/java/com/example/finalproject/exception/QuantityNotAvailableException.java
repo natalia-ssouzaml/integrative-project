@@ -4,8 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
-public class VolumeNotAvailableException extends RuntimeException {
-    public VolumeNotAvailableException(String message) {
+public class QuantityNotAvailableException extends RuntimeException {
+    public QuantityNotAvailableException(String message) {
         super(message);
     }
 }
