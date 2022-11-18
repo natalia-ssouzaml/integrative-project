@@ -27,12 +27,12 @@ public class InboundOrderController {
         Long sectionCode = inboundOrderCreateDTO.getSectionCode();
         Long warehouseCode = inboundOrderCreateDTO.getWarehouseCode();
         List<Long> advertisementCodeList = inboundOrderCreateDTO.getBatchStock().stream().map(BatchDTO::getAdvertisementCode).collect(Collectors.toList());
-        List<BatchDTO> batchDTOList = BatchDTO.convertListToResponse(inboundOrderService.create(inboundOrder,warehouseCode,sectionCode,advertisementCodeList));
+        List<BatchDTO> batchDTOList = BatchDTO.convertListToResponse(inboundOrderService.create(inboundOrder, warehouseCode, sectionCode, advertisementCodeList));
         return new ResponseEntity<>(batchDTOList, HttpStatus.CREATED);
     }
 
     @PutMapping("/inboundorder")
-    public ResponseEntity<List<BatchDTO>> updateInboundOrder(@RequestBody InboundOrderUpdateDTO inboundOrderUpdateDTO){
+    public ResponseEntity<List<BatchDTO>> updateInboundOrder(@RequestBody InboundOrderUpdateDTO inboundOrderUpdateDTO) {
         InboundOrder inboundOrder = InboundOrderUpdateDTO.convertToInboundOrder(inboundOrderUpdateDTO);
         Long sectionCode = inboundOrderUpdateDTO.getSectionCode();
         Long warehouseCode = inboundOrderUpdateDTO.getWarehouseCode();

@@ -1,7 +1,7 @@
 package com.example.finalproject.controller;
 
-import com.example.finalproject.dto.PurchaseAdvertisementDTO;
 import com.example.finalproject.dto.PurchaseOrderCreateDTO;
+import com.example.finalproject.dto.PurchaseOrderDTO;
 import com.example.finalproject.dto.PurchaseOrderUpdateDTO;
 import com.example.finalproject.model.PurchaseOrder;
 import com.example.finalproject.service.IPurchaseOrderService;
@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/fresh-products")
@@ -27,8 +26,8 @@ public class PurchaseOrderController {
     }
 
     @GetMapping("/orders/{purchaseCode}")
-    public ResponseEntity<List<PurchaseAdvertisementDTO>> findAllAdvertisementsByPurchase(@PathVariable Long purchaseCode) {
-        return new ResponseEntity<>(PurchaseAdvertisementDTO.convertListToResponse(purchaseOrderService.findAllAdvertisementsByPurchase(purchaseCode)), HttpStatus.OK);
+    public ResponseEntity<PurchaseOrderDTO> findAllAdvertisementsByPurchase(@PathVariable Long purchaseCode) {
+        return new ResponseEntity<>(PurchaseOrderDTO.convertToResponse(purchaseOrderService.findAllAdvertisementsByPurchase(purchaseCode)), HttpStatus.OK);
     }
 
     @PutMapping("/orders/{purchaseCode}")

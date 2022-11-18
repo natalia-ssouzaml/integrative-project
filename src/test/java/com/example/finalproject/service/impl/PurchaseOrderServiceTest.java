@@ -2,7 +2,6 @@ package com.example.finalproject.service.impl;
 
 import com.example.finalproject.exception.PurchaseFailureException;
 import com.example.finalproject.exception.QuantityNotAvailableException;
-import com.example.finalproject.exception.VolumeNotAvailableException;
 import com.example.finalproject.model.*;
 import com.example.finalproject.model.Enum.Category;
 import com.example.finalproject.model.Enum.OrderStatus;
@@ -72,7 +71,7 @@ class PurchaseOrderServiceTest {
     void setUp() {
 
         buyer = Buyer.builder()
-                .buyerCode(1l)
+                .buyerCode(1L)
                 .name("Neymar")
                 .purchases(new ArrayList<>())
                 .build();
@@ -120,7 +119,7 @@ class PurchaseOrderServiceTest {
 
 
         advertisement = Advertisement.builder()
-                .advertisementCode(2l)
+                .advertisementCode(2L)
                 .name("Pizza")
                 .price(BigDecimal.valueOf(4.0))
                 .batches(batchList)
@@ -142,7 +141,7 @@ class PurchaseOrderServiceTest {
         purchaseItemList.add(purchaseItem);
 
         purchaseOrder = PurchaseOrder.builder()
-                .purchaseCode(1l)
+                .purchaseCode(1L)
                 .dateTime(LocalDateTime.of(2019, 01, 20, 22, 34))
                 .orderStatus(OrderStatus.ABERTO)
                 .buyer(buyer)
@@ -199,8 +198,9 @@ class PurchaseOrderServiceTest {
         when(purchaseOrderRepo.findById(anyLong())).thenReturn(Optional.ofNullable(purchaseOrder));
         purchaseOrderService.updatePurchaseStatus(purchaseOrder.getPurchaseCode());
         verify(sectionRepo, times(2)).save(section);
-        verify(batchRepo, times (1)).save(batch);
+        verify(batchRepo, times(1)).save(batch);
     }
+
     @Test
     void updatePurchaseStatus_returnPurchaseFailureException_whenBatchQuantityIsInvalid() {
         purchaseItem.setQuantity(1210);

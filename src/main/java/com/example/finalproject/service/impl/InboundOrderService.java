@@ -1,5 +1,6 @@
 package com.example.finalproject.service.impl;
 
+import com.example.finalproject.exception.InvalidDueDateException;
 import com.example.finalproject.exception.InvalidTemperatureException;
 import com.example.finalproject.exception.NotFoundException;
 import com.example.finalproject.exception.VolumeNotAvailableException;
@@ -9,6 +10,8 @@ import com.example.finalproject.service.IInboundOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Service
@@ -43,6 +46,7 @@ public class InboundOrderService implements IInboundOrderService {
         float totalVolume = batchesTotalVolume(inboundOrder.getBatchStock()).floatValue();
         volumeValidation(section, totalVolume);
         temperatureValidation(inboundOrder);
+        validationDueDate(inboundOrder);
         inboundOrderRepo.save(inboundOrder);
         setBatchOrderCode(inboundOrder);
 
@@ -52,24 +56,42 @@ public class InboundOrderService implements IInboundOrderService {
     }
 
     public List<Batch> update(InboundOrder inboundOrder, Long warehouseCode, Long sectionCode, List<Long> advertisementList, List<Long> batchCodeList) {
+        inboundOrderRepo.findById(inboundOrder.getOrderCode()).orElseThrow(() -> new NotFoundException("Inbound order not found"));
+        float totalVolumePrevious = 0;
         Warehouse warehouse = warehouseRepo.findById(warehouseCode).orElseThrow(() -> new NotFoundException("Warehouse not found"));
         Section section = sectionRepo.findById(sectionCode).orElseThrow(() -> new NotFoundException("Section not found"));
+        warehouseSectionValidation(section, warehouse);
 
         inboundOrder.setSection(section);
         for (int i = 0; i < advertisementList.size(); i++) {
             Advertisement advertisement = advertisementRepo.findById(advertisementList.get(i)).orElseThrow(() -> new NotFoundException("Advertisement not found"));
             Batch batch = batchRepo.findById(batchCodeList.get(i)).orElseThrow(() -> new NotFoundException("Batch not found"));
-
+            totalVolumePrevious += batch.getVolume();
             inboundOrder.getBatchStock().get(i).setAdvertisement(advertisement);
             inboundOrder.getBatchStock().get(i).setBatchCode(batch.getBatchCode());
         }
 
-        setBatchOrderCode(inboundOrder);
+        float totalVolume = batchesTotalVolume(inboundOrder.getBatchStock()).floatValue();
+        volumeValidation(inboundOrder.getSection(), totalVolume);
+        temperatureValidation(inboundOrder);
+        validationDueDate(inboundOrder);
 
+        setBatchOrderCode(inboundOrder);
         batchCodeValidation(inboundOrder);
-        warehouseSectionValidation(section, warehouse);
+
+        section.setAccumulatedVolume(totalVolume + (section.getAccumulatedVolume() - totalVolumePrevious));
 
         return batchRepo.saveAll(inboundOrder.getBatchStock());
+    }
+
+    private void validationDueDate(InboundOrder inboundOrder) {
+        LocalDate localDate = LocalDate.now();
+        inboundOrder.getBatchStock().forEach(batch -> {
+            if (ChronoUnit.WEEKS.between(localDate, batch.getDueDate()) <= 3) {
+                throw new InvalidDueDateException("Due date not allowed. Must be bigger than three weeks");
+            }
+
+        });
     }
 
     private void batchCodeValidation(InboundOrder inboundOrder) {

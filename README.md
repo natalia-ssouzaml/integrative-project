@@ -53,28 +53,28 @@ a LATAM, criando os artefatos necessários para permitir as seguintes funcionali
 
 ```json
 {
-    "sectionCode": 2,
-    "warehouseCode": 1,
-    "batchStock": [
-        {
-            "advertisementCode": 1,
-            "currentTemperature": -20.0,
-            "productQuantity": 54,
-            "manufacturingDateTime": "2016-01-25T21:34:55",
-            "volume": 1,
-            "dueDate": "2016-01-25T21:34:55",
-            "price": 30.0
-        },
-        {
-            "advertisementCode": 2,
-            "currentTemperature": -20.0,
-            "productQuantity": 99,
-            "manufacturingDateTime": "2016-01-27T21:34:55",
-            "volume": 5,
-            "dueDate": "2016-01-25T21:34:55",
-            "price": 45.0
-        }
-    ]
+  "sectionCode": 2,
+  "warehouseCode": 1,
+  "batchStock": [
+    {
+      "advertisementCode": 1,
+      "currentTemperature": -20.0,
+      "productQuantity": 54,
+      "manufacturingDateTime": "2022-11-18T15:35:00",
+      "volume": 10,
+      "dueDate": "2023-01-25",
+      "price": 30.0
+    },
+    {
+      "advertisementCode": 2,
+      "currentTemperature": -20.0,
+      "productQuantity": 99,
+      "manufacturingDateTime": "2022-11-18T15:35:00",
+      "volume": 5,
+      "dueDate": "2023-01-25",
+      "price": 45.0
+    }
+  ]
 }
 ```
 
@@ -88,31 +88,31 @@ a LATAM, criando os artefatos necessários para permitir as seguintes funcionali
 
 ```json
 {
-    "sectionCode": 2,
-    "warehouseCode": 1,
-    "orderCode": 1,
-    "batchStock": [
-        {
-            "batchCode": 7,
-            "advertisementCode": 1,
-            "currentTemperature": -20.0,
-            "productQuantity": 35,
-            "manufacturingDateTime": "2022-11-01T21:34:56",
-            "volume": 10,
-            "dueDate": "2023-01-27",
-            "price": 30.0
-        },
-        {
-            "batchCode": 8,
-            "advertisementCode": 2,
-            "currentTemperature": -20.0,
-            "productQuantity": 60,
-            "manufacturingDateTime": "2022-11-01T21:40:27",
-            "volume": 5,
-            "dueDate": "2023-01-27",
-            "price": 45.0
-        }
-    ]
+  "sectionCode": 2,
+  "warehouseCode": 1,
+  "orderCode": 12,
+  "batchStock": [
+    {
+      "batchCode": 15,
+      "advertisementCode": 1,
+      "currentTemperature": -20.0,
+      "productQuantity": 40,
+      "manufacturingDateTime": "2022-11-01T21:34:56",
+      "volume": 10,
+      "dueDate": "2023-01-27",
+      "price": 60.0
+    },
+    {
+      "batchCode": 16,
+      "advertisementCode": 2,
+      "currentTemperature": -20.0,
+      "productQuantity": 60,
+      "manufacturingDateTime": "2022-11-01T21:40:27",
+      "volume": 15,
+      "dueDate": "2023-01-27",
+      "price": 200.0
+    }
+  ]
 }
 ```
 
@@ -149,18 +149,17 @@ a LATAM, criando os artefatos necessários para permitir as seguintes funcionali
 
 ```json
 {
-    "dateTime": "2022-11-11T11:04:00",
-    "buyerCode": 1,
-    "purchaseItems": [
-        {
-            "advertisementCode": 1,
-            "quantity": 50
-        },
-        {
-            "advertisementCode": 2,
-            "quantity": 10
-        }
-    ]
+  "buyerCode": 1,
+  "purchaseItems": [
+    {
+      "advertisementCode": 1,
+      "quantity": 50
+    },
+    {
+      "advertisementCode": 2,
+      "quantity": 10
+    }
+  ]
 }
 ```
 
@@ -191,12 +190,12 @@ a LATAM, criando os artefatos necessários para permitir as seguintes funcionali
 #### List Advertisements by Batch
 
 ```http
-  GET localhost:8080/api/v1/fresh-products/list/advertisement?advertisement=${advertisementCode}&filter=${orderParam}
+  GET localhost:8080/api/v1/fresh-products/list/advertisement?advertisement=${advertisementCode}&order=${orderParam}
 ```
-| Parâmetro       | Tipo     | Descrição                                                                                   |
-|:----------------|:---------|:--------------------------------------------------------------------------------------------|
-| `advertisement` | `int`    | **Obrigatório**. O código do anúncio que você quer                                          |
-| `filter`        | `string` | **Opcional**. O tipo de ordenação que deseja aplicar: *V = Data validade ou Q = Quantidade* |
+| Parâmetro       | Tipo     | Descrição                                                                                                         |
+|:----------------|:---------|:------------------------------------------------------------------------------------------------------------------|
+| `advertisement` | `int`    | **Obrigatório**. O código do anúncio que você quer                                                                |
+| `order`         | `string` | **Opcional**. O tipo de ordenação que deseja aplicar: *V = Data validade ou Q = Quantidade ou L = Número do Lote* |
 
 </details>
 
@@ -221,7 +220,7 @@ a LATAM, criando os artefatos necessários para permitir as seguintes funcionali
 #### Find All Batch By Sector And DueDate
 
 ```http
-  GET localhost:8080/api/v1/fresh-products/due-date?days=${numberDays}0&section=${sectionCode}
+  GET localhost:8080/api/v1/fresh-products/due-date?days=${numberDays}&section=${sectionCode}
 ```
 | Parâmetro    | Tipo  | Descrição                                                     |
 |:-------------|:------|:--------------------------------------------------------------|
