@@ -112,4 +112,15 @@ public class HandlerException extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(exceptionDetails, HttpStatus.BAD_REQUEST);
     }
+    @ExceptionHandler(InvalidDueDateException.class)
+    public ResponseEntity<ExceptionDetails> handlerInvalidDueDateException(InvalidDueDateException ex) {
+        ExceptionDetails exceptionDetails = ExceptionDetails.builder()
+                .title("Invalid date")
+                .message(ex.getMessage())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .timeStamp(LocalDateTime.now())
+                .build();
+
+        return new ResponseEntity<>(exceptionDetails, HttpStatus.BAD_REQUEST);
+    }
 }
