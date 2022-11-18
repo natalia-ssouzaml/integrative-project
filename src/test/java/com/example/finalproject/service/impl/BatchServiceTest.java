@@ -14,7 +14,6 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.util.Assert;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -155,36 +154,36 @@ class BatchServiceTest {
         when(batchRepo.findByAdvertisementAdvertisementCode(ArgumentMatchers.anyLong())).thenReturn(batchList);
         List<Batch> batchListService = batchService.findByAdvertisementCode(advertisementI.getAdvertisementCode());
         Assertions.assertNotNull(batchListService);
-        Assertions.assertEquals(2,batchListService.size());
+        Assertions.assertEquals(2, batchListService.size());
     }
 
     @Test
     void findByAdvertisementCode_returnListBatchFilterByQuantity_whenSuccess() {
         batchList.remove(batchIII);
         when(batchRepo.findByAdvertisementAdvertisementCode(ArgumentMatchers.anyLong())).thenReturn(batchList);
-        List<Batch> batchListService = batchService.findByAdvertisementCode(advertisementI.getAdvertisementCode(),"Q");
+        List<Batch> batchListService = batchService.findByAdvertisementCode(advertisementI.getAdvertisementCode(), "Q");
         Assertions.assertNotNull(batchListService);
-        Assertions.assertEquals(2,batchListService.size());
-        Assertions.assertEquals(50,batchListService.get(0).getProductQuantity());
+        Assertions.assertEquals(2, batchListService.size());
+        Assertions.assertEquals(50, batchListService.get(0).getProductQuantity());
     }
 
     @Test
     void findByAdvertisementCode_returnListBatchFilterByValid_whenSuccess() {
         batchList.remove(batchIII);
         when(batchRepo.findByAdvertisementAdvertisementCode(ArgumentMatchers.anyLong())).thenReturn(batchList);
-        List<Batch> batchListService = batchService.findByAdvertisementCode(advertisementI.getAdvertisementCode(),"V");
+        List<Batch> batchListService = batchService.findByAdvertisementCode(advertisementI.getAdvertisementCode(), "V");
         Assertions.assertNotNull(batchListService);
-        Assertions.assertEquals(2,batchListService.size());
-        Assertions.assertEquals(LocalDate.of(2023, 1, 31),batchListService.get(0).getDueDate());
+        Assertions.assertEquals(2, batchListService.size());
+        Assertions.assertEquals(LocalDate.of(2023, 1, 31), batchListService.get(0).getDueDate());
     }
 
     @Test
     void findByAdvertisementCode_returnListBatchWhenFilterIsEmpty_whenSuccess() {
         batchList.remove(batchIII);
         when(batchRepo.findByAdvertisementAdvertisementCode(ArgumentMatchers.anyLong())).thenReturn(batchList);
-        List<Batch> batchListService = batchService.findByAdvertisementCode(advertisementI.getAdvertisementCode(),"");
+        List<Batch> batchListService = batchService.findByAdvertisementCode(advertisementI.getAdvertisementCode(), "");
         Assertions.assertNotNull(batchListService);
-        Assertions.assertEquals(2,batchListService.size());
+        Assertions.assertEquals(2, batchListService.size());
     }
 
 }

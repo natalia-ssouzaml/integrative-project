@@ -14,7 +14,7 @@ public interface IPurchaseOrderService {
      * @param purchaseCode The code of the purchase.
      * @return List of PurchaseItem.
      */
-    List<PurchaseItem> findAllAdvertisementsByPurchase(Long purchaseCode);
+    PurchaseOrder findAllAdvertisementsByPurchase(Long purchaseCode);
 
     /**
      * Update the status of a purchase order.

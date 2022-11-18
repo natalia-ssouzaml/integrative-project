@@ -43,7 +43,7 @@ public class AdvertisementServiceTest {
     void setup() {
         advertisementList = new ArrayList<>();
         advertisement = Advertisement.builder()
-                .advertisementCode(2l)
+                .advertisementCode(2L)
                 .name("Pizza")
                 .price(BigDecimal.valueOf(4.0))
                 .seller(Seller.builder().build())

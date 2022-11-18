@@ -1,11 +1,10 @@
 package com.example.finalproject.service.impl;
 
-import com.example.finalproject.exception.InvalidTemperatureException;
-import com.example.finalproject.exception.NotFoundException;
-import com.example.finalproject.exception.VolumeNotAvailableException;
+import com.example.finalproject.exception.*;
 import com.example.finalproject.model.*;
 import com.example.finalproject.model.Enum.Category;
 import com.example.finalproject.repository.*;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,19 +29,14 @@ class InboundOrderServiceTest {
 
     @InjectMocks
     InboundOrderService inboundOrderService;
-
-    @Mock
-    private InboundOrderRepo inboundOrderRepo;
-
-    @Mock
-    private WarehouseRepo warehouseRepo;
-
-    @Mock
-    private SectionRepo sectionRepo;
-
     @Mock
     AdvertisementRepo advertisementRepo;
-
+    @Mock
+    private InboundOrderRepo inboundOrderRepo;
+    @Mock
+    private WarehouseRepo warehouseRepo;
+    @Mock
+    private SectionRepo sectionRepo;
     @Mock
     private BatchRepo batchRepo;
 
@@ -53,7 +47,6 @@ class InboundOrderServiceTest {
     private Section section;
 
     private InboundOrder inboundOrder;
-    private InboundOrder inboundOrderII;
 
     private List<Long> advertisementIdsList;
 
@@ -77,13 +70,7 @@ class InboundOrderServiceTest {
 
         batchList = new ArrayList<>();
 
-        inboundOrderII = InboundOrder.builder()
-                .orderCode(1L)
-                .orderDate(LocalDate.of(2019, 10, 25))
-                .section(section)
-                .batchStock(new ArrayList<>()).build();
-
-        advertisement = Advertisement.builder().advertisementCode(2l).name("Pizza").price(BigDecimal.valueOf(4.0)).seller(Seller.builder().build()).build();
+        advertisement = Advertisement.builder().advertisementCode(2L).name("Pizza").price(BigDecimal.valueOf(4.0)).seller(Seller.builder().build()).build();
 
         batch = Batch.builder()
                 .batchCode(3L)
@@ -93,7 +80,7 @@ class InboundOrderServiceTest {
                 .productQuantity(100)
                 .manufacturingDateTime(LocalDateTime.of(2019, 01, 20, 22, 34))
                 .volume(12.0F)
-                .dueDate(LocalDate.of(2019, 01, 05))
+                .dueDate(LocalDate.of(2023, 01, 05))
                 .price(BigDecimal.valueOf(45.0D))
                 .build();
 
@@ -104,7 +91,7 @@ class InboundOrderServiceTest {
                 .currentTemperature(-20.0F)
                 .productQuantity(10)
                 .manufacturingDateTime(LocalDateTime.of(2019, 02, 02, 05, 55))
-                .volume(3.0F).dueDate(LocalDate.of(2019, 10, 25))
+                .volume(3.0F).dueDate(LocalDate.of(2023, 10, 25))
                 .price(BigDecimal.valueOf(5.0D))
                 .build();
 
@@ -139,6 +126,20 @@ class InboundOrderServiceTest {
 
     }
 
+
+    @Test
+    void createInboundOrder_returnInvalidDueDateException_whenDueDateLessThanThreeWeeks() {
+        LocalDate dueDate = LocalDate.now();
+
+        when(warehouseRepo.findById(anyLong())).thenReturn(Optional.ofNullable(warehouse));
+        when(sectionRepo.findById(anyLong())).thenReturn(Optional.ofNullable(section));
+        when(advertisementRepo.findById(any())).thenReturn(Optional.ofNullable(advertisement));
+
+        inboundOrder.getBatchStock().get(0).setDueDate(dueDate);
+
+        Assertions.assertThrows(InvalidDueDateException.class, () -> inboundOrderService.create(inboundOrder, warehouse.getWarehouseCode(), section.getSectionCode(), advertisementIdsList));
+    }
+
     @Test
     void updateInboundOrder_returnListOfBatch_whenValidationsCorrect() {
         when(warehouseRepo.findById(anyLong())).thenReturn(Optional.ofNullable(warehouse));
@@ -148,8 +149,8 @@ class InboundOrderServiceTest {
         when(batchRepo.existsById(any())).thenReturn(true);
         inboundOrderService.update(inboundOrder, warehouse.getWarehouseCode(), section.getSectionCode(), advertisementIdsList, batchNumberList);
         verify(batchRepo, times(1)).saveAll(inboundOrder.getBatchStock());
-
     }
+
 
     @Test
     void createInboundOrder_returnNotFoundException_whenWarehouseAndSectionNotEquals() {
@@ -178,7 +179,5 @@ class InboundOrderServiceTest {
         when(sectionRepo.findById(anyLong())).thenReturn(Optional.ofNullable(section));
         when(advertisementRepo.findById(any())).thenReturn(Optional.ofNullable(advertisement));
         assertThrows(VolumeNotAvailableException.class, () -> inboundOrderService.create(inboundOrder, warehouse.getWarehouseCode(), section.getSectionCode(), advertisementIdsList));
-
-
     }
 }

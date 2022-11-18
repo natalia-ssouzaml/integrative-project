@@ -20,14 +20,14 @@ public class PurchaseAdvertisementDTO {
     private int quantity;
     private Double totalPrice;
 
-    private OrderStatus orderStatus;
+//    private OrderStatus orderStatus;
 
     public PurchaseAdvertisementDTO(PurchaseItem purchaseItem) {
         this.name = purchaseItem.getAdvertisement().getName();
         this.price = purchaseItem.getAdvertisement().getPrice();
         this.quantity = purchaseItem.getQuantity();
         this.totalPrice = this.price.doubleValue() * this.quantity;
-        this.orderStatus = purchaseItem.getPurchaseOrder().getOrderStatus();
+//        this.orderStatus = purchaseItem.getPurchaseOrder().getOrderStatus();
     }
 
     private static PurchaseAdvertisementDTO convertToResponse(PurchaseItem purchaseItem) {

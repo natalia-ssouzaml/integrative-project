@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Comparator;
 import java.util.List;
@@ -65,10 +66,10 @@ public class PurchaseOrderService implements IPurchaseOrderService {
     }
 
     @Override
-    public List<PurchaseItem> findAllAdvertisementsByPurchase(Long purchaseCode) {
+    public PurchaseOrder findAllAdvertisementsByPurchase(Long purchaseCode) {
         PurchaseOrder purchaseOrder = (purchaseOrderRepo.findById(purchaseCode).orElseThrow(() -> new NotFoundException("Purchase order not found")));
         purchaseOrder.getPurchaseItems().forEach(i -> i.getAdvertisement().setPrice(i.getPrice().divide(BigDecimal.valueOf(i.getQuantity()), RoundingMode.DOWN)));
-        return purchaseOrder.getPurchaseItems();
+        return purchaseOrder;
     }
 
     @Override
@@ -95,6 +96,7 @@ public class PurchaseOrderService implements IPurchaseOrderService {
                 }
             }
         }
+        purchaseOrder.setDateTime(LocalDateTime.now());
         purchaseOrder.setOrderStatus(OrderStatus.FINALIZADO);
         return purchaseOrderRepo.save(purchaseOrder);
     }
