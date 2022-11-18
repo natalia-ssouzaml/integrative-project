@@ -8,11 +8,12 @@ import java.util.List;
 
 public interface IPurchaseOrderService {
 
+
     /**
-     * Find all advertisements by purchase.
+     * It returns a list of advertisements that are associated with a purchase.
      *
      * @param purchaseCode The code of the purchase.
-     * @return List of PurchaseItem.
+     * @return A Purchase order containing a list of advertisements associated with the purchase.
      */
     PurchaseOrder findAllAdvertisementsByPurchase(Long purchaseCode);
 

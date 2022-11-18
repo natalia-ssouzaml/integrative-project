@@ -221,7 +221,7 @@ a LATAM, criando os artefatos necessários para permitir as seguintes funcionali
 #### Find All Batch By Sector And DueDate
 
 ```http
-  GET localhost:8080/api/v1/fresh-products/due-date?days=${numberDays}0&section=${sectionCode}
+  GET localhost:8080/api/v1/fresh-products/due-date?days=${numberDays}&section=${sectionCode}
 ```
 | Parâmetro    | Tipo  | Descrição                                                     |
 |:-------------|:------|:--------------------------------------------------------------|
