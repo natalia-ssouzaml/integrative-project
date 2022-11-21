@@ -288,5 +288,5 @@ Cadastrar um Buyer e fazer login.
 
 - [Collection (endpoints)](src/main/resources/projeto-integrador.postman_collection.json)
 
-- [Collection (endpoints com requisito 6)](src/main/resources/Insomnia_2022-11-21 2.json)
+- [Collection (endpoints com requisito 6)](src/main/resources/projeto-integrador-requisitoextra.json)
 
