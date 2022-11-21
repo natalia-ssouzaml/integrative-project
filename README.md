@@ -144,7 +144,7 @@ Cadastrar um Buyer e fazer login.
 | `category` | `string` | **Obrigatório**. A categoria que você quer: *Refrigerado, Fresco ou Congelado* |
 
 
-#### Create Purchase Order
+#### Create Purchase Order apenas se o buyer estiver autenticado.
 
 ```http
   POST localhost:8080/api/v1/fresh-products/orders
@@ -178,7 +178,7 @@ Cadastrar um Buyer e fazer login.
 | `purchaseCode` | `int` | **Obrigatório**. O código da ordem de compra que você quer |
 
 
-#### Change Purchase Order Status
+#### Change Purchase Order Status apenas se o buyer estiver autenticado.
 
 ```http
   PUT localhost:8080/api/v1/fresh-products/orders/${purchaseCode}
@@ -248,38 +248,35 @@ Cadastrar um Buyer e fazer login.
 <details>
   <summary><h3> Requerimento 6 </h3></summary>
   
-  #### Create Purchase Order apenas se o buyer estiver autenticado.
+  #### Create new Buyer
 
 ```http
-  POST localhost:8080/api/v1/fresh-products/orders
+  POST localhost:8080/buyer/new
 ```
 
 ###### **@RequestBody**
 
 ```json
 {
-  "buyerCode": 1,
-  "purchaseItems": [
-    {
-      "advertisementCode": 1,
-      "quantity": 50
-    },
-    {
-      "advertisementCode": 2,
-      "quantity": 10
-    }
-  ]
+	"name": "Seu nome",
+	"username": "Seu email",
+	"password": "Sua senha"
 }
 ```
   
-  #### Change Purchase Order Status apenas se o buyer estiver autenticado.
+  #### Login Buyer
 
 ```http
-  PUT localhost:8080/api/v1/fresh-products/orders/${purchaseCode}
+  POST localhost:8080/buyer/login
 ```
-| Parâmetro      | Tipo  | Descrição                                                            |
-|:---------------|:------|:---------------------------------------------------------------------|
-| `purchaseCode` | `int` | **Obrigatório**. O código da ordem de compra que você quer finalizar |
+###### **@RequestBody**
+
+```json
+{
+	"username": "Seu email",
+	"password": "Sua senha"
+}
+
 
 
 </details>
