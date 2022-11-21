@@ -33,9 +33,14 @@ a LATAM, criando os artefatos necessários para permitir as seguintes funcionali
 - Poder cadastrar o pedido de compra para que os colaboradores dentro do Fullfilment possam montar o (s) pedido (s) para despachá-los.
 
 
+## :sparkles: Funcionalidade extras:
+
+Cadastrar um Buyer e fazer login.
+
+
 ## :pencil: Modelagem UML
 
-![Modelagem UML](src/main/resources/images/modelagem.jpg)
+![Modelagem UML](src/main/resources/images/Diagrama-UML.png)
 
 
 ## :books: Documentação da API
@@ -240,9 +245,48 @@ a LATAM, criando os artefatos necessários para permitir as seguintes funcionali
 | `order`      | `string` | **Opcional**. O tipo de ordenação que deseja aplicar: *asc = ascendente ou desc = descendente* |
 
 </details>
+<details>
+  <summary><h3> Requerimento 6 </h3></summary>
+  
+  #### Create Purchase Order apenas se o buyer estiver autenticado.
 
+```http
+  POST localhost:8080/api/v1/fresh-products/orders
+```
+
+###### **@RequestBody**
+
+```json
+{
+  "buyerCode": 1,
+  "purchaseItems": [
+    {
+      "advertisementCode": 1,
+      "quantity": 50
+    },
+    {
+      "advertisementCode": 2,
+      "quantity": 10
+    }
+  ]
+}
+```
+  
+  #### Change Purchase Order Status apenas se o buyer estiver autenticado.
+
+```http
+  PUT localhost:8080/api/v1/fresh-products/orders/${purchaseCode}
+```
+| Parâmetro      | Tipo  | Descrição                                                            |
+|:---------------|:------|:---------------------------------------------------------------------|
+| `purchaseCode` | `int` | **Obrigatório**. O código da ordem de compra que você quer finalizar |
+
+
+</details>
 
 ## :file_folder: Download Endpoints
 
 - [Collection (endpoints)](src/main/resources/projeto-integrador.postman_collection.json)
+
+- [Collection (endpoints com requisito 6)](src/main/resources/Insomnia_2022-11-21 2.json)
 
