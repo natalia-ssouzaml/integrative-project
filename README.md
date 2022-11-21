@@ -276,10 +276,10 @@ Cadastrar um Buyer e fazer login.
 	"username": "Seu email",
 	"password": "Sua senha"
 }
-
-
+```
 
 </details>
+
 
 ## :file_folder: Download Endpoints
 
