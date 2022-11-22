@@ -251,7 +251,7 @@ Cadastrar um Buyer e fazer login.
   #### Create new Buyer
 
 ```http
-  POST localhost:8080/buyer/new
+  POST localhost:8080/api/v1/fresh-products/buyer/new
 ```
 
 ###### **@RequestBody**
@@ -267,7 +267,7 @@ Cadastrar um Buyer e fazer login.
   #### Login Buyer
 
 ```http
-  POST localhost:8080/buyer/login
+  POST localhost:8080/api/v1/fresh-products/buyer/login
 ```
 ###### **@RequestBody**
 

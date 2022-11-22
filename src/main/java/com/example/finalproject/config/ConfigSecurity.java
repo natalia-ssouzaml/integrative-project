@@ -44,8 +44,8 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.authorizeRequests()
-                .antMatchers("/buyer/login").permitAll()
-                .antMatchers("/buyer/new").permitAll()
+                .antMatchers("/api/v1/fresh-products/buyer/new").permitAll()
+                .antMatchers("/api/v1/fresh-products/buyer/login").permitAll()
                 .antMatchers(HttpMethod.GET,"/api/v1/fresh-products*").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/v1/fresh-products/list/{category}").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/v1/fresh-products/due-date").permitAll()

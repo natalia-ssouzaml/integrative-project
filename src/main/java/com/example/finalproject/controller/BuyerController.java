@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/buyer")
+@RequestMapping("/api/v1/fresh-products/")
 public class BuyerController {
 
     @Autowired
@@ -30,7 +30,7 @@ public class BuyerController {
     @Autowired
     JwtTokenUtil jwtUtil;
 
-    @PostMapping("/new")
+    @PostMapping("buyer/new")
     public ResponseEntity<Buyer> insertBuyer(@RequestBody @Valid BuyerAuth authUser) {
 
         Buyer buyer = service.saveBuyer(authUser);
@@ -41,7 +41,7 @@ public class BuyerController {
         return ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
 
-    @PostMapping("/login")
+    @PostMapping("buyer/login")
     public ResponseEntity<String> login(@RequestBody @Valid BuyerAuth authUser) {
         try {
             Authentication authentication = authManager.authenticate(
