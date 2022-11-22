@@ -12,19 +12,10 @@
 <h3>Default endpoint</h3>
 
 ```http
-  GET localhost:8080/api/v1/fresh-products/orders/totalsales?warehousecode={warehousecode}
-```
-<h3> Endpoint with date filters</h3>
-
-```http
   GET localhost:8080/api/v1/fresh-products/orders/totalsales?warehousecode={warehousecode}&initialdate={initialdate}&finaldate={finaldate}
 ```
-<h3>Endpoint with only initial date</h3>
-<p> This endpoint will be filtered from initialdate(param) to the current date(LocalDateTime.now()) that you send it</p>
 
-```http
-  GET localhost:8080/api/v1/fresh-products/orders/totalsales?warehousecode={warehousecode}&initialdate={initialdate}
-```
+<p>If you pass only initial date the endpoint will be filtered from initial date to current date</p>
 
 | Param    | Type     | Description                                                                                      |
 |:-------------|:---------|:-----------------------------------------------------------------------------------------------|
