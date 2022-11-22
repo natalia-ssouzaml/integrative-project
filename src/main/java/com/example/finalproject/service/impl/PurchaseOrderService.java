@@ -40,6 +40,8 @@ public class PurchaseOrderService implements IPurchaseOrderService {
     @Autowired
     private SectionRepo sectionRepo;
 
+    @Autowired
+    WarehouseRepo warehouseRepo;
 
     @Override
     public BigDecimal createPurchaseOrder(PurchaseOrder purchaseOrder) {
@@ -64,6 +66,7 @@ public class PurchaseOrderService implements IPurchaseOrderService {
         purchaseItemRepo.saveAll(purchaseItemList);
         return totalPrice;
     }
+
 
     @Override
     public PurchaseOrder findAllAdvertisementsByPurchase(Long purchaseCode) {
@@ -152,5 +155,21 @@ public class PurchaseOrderService implements IPurchaseOrderService {
                 .sorted(Comparator.comparing(Batch::getDueDate))
                 .collect(Collectors.toList());
     }
-}
 
+    @Override
+    public List<PurchaseItem> findAllByInitialDateAndFinalDate(LocalDate initialDate, LocalDate finalDate) {
+        List<PurchaseItem> purchaseItemList = purchaseItemRepo.findAllByInitialDateAndFinalDate(initialDate, finalDate);
+        if (purchaseItemList.isEmpty()) throw new NotFoundException("There are not any sale in this period");
+        return purchaseItemList;
+    }
+
+    @Override
+    public List<PurchaseItem> findAllByWarehouseInitialDateAndFinalDate(Long warehouseCode, LocalDate initialDate, LocalDate finalDate) {
+        if(!warehouseRepo.existsById(warehouseCode))throw new NotFoundException("Warehouse not found");
+        List<PurchaseItem> purchaseItemList = purchaseItemRepo.findAllByWarehouseInitialDateAndFinalDate(warehouseCode, initialDate, finalDate);
+        if (purchaseItemList.isEmpty()) throw new NotFoundException("There are not any sale in this period");
+        return purchaseItemList;
+
+    }
+
+}
