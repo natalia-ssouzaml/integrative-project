@@ -5,7 +5,6 @@ import com.example.finalproject.model.PurchaseOrder;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public interface IPurchaseOrderService {
@@ -35,5 +34,14 @@ public interface IPurchaseOrderService {
      */
     BigDecimal createPurchaseOrder(PurchaseOrder purchaseOrder);
 
+
+    /**
+     * Find all purchase items by warehouse code, initial date and final date.
+     *
+     * @param warehouseCode The code of the warehouse you want to search for.
+     * @param initialDate The initial date of the purchase.
+     * @param finalDate The final date of the purchase.
+     * @return List<PurchaseItem>
+     */
     List<PurchaseItem> findAllByWarehouseInitialDateAndFinalDate(Long warehouseCode, LocalDate initialDate, LocalDate finalDate);
 }
