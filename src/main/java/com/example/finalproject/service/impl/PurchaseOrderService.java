@@ -167,8 +167,7 @@ public class PurchaseOrderService implements IPurchaseOrderService {
         return purchaseItemList;
     }
 
-    @Override
-    public List<PurchaseItem> findAllByWarehouseCode(Long warehouseCode) {
+    private List<PurchaseItem> findAllByWarehouseCode(Long warehouseCode) {
         List<PurchaseItem> purchaseItemList = purchaseItemRepo.findAllByWarehouseCode(warehouseCode);
         purchaseItemListValidation(purchaseItemList);
         return purchaseItemList;

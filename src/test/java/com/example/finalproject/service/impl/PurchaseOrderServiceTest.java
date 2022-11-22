@@ -1,5 +1,6 @@
 package com.example.finalproject.service.impl;
 
+import com.example.finalproject.exception.NotFoundException;
 import com.example.finalproject.exception.PurchaseFailureException;
 import com.example.finalproject.exception.QuantityNotAvailableException;
 import com.example.finalproject.model.*;
@@ -49,6 +50,8 @@ class PurchaseOrderServiceTest {
     @Mock
     private SectionRepo sectionRepo;
 
+    @Mock
+    private WarehouseRepo warehouseRepo;
     private PurchaseOrder purchaseOrder;
 
     private PurchaseItem purchaseItem;
@@ -208,5 +211,50 @@ class PurchaseOrderServiceTest {
         assertThrows(PurchaseFailureException.class, () -> purchaseOrderService.updatePurchaseStatus(purchaseOrder.getPurchaseCode()));
         assertEquals(purchaseOrder.getOrderStatus(), OrderStatus.INDISPONIVEL);
         verify(purchaseOrderRepo, times(1)).save(purchaseOrder);
+    }
+
+    @Test
+    void findAllByWarehouseInitialDateAndFinalDate_returnListPurchaseItem_whenSuccess() {
+        List<PurchaseItem> localPurchaseItemList = new ArrayList<>();
+        PurchaseOrder localPurchaseOrder = PurchaseOrder.builder()
+                .purchaseCode(1L)
+                .orderStatus(OrderStatus.FINALIZADO)
+                .buyer(buyer)
+                .dateTime(LocalDateTime.of(2022, 11, 21, 0, 0, 0))
+                .purchaseItems(localPurchaseItemList)
+                .build();
+        PurchaseItem localPurchaseItem = PurchaseItem.builder()
+                .purchaseOrder(localPurchaseOrder)
+                .advertisement(advertisement)
+                .itemCode(1L)
+                .price(BigDecimal.valueOf(40.0))
+                .quantity(10)
+                .build();
+
+        localPurchaseItemList.add(localPurchaseItem);
+
+        when(warehouseRepo.existsById(anyLong())).thenReturn(true);
+        when(purchaseItemRepo.findAllByWarehouseInitialDateAndFinalDate(anyLong(), any(), any())).thenReturn(
+                localPurchaseItemList
+        );
+        List<PurchaseItem> servicePurchaseItemList = purchaseOrderService.findAllByWarehouseInitialDateAndFinalDate(warehouse.getWarehouseCode(), LocalDate.of(2022,11,21),LocalDate.of(2024,1,1));
+
+        assertEquals(localPurchaseItemList.size(),servicePurchaseItemList.size() );
+        assertEquals(localPurchaseItemList.get(0).getQuantity(), servicePurchaseItemList.get(0).getQuantity());
+        assertEquals(localPurchaseItemList.get(0).getPrice(),servicePurchaseItemList.get(0).getPrice());
+    }
+
+    @Test
+    void findAllByWarehouseInitialDateAndFinalDate_returnNotFoundException_whenWarehouseCodeNotFound() {
+        when(warehouseRepo.existsById(anyLong())).thenReturn(false);
+        assertThrows(NotFoundException.class, () -> purchaseOrderService.findAllByWarehouseInitialDateAndFinalDate(warehouse.getWarehouseCode(),LocalDate.of(2022,11,21),LocalDate.of(2024,1,1)));
+    }
+
+    @Test
+    void findAllByWarehouseInitialDateAndFinalDate_returnNotFoundException_whenEmptyPurchaseItemList() {
+        List<PurchaseItem> emptyPurchaseItemList = new ArrayList<>();
+        when(warehouseRepo.existsById(anyLong())).thenReturn(true);
+        when(purchaseItemRepo.findAllByWarehouseInitialDateAndFinalDate(anyLong(),any(),any())).thenReturn(emptyPurchaseItemList);
+        assertThrows(NotFoundException.class, () -> purchaseOrderService.findAllByWarehouseInitialDateAndFinalDate(warehouse.getWarehouseCode(),LocalDate.of(2022,11,21),LocalDate.of(2024,1,1)));
     }
 }

@@ -35,6 +35,5 @@ public interface IPurchaseOrderService {
      */
     BigDecimal createPurchaseOrder(PurchaseOrder purchaseOrder);
 
-    List<PurchaseItem> findAllByWarehouseCode(Long warehouseCode);
     List<PurchaseItem> findAllByWarehouseInitialDateAndFinalDate(Long warehouseCode, LocalDate initialDate, LocalDate finalDate);
 }
