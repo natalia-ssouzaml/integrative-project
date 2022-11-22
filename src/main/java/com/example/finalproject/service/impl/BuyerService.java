@@ -4,15 +4,15 @@ import com.example.finalproject.exception.BuyerException;
 import com.example.finalproject.model.Buyer;
 import com.example.finalproject.model.BuyerAuth;
 import com.example.finalproject.repository.BuyerRepo;
+import com.example.finalproject.service.IBuyerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 
 @Service
-public class BuyerService {
+public class BuyerService implements IBuyerService {
 
     @Autowired
     private BuyerRepo buyerRepo;
