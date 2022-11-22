@@ -1,6 +1,6 @@
 package com.example.finalproject.service.impl;
 
-import com.example.finalproject.exception.NotFoundException;
+import com.example.finalproject.exception.BuyerException;
 import com.example.finalproject.model.Buyer;
 import com.example.finalproject.model.BuyerAuth;
 import com.example.finalproject.repository.BuyerRepo;
@@ -19,7 +19,7 @@ public class BuyerService {
 
     public Buyer saveBuyer(BuyerAuth buyerAuth) {
         if (buyerRepo.existsByUsername(buyerAuth.getUsername())) {
-            throw new NotFoundException("This username has already been registered");
+            throw new BuyerException("This username has already been registered");
         }
         Buyer buyer = new Buyer();
         buyer.setName(buyerAuth.getName());
@@ -29,9 +29,5 @@ public class BuyerService {
         buyer.setAuthorities("Buyer");
         Buyer savedBuyer = buyerRepo.save(buyer);
         return savedBuyer;
-    }
-
-    public Optional<Buyer> findBuyerByUsername(String username) {
-        return buyerRepo.findBuyerByUsername(username);
     }
 }

@@ -124,4 +124,15 @@ public class HandlerException extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(exceptionDetails, HttpStatus.BAD_REQUEST);
     }
+    @ExceptionHandler(BuyerException.class)
+    public ResponseEntity<ExceptionDetails> handlerBuyerException(BuyerException ex) {
+        ExceptionDetails exceptionDetails = ExceptionDetails.builder()
+                .title("Buyer is already registered")
+                .message(ex.getMessage())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .timeStamp(LocalDateTime.now())
+                .build();
+
+        return new ResponseEntity<>(exceptionDetails, HttpStatus.BAD_REQUEST);
+    }
 }
