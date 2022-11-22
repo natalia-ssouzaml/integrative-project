@@ -35,5 +35,5 @@
 
 ## :file_folder: Download Endpoints
 
-**Endpoint 06 added in the collection:**
+**Requisito 06 added in the collection:**
 - [Collection (endpoints)](src/main/resources/projeto-integrador.postman_collection.json)
