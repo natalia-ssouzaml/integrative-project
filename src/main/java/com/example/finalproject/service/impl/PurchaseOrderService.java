@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Comparator;
 import java.util.List;
@@ -157,19 +158,23 @@ public class PurchaseOrderService implements IPurchaseOrderService {
     }
 
     @Override
-    public List<PurchaseItem> findAllByInitialDateAndFinalDate(LocalDate initialDate, LocalDate finalDate) {
-        List<PurchaseItem> purchaseItemList = purchaseItemRepo.findAllByInitialDateAndFinalDate(initialDate, finalDate);
-        if (purchaseItemList.isEmpty()) throw new NotFoundException("There are not any sale in this period");
+    public List<PurchaseItem> findAllByWarehouseInitialDateAndFinalDate(Long warehouseCode, LocalDate initialDate, LocalDate finalDate) {
+        if (!warehouseRepo.existsById(warehouseCode)) throw new NotFoundException("Warehouse not found");
+        if (initialDate == null && finalDate == null) return findAllByWarehouseCode(warehouseCode);
+        if (finalDate == null) finalDate = LocalDate.now();
+        List<PurchaseItem> purchaseItemList = purchaseItemRepo.findAllByWarehouseInitialDateAndFinalDate(warehouseCode, LocalDateTime.of(initialDate, LocalTime.of(0, 0, 0)), LocalDateTime.of(finalDate, LocalTime.now()));
+        purchaseItemListValidation(purchaseItemList);
         return purchaseItemList;
     }
 
     @Override
-    public List<PurchaseItem> findAllByWarehouseInitialDateAndFinalDate(Long warehouseCode, LocalDate initialDate, LocalDate finalDate) {
-        if(!warehouseRepo.existsById(warehouseCode))throw new NotFoundException("Warehouse not found");
-        List<PurchaseItem> purchaseItemList = purchaseItemRepo.findAllByWarehouseInitialDateAndFinalDate(warehouseCode, initialDate, finalDate);
-        if (purchaseItemList.isEmpty()) throw new NotFoundException("There are not any sale in this period");
+    public List<PurchaseItem> findAllByWarehouseCode(Long warehouseCode) {
+        List<PurchaseItem> purchaseItemList = purchaseItemRepo.findAllByWarehouseCode(warehouseCode);
+        purchaseItemListValidation(purchaseItemList);
         return purchaseItemList;
-
     }
 
+    private static void purchaseItemListValidation(List<PurchaseItem> purchaseItemList) {
+        if (purchaseItemList.isEmpty()) throw new NotFoundException("There are not any sale in this period");
+    }
 }

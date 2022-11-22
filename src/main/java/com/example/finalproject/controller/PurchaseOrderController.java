@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/api/v1/fresh-products")
@@ -39,7 +40,7 @@ public class PurchaseOrderController {
     }
 
     @GetMapping("/orders/totalsales")
-    public ResponseEntity<WarehouseSalesDTO> getTotalPurchasedByDate(@RequestParam Long warehouseCode, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate initialDate, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate finalDate) {
+    public ResponseEntity<WarehouseSalesDTO> getTotalPurchasedByDate(@RequestParam("warehousecode") Long warehouseCode, @RequestParam(value = "initialdate",required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate initialDate, @RequestParam(value = "finaldate",required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate finalDate) {
         return ResponseEntity.ok(new WarehouseSalesDTO(warehouseCode, purchaseOrderService.findAllByWarehouseInitialDateAndFinalDate(warehouseCode, initialDate, finalDate)));
     }
 
