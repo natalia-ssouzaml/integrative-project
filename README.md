@@ -246,7 +246,3 @@ a LATAM, criando os artefatos necessários para permitir as seguintes funcionali
 ## :file_folder: Download Endpoints
 
 - [Collection (endpoints)](src/main/resources/projeto-integrador.postman_collection.json)
-
-## :file_folder: PDF
-
-- [Requisito 06 (pdf)](src/main/resources/projeto-integrador.Requisito6-Heitor.pdf)
