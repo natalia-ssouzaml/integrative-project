@@ -31,4 +31,4 @@
 
 ## :file_folder: PDF
 
-- [Requisito 06 (pdf)](src/main/resources/projeto-integrador.Requisito6-Heitor.pdf)
+- [Requisito 06 (pdf)](https://github.com/natalia-ssouzaml/integrative-project/blob/feat/general-data-analysis-endpoints/Requisito6-Heitor.pdf)
